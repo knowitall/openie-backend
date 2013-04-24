@@ -12,7 +12,7 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class ReVerbExtractionGroupTest extends Suite {
 
-  var inputLines: List[String] = Source.fromInputStream(this.getClass.getResource("/test-groups-5000.txt").openStream(), "UTF-8").getLines.toList
+  var inputLines: List[String] = Source.fromInputStream(Resources.groupsUrl.openStream(), "UTF-8").getLines.toList
 
   private def getExtrsHelper = inputLines.flatMap(e => { ReVerbExtractionGroup.deserializeFromString(e) })
 

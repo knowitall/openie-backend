@@ -168,6 +168,7 @@ object ExtractionGroupFetcher {
   val logger = LoggerFactory.getLogger(this.getClass)
 
   val entityStoplistFile = "entity-stoplist-25k.txt"
+  val entityStoplistUrl = this.getClass.getResource("/" + entityStoplistFile)
 
   val defaultMaxResults = 750
 
@@ -216,7 +217,7 @@ object ExtractionGroupFetcher {
 
   lazy val entityStoplist: Set[String] = {
     val (nsLoad, stopList) = Timing.time {
-      using(Source.fromInputStream(this.getClass.getResource(entityStoplistFile).openStream)) { source => source.getLines.toSet}
+      using(Source.fromInputStream(entityStoplistUrl.openStream)) { source => source.getLines.toSet}
     }
     logger.info("Loaded entity blacklist of size %d in %s".format(stopList.size, Timing.Milliseconds.format(nsLoad)))
     stopList

@@ -16,6 +16,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.Suite
 import scala.Option.option2Iterable
 import scala.io.Source
+import edu.knowitall.openie.models.Resources
 
 @RunWith(classOf[JUnitRunner])
 class ParallelReVerbIndexModifierTest extends Suite {
@@ -26,7 +27,7 @@ class ParallelReVerbIndexModifierTest extends Suite {
 
   val numIndexes = 7
 
-  val rawInputLines: List[String] = Source.fromInputStream(this.getClass.getClassLoader.getResource("test-groups-5000.txt").openStream(), "UTF-8").getLines.drop(1000).take(numGroupsToTest).toList
+  val rawInputLines: List[String] = Source.fromInputStream(Resources.groupsUrl.openStream(), "UTF-8").getLines.drop(1000).take(numGroupsToTest).toList
 
   val inputLines = rawInputLines flatMap ReVerbExtractionGroup.deserializeFromString flatMap (_.reNormalize) map ReVerbExtractionGroup.serializeToString
 

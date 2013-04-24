@@ -11,11 +11,14 @@ object NellType {
 
   val logger = LoggerFactory.getLogger(this.getClass)
 
-  val nellToFbTypeMapFile = "/nelltypes-to-fbtypes.txt"
+  val nellToFbTypeMapFile = "nelltypes-to-fbtypes.txt"
+  val nellToFbTypeMapUrl = this.getClass.getResource(nellToFbTypeMapFile)
+  require(nellToFbTypeMapUrl != null, "Could not find resource: " + nellToFbTypeMapFile)
+
   // make this a map to fbTypes
   lazy val fbToNellType: Map[FreeBaseType, NellType] = {
     val (nsLoad, resultMap) = Timing.time {
-      using(Source.fromInputStream(this.getClass().getResource(nellToFbTypeMapFile).openStream)) { source =>
+      using(Source.fromInputStream(nellToFbTypeMapUrl.openStream)) { source =>
         source.getLines.flatMap { line =>
           line.split("\t") match {
             case Array(nellString, fbString, nameString, _*) => FreeBaseType.parse(fbString) match {

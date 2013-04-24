@@ -7,12 +7,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.scalatest.Suite
 import org.scalatest.junit.JUnitRunner
+import edu.knowitall.openie.models.Resources
 
 
 @RunWith(classOf[JUnitRunner])
 class ReVerbTabSerializerTest extends Suite {
 
-  var inputLines: List[String] = Source.fromInputStream(this.getClass.getResource("/test-groups-5000.txt").openStream()).getLines.toList
+  var inputLines: List[String] = Source.fromInputStream(Resources.reverbExtractionsUrl.openStream()).getLines.toList
 
   private def getExtrsHelper = inputLines.flatMap(e => ReVerbExtraction.deserializeFromString(e))
 

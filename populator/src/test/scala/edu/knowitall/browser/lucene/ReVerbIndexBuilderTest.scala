@@ -2,7 +2,6 @@ package edu.knowitall.browser.lucene
 
 import org.junit.Assert._
 import org.scalatest.junit.AssertionsForJUnit
-
 import org.junit.Test
 import org.junit.Before
 import org.scalatest.Suite
@@ -14,7 +13,6 @@ import java.io.ByteArrayOutputStream
 import java.io.ObjectOutputStream
 import java.io.ByteArrayInputStream
 import java.io.ObjectInputStream
-
 import org.apache.lucene.document.Document
 import org.apache.lucene.store.RAMDirectory
 import org.apache.lucene.index.IndexWriter
@@ -23,13 +21,13 @@ import org.apache.lucene.search.IndexSearcher
 import org.apache.lucene.queryParser.QueryParser
 import org.apache.lucene.util.Version
 import org.apache.lucene.analysis.WhitespaceAnalyzer
-
 import edu.knowitall.openie.models.ReVerbExtractionGroup
 import edu.knowitall.openie.models.ExtractionGroup
 import edu.knowitall.openie.models.ReVerbExtraction
 import edu.knowitall.openie.models.FreeBaseEntity
 import edu.knowitall.openie.models.Instance
 import edu.knowitall.tool.stem.MorphaStemmer
+import edu.knowitall.openie.models.Resources
 
 
 @RunWith(classOf[JUnitRunner])
@@ -37,7 +35,7 @@ class ReVerbIndexBuilderTest extends Suite {
 
   val numGroupsToTest = 2000
 
-  var inputLines: List[String] = Source.fromInputStream(this.getClass.getResource("/test-groups-5000.txt").openStream(), "UTF-8").getLines.drop(1000).take(numGroupsToTest).toList
+  var inputLines: List[String] = Source.fromInputStream(Resources.groupsUrl.openStream(), "UTF-8").getLines.drop(1000).take(numGroupsToTest).toList
 
   private def getExtrsHelper = inputLines.flatMap(e => ReVerbExtractionGroup.deserializeFromString(e))
 

@@ -91,6 +91,15 @@ object NlpToolsBuild extends Build {
       "junit" % "junit" % "4.10",
       "org.scalatest" % "scalatest_2.9.2" % "1.7.1",
       "org.apache.derby" % "derby" % "10.9.1.0"
-    )
+    ),
+    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+      {
+        case x => {
+          val oldstrat = old(x)
+          if (oldstrat == MergeStrategy.deduplicate) MergeStrategy.first
+          else oldstrat
+        }
+      }
+    }
   )) dependsOn(models)
 }
