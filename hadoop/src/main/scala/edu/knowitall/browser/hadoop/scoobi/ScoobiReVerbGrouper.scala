@@ -17,8 +17,8 @@ import edu.knowitall.browser.extraction.Instance
 import edu.knowitall.browser.extraction.ExtractionGroup
 import edu.knowitall.browser.util.TaggedStemmer
 import edu.knowitall.browser.extraction.ReVerbExtractionGroup
-import edu.washington.cs.knowitall.browser.entity.EntityLinker
-import edu.washington.cs.knowitall.browser.entity.Pair
+import edu.knowitall.browser.entity.EntityLinker
+import edu.knowitall.browser.entity.Pair
 
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedExtraction
 

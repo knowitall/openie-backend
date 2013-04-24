@@ -57,13 +57,33 @@ object NlpToolsBuild extends Build {
 
   lazy val hadoop = Project(id = "openie-hadoop", base = file("hadoop"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq("edu.washington.cs.knowitall" % "reverb-core" % "1.4.1",
-      "edu.washington.cs.knowitall" % "browser-entitylinker" % "1.0.0-SNAPSHOT",
       nlptoolsPackage % "nlptools-chunk-opennlp_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
       "com.nicta" % "scoobi_2.9.2" % "0.6.0-cdh3",
       "log4j" % "log4j" % "1.2.16",
       "org.slf4j" % "slf4j-api" % "1.6.3",
       "org.slf4j" % "slf4j-log4j12" % "1.6.3"
+    ),
+    resolvers ++= Seq("nicta" at "http://nicta.github.com/scoobi/releases",
+      "cloudera" at "https://repository.cloudera.com/content/repositories/releases")
+  )) dependsOn(backend, linker)
+
+  lazy val linker = Project(id = "openie-linker", base = file("linker"), settings = buildSettings ++ Seq(
+    libraryDependencies ++= Seq(
+      "edu.washington.cs.knowitall" % "reverb-core" % "1.4.0",
+      nlptoolsPackage % "nlptools-core_2.9.2" % "2.3.1-SNAPSHOT",
+      nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
+      nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion,
+      "org.apache.lucene" % "lucene-core" % "3.0.3",
+      "org.apache.lucene" % "lucene-queries" % "3.0.3",
+      "org.apache.lucene" % "lucene-core" % "3.6.0",
+      "com.github.scopt" % "scopt_2.9.2" % "2.1.0",
+      "log4j" % "log4j" % "1.2.17",
+      "org.slf4j" % "slf4j-api" % "1.7.2",
+      "org.slf4j" % "slf4j-log4j12" % "1.7.2",
+      "junit" % "junit" % "4.10",
+      "org.scalatest" % "scalatest_2.9.2" % "1.7.1",
+      "org.apache.derby" % "derby" % "10.9.1.0"
     )
   )) dependsOn(backend)
 }

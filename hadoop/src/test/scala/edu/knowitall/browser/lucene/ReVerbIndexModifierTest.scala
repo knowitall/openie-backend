@@ -3,7 +3,6 @@ package edu.knowitall.browser.lucene
 import edu.knowitall.browser.extraction.ExtractionGroup
 import edu.knowitall.browser.extraction.ReVerbExtraction
 import edu.knowitall.browser.extraction.ReVerbExtractionGroup
-import edu.knowitall.commonlib.ResourceUtils
 import org.apache.lucene.search.SearcherManager
 import org.apache.lucene.search.SearcherFactory
 import edu.knowitall.tool.stem.MorphaStemmer
@@ -25,7 +24,7 @@ class ReVerbIndexModifierTest extends Suite {
 
   val numGroupsToTest = 1000
 
-  val rawInputLines: List[String] = Source.fromInputStream(ResourceUtils.loadResource("test-groups-5000.txt", this.getClass()), "UTF-8").getLines.drop(1000).take(numGroupsToTest).toList
+  val rawInputLines: List[String] = Source.fromInputStream(this.getClass.getClassLoader.getResource("test-groups-5000.txt").openStream(), "UTF-8").getLines.drop(1000).take(numGroupsToTest).toList
 
   val inputLines = rawInputLines flatMap lineToOptGroup flatMap (_.reNormalize) map ReVerbExtractionGroup.serializeToString
 
