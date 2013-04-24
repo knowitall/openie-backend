@@ -72,7 +72,16 @@ object NlpToolsBuild extends Build {
       "org.slf4j" % "slf4j-log4j12" % "1.6.3"
     ),
     resolvers ++= Seq("nicta" at "http://nicta.github.com/scoobi/releases",
-      "cloudera" at "https://repository.cloudera.com/content/repositories/releases")
+      "cloudera" at "https://repository.cloudera.com/content/repositories/releases"),
+    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+      {
+        case x => {
+          val oldstrat = old(x)
+          if (oldstrat == MergeStrategy.deduplicate) MergeStrategy.first
+          else oldstrat
+        }
+      }
+    }
   )) dependsOn(populator, linker)
 
   lazy val linker = Project(id = "openie-linker", base = file("linker"), settings = buildSettings ++ Seq(
@@ -91,15 +100,6 @@ object NlpToolsBuild extends Build {
       "junit" % "junit" % "4.10",
       "org.scalatest" % "scalatest_2.9.2" % "1.7.1",
       "org.apache.derby" % "derby" % "10.9.1.0"
-    ),
-    mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
-      {
-        case x => {
-          val oldstrat = old(x)
-          if (oldstrat == MergeStrategy.deduplicate) MergeStrategy.first
-          else oldstrat
-        }
-      }
-    }
+    )
   )) dependsOn(models)
 }
