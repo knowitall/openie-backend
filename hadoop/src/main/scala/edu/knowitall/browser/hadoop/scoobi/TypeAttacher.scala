@@ -4,9 +4,9 @@ import com.nicta.scoobi.core.WireFormat
 import com.nicta.scoobi.Scoobi._
 import com.nicta.scoobi.lib.Relational
 import scopt.OptionParser
-import edu.knowitall.browser.util.StringSerializer
 import edu.knowitall.browser.hadoop.scoobi.util.{ Arg1, Arg2, ArgField }
 import edu.knowitall.browser.hadoop.scoobi.util.TypePrediction
+import edu.knowitall.openie.models.serialize.StringSerializer
 
 class TypeAttacher[T <: ExtractionTuple](
   val argField: ArgField,

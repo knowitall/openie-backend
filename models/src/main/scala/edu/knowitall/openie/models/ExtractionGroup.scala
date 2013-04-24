@@ -1,8 +1,6 @@
-package edu.knowitall.browser.extraction
+package edu.knowitall.openie.models
 
-import edu.knowitall.browser.util.TabSerializer
-import edu.knowitall.browser.lucene.QuerySpec
-import edu.knowitall.browser.lucene.ReVerbDocumentConverter
+import edu.knowitall.openie.models.serialize.TabSerializer
 import scala.collection.mutable
 import sjson.json.DefaultProtocol
 import sjson.json.Format

@@ -17,11 +17,11 @@ import org.apache.lucene.index.IndexReader
 
 import scopt.OptionParser
 
-import edu.knowitall.browser.extraction.FreeBaseType
-import edu.knowitall.browser.extraction.InstanceDeduplicator
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtraction
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
+import edu.knowitall.openie.models.FreeBaseType
+import edu.knowitall.openie.models.InstanceDeduplicator
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.ReVerbExtractionGroup
 import edu.knowitall.tool.stem.MorphaStemmer
 
 import org.slf4j.Logger

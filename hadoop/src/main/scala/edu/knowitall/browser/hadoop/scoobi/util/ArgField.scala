@@ -1,9 +1,9 @@
 package edu.knowitall.browser.hadoop.scoobi.util
 
-import edu.knowitall.browser.extraction.ReVerbExtraction
-import edu.knowitall.browser.extraction.FreeBaseEntity
-import edu.knowitall.browser.extraction.FreeBaseType
-import edu.knowitall.browser.extraction.Instance
+import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.FreeBaseEntity
+import edu.knowitall.openie.models.FreeBaseType
+import edu.knowitall.openie.models.Instance
 import edu.knowitall.browser.hadoop.scoobi.ExtractionTuple
 
 sealed abstract class ArgField {

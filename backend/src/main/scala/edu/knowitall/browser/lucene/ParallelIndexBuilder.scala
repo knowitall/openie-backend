@@ -12,7 +12,7 @@ import org.apache.lucene.document.Document
 import org.apache.lucene.util.Version
 import org.apache.lucene.analysis.WhitespaceAnalyzer
 
-import edu.knowitall.browser.extraction._
+import edu.knowitall.openie.models._
 
 import scopt.OptionParser
 

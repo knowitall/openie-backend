@@ -1,32 +1,23 @@
 package edu.knowitall.browser.lucene
 
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtraction
-import edu.knowitall.tool.stem.MorphaStemmer
-import org.apache.lucene.queryParser.QueryParser
-import org.apache.lucene.search.Query
-import org.apache.lucene.search.NumericRangeQuery
-import edu.knowitall.browser.extraction.ReVerbExtraction
-import org.apache.lucene.search.NumericRangeQuery
-import org.apache.lucene.search.BooleanQuery
-import org.apache.lucene.search.BooleanClause
-import org.apache.lucene.index.Term
-import org.apache.lucene.search.BooleanQuery
-import org.apache.lucene.search.BooleanClause
-import org.apache.lucene.search.TermQuery
-import org.apache.lucene.analysis.WhitespaceAnalyzer
-import org.apache.lucene.util.Version
-import edu.knowitall.tool.postag.OpenNlpPostagger
-import edu.knowitall.tool.postag.PostaggedToken
-import edu.knowitall.browser.util.TaggedStemmer
-import QuerySpec.whitespaceSplitter
 import java.util.concurrent.ArrayBlockingQueue
-import edu.knowitall.tool.tokenize.OpenNlpTokenizer
-import org.slf4j.LoggerFactory
-import edu.knowitall.common.Timing
 
-import org.slf4j.Logger
+import scala.Array.canBuildFrom
+import scala.Option.option2Iterable
+
+import org.apache.lucene.analysis.WhitespaceAnalyzer
+import org.apache.lucene.index.Term
+import org.apache.lucene.queryParser.QueryParser
+import org.apache.lucene.search.{BooleanClause, BooleanQuery, NumericRangeQuery, Query, TermQuery}
+import org.apache.lucene.util.Version
 import org.slf4j.LoggerFactory
+
+import edu.knowitall.common.Timing
+import edu.knowitall.openie.models.{ExtractionGroup, ReVerbExtraction}
+import edu.knowitall.openie.models.ReVerbExtraction.strippedDeterminers
+import edu.knowitall.openie.models.util.TaggedStemmer
+import edu.knowitall.tool.postag.OpenNlpPostagger
+import edu.knowitall.tool.tokenize.OpenNlpTokenizer
 
 case class QuerySpec(
   val arg1: Option[String],

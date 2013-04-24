@@ -1,4 +1,4 @@
-package edu.knowitall.browser.extraction
+package edu.knowitall.openie.models
 
 import edu.knowitall.tool.postag.PostaggedToken
 import sjson.json.DefaultProtocol

@@ -10,9 +10,9 @@ import scala.collection.JavaConversions._
 import scala.collection.mutable
 
 import edu.knowitall.common.Timing._
-import edu.knowitall.browser.extraction.ReVerbExtraction
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtractionGroup
 import edu.knowitall.browser.entity.EntityLinker
 import edu.knowitall.browser.entity.Pair
 

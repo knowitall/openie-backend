@@ -1,4 +1,4 @@
-package edu.knowitall.browser.util
+package edu.knowitall.openie.models.util
 
 import java.io.StringReader
 import edu.knowitall.tool.chunk.ChunkedToken

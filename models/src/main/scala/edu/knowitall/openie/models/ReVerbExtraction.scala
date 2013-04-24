@@ -1,6 +1,6 @@
-package edu.knowitall.browser.extraction
+package edu.knowitall.openie.models
 
-import edu.knowitall.browser.util.TabSerializer
+import edu.knowitall.openie.models.serialize.TabSerializer
 import java.net.URL
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -15,7 +15,7 @@ import edu.knowitall.tool.chunk.ChunkedToken
 import edu.knowitall.tool.postag.PostaggedToken
 import edu.knowitall.tool.tokenize.Token
 import edu.knowitall.common.HashCodeHelper
-import edu.knowitall.browser.util.TaggedStemmer
+import edu.knowitall.openie.models.util.TaggedStemmer
 import sjson.json.DefaultProtocol
 
 @SerialVersionUID(7720340660222065636L)

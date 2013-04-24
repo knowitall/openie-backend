@@ -1,4 +1,4 @@
-package edu.knowitall.browser.util
+package edu.knowitall.openie.models.serialize
 
 /**
  * A pattern for classes that can go to and from a Tab-delimited string representation.

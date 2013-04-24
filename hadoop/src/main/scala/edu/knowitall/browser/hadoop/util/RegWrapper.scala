@@ -1,8 +1,8 @@
 package edu.knowitall.browser.hadoop.util
 
-import edu.knowitall.browser.util.StringSerializer
-import edu.knowitall.browser.extraction._
+import edu.knowitall.openie.models._
 import edu.knowitall.browser.hadoop.scoobi.ExtractionTuple
+import edu.knowitall.openie.models.serialize.StringSerializer
 
 case class RegWrapper(
   val reg: ExtractionGroup[ReVerbExtraction]) extends ExtractionTuple {
@@ -22,7 +22,6 @@ case class RegWrapper(
 }
 
 object RegWrapper extends StringSerializer[RegWrapper] {
-
   override def serializeToString(wrapper: RegWrapper): String = ReVerbExtractionGroup.serializeToString(wrapper.reg)
   override def deserializeFromString(string: String): Option[RegWrapper] = ReVerbExtractionGroup.deserializeFromString(string) map RegWrapper.apply
 }

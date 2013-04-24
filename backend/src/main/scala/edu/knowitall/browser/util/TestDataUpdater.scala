@@ -8,9 +8,9 @@ import scopt.OptionParser
 
 import edu.knowitall.common.Resource.using
 
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtraction
+import edu.knowitall.openie.models.ReVerbExtractionGroup
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtraction
 
 /**
  * Reads in REGs and just writes them back out. Useful if you make a change to serialization, such

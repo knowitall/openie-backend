@@ -6,7 +6,7 @@ import org.apache.lucene.index.IndexReader
 import scala.collection.parallel.ParSeq
 import scala.util.Random
 
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtractionGroup
 
 /**
  * Prints the contents of an REG index to std out.

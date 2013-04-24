@@ -1,7 +1,7 @@
 package edu.knowitall.browser.entity
 
 import edu.knowitall.browser.hadoop.scoobi.ScoobiEntityLinker
-import edu.knowitall.browser.extraction._
+import edu.knowitall.openie.models._
 import scala.collection.mutable
 
 class LinkerTest {

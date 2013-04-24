@@ -1,4 +1,4 @@
-package edu.knowitall.browser.extraction
+package edu.knowitall.openie.models
 
 import scala.Option.option2Iterable
 import scala.io.Source

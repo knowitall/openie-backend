@@ -1,4 +1,4 @@
-package edu.knowitall.browser.util
+package edu.knowitall.openie.models.serialize
 
 /**
  * A trait for classes that can be serialized to strings, and deserialized from strings. 

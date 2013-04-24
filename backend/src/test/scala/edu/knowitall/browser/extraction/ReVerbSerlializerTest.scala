@@ -1,4 +1,4 @@
-package edu.knowitall.browser.extraction
+package edu.knowitall.openie.models
 
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream

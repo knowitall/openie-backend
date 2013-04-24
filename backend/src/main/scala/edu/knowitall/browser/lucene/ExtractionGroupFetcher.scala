@@ -31,10 +31,10 @@ import org.apache.lucene.search.ScoreDoc
 
 import scopt.OptionParser
 
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtraction
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
-import edu.knowitall.browser.extraction.InstanceDeduplicator
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.ReVerbExtractionGroup
+import edu.knowitall.openie.models.InstanceDeduplicator
 
 import edu.knowitall.common.Timing
 import edu.knowitall.common.Resource.using

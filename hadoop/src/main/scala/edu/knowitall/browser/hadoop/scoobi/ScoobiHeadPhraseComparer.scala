@@ -9,7 +9,7 @@ import com.nicta.scoobi.Scoobi.TextInput
 import com.nicta.scoobi.Scoobi.TextOutput
 import com.nicta.scoobi.Scoobi.persist
 
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtractionGroup
 import scopt.OptionParser
 
 /**

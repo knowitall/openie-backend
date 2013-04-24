@@ -3,13 +3,12 @@ package edu.knowitall.browser.hadoop.scoobi
 import com.nicta.scoobi.Scoobi._
 
 import edu.knowitall.common.Timing._
-import edu.knowitall.browser.extraction.ReVerbExtraction
-import edu.knowitall.browser.extraction.FreeBaseEntity
-import edu.knowitall.browser.extraction.FreeBaseType
-import edu.knowitall.browser.extraction.Instance
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.util.TaggedStemmer
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.FreeBaseEntity
+import edu.knowitall.openie.models.FreeBaseType
+import edu.knowitall.openie.models.Instance
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtractionGroup
 
 import edu.knowitall.tool.chunk.OpenNlpChunker
 import edu.knowitall.tool.chunk.ChunkedToken

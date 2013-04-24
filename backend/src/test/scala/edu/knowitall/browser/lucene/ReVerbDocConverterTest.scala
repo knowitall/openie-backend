@@ -17,11 +17,11 @@ import java.io.ObjectInputStream
 
 import org.apache.lucene.document.Document
 
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtraction
-import edu.knowitall.browser.extraction.FreeBaseEntity
-import edu.knowitall.browser.extraction.Instance
+import edu.knowitall.openie.models.ReVerbExtractionGroup
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.FreeBaseEntity
+import edu.knowitall.openie.models.Instance
 
 @RunWith(classOf[JUnitRunner])
 class ReVerbDocConverterTest extends Suite {

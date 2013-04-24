@@ -3,13 +3,13 @@ package edu.knowitall.browser.lucene
 import edu.knowitall.browser.hadoop.scoobi.ScoobiEntityLinker
 import edu.knowitall.browser.hadoop.scoobi.ScoobiGroupReGrouper
 
-import edu.knowitall.browser.extraction.ExtractionArgument
-import edu.knowitall.browser.extraction.ExtractionRelation
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.extraction.Instance
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtraction
+import edu.knowitall.openie.models.ExtractionArgument
+import edu.knowitall.openie.models.ExtractionRelation
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.Instance
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtraction
 
 import org.apache.lucene.index.IndexWriter
 import org.apache.lucene.store.FSDirectory

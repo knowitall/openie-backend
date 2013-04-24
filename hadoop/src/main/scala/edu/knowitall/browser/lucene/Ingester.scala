@@ -5,7 +5,7 @@ import java.io.File
 import java.io.FileInputStream
 import edu.knowitall.common.Resource.using
 import edu.knowitall.common.Timing
-import edu.knowitall.browser.extraction.ReVerbExtraction
+import edu.knowitall.openie.models.ReVerbExtraction
 
 import edu.knowitall.tool.tokenize.OpenNlpTokenizer
 

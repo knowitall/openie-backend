@@ -1,12 +1,10 @@
-package edu.knowitall.browser.extraction
+package edu.knowitall.openie.models
 
 import java.util.regex.Pattern
 
-import edu.knowitall.browser.util.TabSerializer
+import edu.knowitall.openie.models.serialize.TabSerializer
 
 import scala.collection.mutable
-import edu.knowitall.browser.lucene.QuerySpec
-import edu.knowitall.browser.lucene.ReVerbDocumentConverter
 
 
 
@@ -63,7 +61,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
   private val commaEscapeString = Pattern.compile(Pattern.quote("|/|")) // something not likely to occur
   private val commaString = Pattern.compile(",")
 
-  private[extraction] def serializeEntity(opt: Option[FreeBaseEntity]): String = opt match {
+  private[this] def serializeEntity(opt: Option[FreeBaseEntity]): String = opt match {
 
     case Some(t) => {
       val escapedName = commaString.matcher(t.name).replaceAll("|/|")
@@ -73,7 +71,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
   }
 
   // assumes that input represents an entity that is present, not empty
-  private[extraction] def deserializeEntity(input: String): Option[FreeBaseEntity] = {
+  private[this] def deserializeEntity(input: String): Option[FreeBaseEntity] = {
 
     def fail = { System.err.println("Error parsing entity: " + input); None }
 

@@ -1,4 +1,4 @@
-package edu.knowitall.browser.extraction
+package edu.knowitall.openie.models
 
 import org.junit.Test
 import org.junit.runner.RunWith

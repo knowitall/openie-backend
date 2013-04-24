@@ -24,11 +24,11 @@ import org.apache.lucene.queryParser.QueryParser
 import org.apache.lucene.util.Version
 import org.apache.lucene.analysis.WhitespaceAnalyzer
 
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtraction
-import edu.knowitall.browser.extraction.FreeBaseEntity
-import edu.knowitall.browser.extraction.Instance
+import edu.knowitall.openie.models.ReVerbExtractionGroup
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.FreeBaseEntity
+import edu.knowitall.openie.models.Instance
 import edu.knowitall.tool.stem.MorphaStemmer
 
 @RunWith(classOf[JUnitRunner])

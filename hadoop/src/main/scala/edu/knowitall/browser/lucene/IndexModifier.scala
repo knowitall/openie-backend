@@ -2,9 +2,9 @@ package edu.knowitall.browser.lucene
 
 import org.apache.lucene.index.IndexReader
 import org.apache.lucene.index.IndexWriter
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
-import edu.knowitall.browser.extraction.ReVerbExtraction
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtraction
 
 import org.apache.lucene.search.SearcherManager
 import org.apache.lucene.search.SearcherFactory

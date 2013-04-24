@@ -1,4 +1,4 @@
-package edu.knowitall.browser.extraction
+package edu.knowitall.openie.models
 
 import sjson.json.DefaultProtocol
 import sjson.json.Format

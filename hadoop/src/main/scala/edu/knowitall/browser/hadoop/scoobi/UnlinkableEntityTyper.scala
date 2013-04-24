@@ -1,18 +1,14 @@
 package edu.knowitall.browser.hadoop.scoobi
 
 import com.nicta.scoobi.Scoobi._
-
 import com.nicta.scoobi.lib.Relational
-
 import edu.knowitall.common.Timing._
-import edu.knowitall.browser.extraction.ReVerbExtraction
-import edu.knowitall.browser.extraction.FreeBaseEntity
-import edu.knowitall.browser.extraction.FreeBaseType
-import edu.knowitall.browser.extraction.Instance
-import edu.knowitall.browser.extraction.ExtractionGroup
-import edu.knowitall.browser.util.TaggedStemmer
-import edu.knowitall.browser.util.StringSerializer
-import edu.knowitall.browser.extraction.ReVerbExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.FreeBaseEntity
+import edu.knowitall.openie.models.FreeBaseType
+import edu.knowitall.openie.models.Instance
+import edu.knowitall.openie.models.ExtractionGroup
+import edu.knowitall.openie.models.ReVerbExtractionGroup
 import edu.knowitall.tool.chunk.OpenNlpChunker
 import edu.knowitall.tool.chunk.ChunkedToken
 import edu.knowitall.browser.hadoop.scoobi.util.EntityInfo
@@ -24,6 +20,7 @@ import edu.knowitall.browser.hadoop.scoobi.util.{ Arg1, Arg2, ArgField }
 import scopt.OptionParser
 import scala.collection.mutable
 import scala.io.Source
+import edu.knowitall.openie.models.serialize.StringSerializer
 
 case class TyperSettings(
   val argField: ArgField, // which argument field? (arg1 or arg2)

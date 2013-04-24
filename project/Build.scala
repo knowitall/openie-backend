@@ -24,7 +24,7 @@ object NlpToolsBuild extends Build {
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     publish := { },
     publishLocal := { }
-  ) aggregate(backend, hadoop)
+  ) aggregate(models, backend, hadoop, linker)
 
   // parent build definition
   val buildSettings = Defaults.defaultSettings ++ Seq (
@@ -40,10 +40,17 @@ object NlpToolsBuild extends Build {
     scalacOptions ++= Seq("-unchecked", "-deprecation")
   ) ++ assemblySettings
 
+  lazy val models = Project(id = "openie-models", base = file("models"), settings = buildSettings ++ Seq(
+    libraryDependencies ++= Seq(
+      nlptoolsPackage % "nlptools-core_2.9.2" % nlptoolsVersion,
+      nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
+      "net.debasishg" % "sjson_2.9.2" % "0.19"
+    )
+  ))
+
   lazy val backend = Project(id = "openie-backend", base = file("backend"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
       "org.apache.lucene" % "lucene-core" % "3.6.1",
-      "net.debasishg" % "sjson_2.9.2" % "0.19",
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion,
       "com.google.guava" % "guava" % "14.0.1",
@@ -53,7 +60,7 @@ object NlpToolsBuild extends Build {
       "com.github.scopt" % "scopt_2.9.2" % "2.1.0",
       "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
       "net.databinder.dispatch" %% "dispatch-core" % "0.10.0")
-  ))
+  )) dependsOn(models)
 
   lazy val hadoop = Project(id = "openie-hadoop", base = file("hadoop"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq("edu.washington.cs.knowitall" % "reverb-core" % "1.4.1",
