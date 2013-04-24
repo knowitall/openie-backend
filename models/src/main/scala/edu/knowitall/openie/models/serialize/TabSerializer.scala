@@ -25,7 +25,7 @@ trait TabSerializer[T] extends StringSerializer[T] {
    */
 
   def deserializeFromTokens(tokens: Seq[String]): Option[T]
-  
+
   def deserializeFromString(string: String): Option[T] = deserializeFromTokens(tabSplit.split(string))
 
 }

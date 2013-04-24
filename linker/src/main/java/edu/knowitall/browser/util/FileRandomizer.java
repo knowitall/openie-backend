@@ -1,7 +1,10 @@
 package edu.knowitall.browser.util;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Map;
+import java.util.TreeMap;
 
 import edu.knowitall.browser.entity.Pair;
 

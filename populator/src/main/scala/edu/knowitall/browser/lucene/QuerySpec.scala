@@ -30,11 +30,11 @@ case class QuerySpec(
   val corpora: Option[String] = None,
   val stem: Boolean = true,
   val and: Boolean = true,
-  val arg1Fbid: Option[String] = None, 
+  val arg1Fbid: Option[String] = None,
   val arg2Fbid: Option[String] = None) {
 
   def defaultOp = if (and) QueryParser.AND_OPERATOR else QueryParser.OR_OPERATOR
-  
+
   import ReVerbExtraction.strippedDeterminers
 
   lazy val lowLevelLuceneQueries: Seq[Query] = {
@@ -95,7 +95,7 @@ case class QuerySpec(
     }
 
     if (arg1Fbid.isDefined) arg1Clauses ::= "arg1EntityId:\"%s\"".format(arg1Fbid.get)
-    
+
     if (arg1Entity.isDefined) arg1Clauses ::= "arg1EntityName:\"%s\"".format(QueryParser.escape(arg1Entity.get))
 
     if (arg1Types.isDefined) arg1TypeClause ::= "arg1Types:\"%s\"".format(escape(arg1Types.get))
@@ -116,27 +116,27 @@ case class QuerySpec(
     }
 
     if (arg2Fbid.isDefined) arg2Clauses ::= "arg2EntityId:\"%s\"".format(arg2Fbid.get)
-    
+
     if (arg2Entity.isDefined) arg2Clauses ::= "arg2EntityName:\"%s\"".format(QueryParser.escape(arg2Entity.get))
 
     if (arg2Types.isDefined) arg2TypeClause ::= "arg2Types:\"%s\"".format(escape(arg2Types.get).toLowerCase)
 
     if (corpora.isDefined) corporaClause ::= corpora.get.split(" ").map(corpus => "corpora:\"%s\"".format(escape(corpus).toLowerCase)).mkString(" OR ")
-    
+
     val clauses = Seq(arg1Clauses, relClauses, arg2Clauses, arg1TypeClause, arg2TypeClause, corporaClause).filter(!_.isEmpty)
     val disjunctions = clauses.map(clause => "(%s)".format(clause.mkString(" OR ")))
-    val joinString = if (and) " AND " else " OR " 
+    val joinString = if (and) " AND " else " OR "
     val fullQueryString = disjunctions.mkString(joinString)
-    
+
     QuerySpec.logger.info("Computed lucene query string: %s".format(fullQueryString))
-    
+
     fullQueryString
   }
-  
+
   private def numSpecifiedFields = Seq(arg1, rel, arg2, arg1Entity, arg2Entity, arg1Types, arg2Types).flatten.size
-  
+
   private def numericRangeQueries: Seq[NumericRangeQuery[java.lang.Integer]] = {
-    
+
     if (numSpecifiedFields <= 1) {
       Seq(NumericRangeQuery.newIntRange("size", 1, 4, true, false),
           NumericRangeQuery.newIntRange("size", 4, 25, true, false),
@@ -162,13 +162,13 @@ private class GroupIdentityQuerySpec(
   corpora: Option[String],
   stem: Boolean,
   and: Boolean) extends QuerySpec(arg1, rel, arg2, arg1Entity, arg2Entity, arg1Types, arg2Types, corpora, stem, and) {
-  
+
   override lazy val luceneQuery = {
-    
+
     val doc = ReVerbDocumentConverter.toDocument(group)
-    
+
     def getTerm(field: String) = doc.getFieldable(field).stringValue.split(" ").map(_.trim).filter(!_.isEmpty).map(t=>new Term(field, t))
-    
+
     val terms = Seq(getTerm("arg1Norm"), getTerm("relNorm"), getTerm("arg2Norm")).flatten
 
     val termQueries = terms.map(new TermQuery(_))
@@ -178,21 +178,21 @@ private class GroupIdentityQuerySpec(
     termQueries.foreach(booleanQuery.add(_, occur))
     booleanQuery
   }
-  
+
   override lazy val lowLevelLuceneQueries = Seq(luceneQuery)
 }
 
 object QuerySpec {
   val logger = LoggerFactory.getLogger(this.getClass)
-  
+
   protected val whitespaceSplitter = "\\s+".r
 
   val taggers = {
     val capacity = 4
-    
+
     Timing.timeThen {
     val queue = new ArrayBlockingQueue[OpenNlpPostagger](capacity)
-    
+
     val tokenizer = new OpenNlpTokenizer()
     val tagger = new OpenNlpPostagger(tokenizer=tokenizer)
     queue.add(tagger)
@@ -201,7 +201,7 @@ object QuerySpec {
       val newTagger = new OpenNlpPostagger(tagger.model, newTokenizer)
       queue.add(newTagger)
     }
-    
+
     queue
     } (ns => QuerySpec.logger.debug("Initialized " + capacity + " POS taggers (" + Timing.Seconds.format(ns) + ")"))
   }
@@ -222,15 +222,15 @@ object QuerySpec {
       queue
     }(ns => QuerySpec.logger.debug("Initialized " + capacity + " Query parsers (" + Timing.Seconds.format(ns) + ")"))
   }
-  
+
   def identityQuery(group: ExtractionGroup[ReVerbExtraction]): QuerySpec = {
     new GroupIdentityQuerySpec(group, Some(group.arg1.norm), Some(group.rel.norm), Some(group.arg2.norm), None, None, None, None, None, true, true)
   }
-  
+
   val warmupQueries: Seq[QuerySpec] = Seq(
     QuerySpec(None, Some("kill"), Some("bacteria"), None, None),  // "what kills bacteria?"
     QuerySpec(Some("FDA"), Some("approve"), None, None, None, Some("drug")), // what drugs has the FDA approved?
     QuerySpec(None, Some("contain"), Some("antioxidant"), None, None, Some("food")) // what foods contain antioxidants?
   )
-  
+
 }

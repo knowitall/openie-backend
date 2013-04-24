@@ -22,21 +22,21 @@ import edu.knowitall.browser.lucene.bad.BadQuery
 import edu.knowitall.nlp.extraction.ChunkedExtraction
 
 object ScoobiReVerbGroupFilter extends ScoobiApp {
-  
+
   def run() = {
 
     val (inputPath, outputPath) = (args(0), args(1))
 
     // serialized groups
     val groups: DList[String] = fromTextFile(inputPath)
-    
+
     // serialized ExtractionGroup[ReVerbExtraction]
-    val filtered: DList[String] = groups.flatMap  { group => 
+    val filtered: DList[String] = groups.flatMap  { group =>
       val parsed = ReVerbExtractionGroup.deserializeFromString(group)
       val apply = BadQuery.applyFilterForIndex(parsed) map ReVerbExtractionGroup.serializeToString
       apply
     }
-    
+
     persist(TextOutput.toTextFile(filtered, outputPath + "/"));
   }
 }

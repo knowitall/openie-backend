@@ -78,7 +78,7 @@ class Ingester(
     try {
       // doing this helps make sure the extraction has valid indices.
       val silent = ("(%s) %s".format(extr.indexGroupingKeyString, extr.toString))
-      // printErr(silent) 
+      // printErr(silent)
       true
     } catch {
       case e: Exception => { e.printStackTrace; false }

@@ -1,6 +1,7 @@
 package edu.knowitall.browser.lucene
 
 import java.io.File
+import java.util.concurrent.TimeUnit.MILLISECONDS
 
 import scala.util.matching.Regex
 import scala.io.Source
@@ -49,7 +50,7 @@ class ParallelExtractionGroupFetcher(val simpleFetchers: Seq[ExtractionGroupFetc
             querySpec.toString,
             combinedResults.numGroups,
             combinedResults.numInstances,
-            parallelwatch.elapsedMillis()))
+            parallelwatch.elapsed(MILLISECONDS)))
 
     combinedResults
   }

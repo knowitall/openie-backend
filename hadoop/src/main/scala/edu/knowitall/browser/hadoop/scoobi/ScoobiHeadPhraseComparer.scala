@@ -37,7 +37,7 @@ object ScoobiHeadPhraseComparer extends ScoobiApp {
 
   def run() = {
     var inputPath, outputPath = ""
-      
+
     val parser = new OptionParser() {
       arg("inputPath", "hdfs input path, tab delimited ExtractionGroups", { str => inputPath = str })
       arg("outputPath", "hdfs output path, tab delimited ExtractionGroups", { str => outputPath = str })

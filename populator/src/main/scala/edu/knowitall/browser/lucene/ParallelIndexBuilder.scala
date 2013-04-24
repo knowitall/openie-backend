@@ -20,7 +20,7 @@ import scopt.OptionParser
  * Note that this implementation doesn't contain any explicit parallelism - we rely instead
  * on parallelism within indexWriters and within the OS. Doing it this way should make it easier
  * to reason about how to proceed in the event that this indexer crashes after indexing k lines.
- * 
+ *
  * For example, you can just skip k lines and start up this process again. If everything was
  * actually in a separate thread, it would be more difficult to resume each separate thread where
  * it left off.
@@ -29,16 +29,16 @@ class ParallelIndexBuilder(
     val indexWriters: Seq[IndexWriter],
     val inputLineConverter: String => Iterable[Document],
     val linesPerCommit: Int) {
-  
+
   var linesIndexed = 0
   var groupsIndexed = 0
   private def indexLines(input: Iterable[String]): Unit = {
 
-    input.par.flatMap{ line => 
+    input.par.flatMap{ line =>
       linesIndexed += 1
-      inputLineConverter(line) 
+      inputLineConverter(line)
     }.toStream.grouped(indexWriters.size).foreach { docs =>
-      indexWriters.zip(docs).foreach { case (indexWriter, doc) => 
+      indexWriters.zip(docs).foreach { case (indexWriter, doc) =>
         indexWriter.addDocument(doc)
         groupsIndexed += 1
       }
@@ -55,8 +55,8 @@ class ParallelIndexBuilder(
   def indexAll(input: Iterator[String]): Unit = {
 
     input.grouped(linesPerCommit).foreach(group => indexAndCommit(group))
-  } 
-  
+  }
+
   def close() = indexWriters.map(writer => scala.actors.Futures.future(writer.close())).foreach(_.apply())
 }
 
@@ -88,7 +88,7 @@ object ReVerbParallelIndexBuilder {
       indexWriter.setInfoStream(System.err)
       indexWriter
     }
-    
+
     val converter = if (instanceLimit == -1) {
       ReVerbIndexBuilder.inputLineConverter(regroup)
     } else {

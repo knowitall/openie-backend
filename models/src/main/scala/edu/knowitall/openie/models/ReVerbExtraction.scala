@@ -46,7 +46,7 @@ class ReVerbExtraction(
   override def hashCode = Seq(sentenceTokens, arg1Interval, relInterval, arg2Interval, sourceUrl).hashCode
 
   override def sentenceText = sentenceTokens.map(_.string).mkString(" ")
-  
+
   override def toString: String = ReVerbExtraction.serializeToString(this)
 
   private def writeReplace(): java.lang.Object = {
@@ -58,17 +58,17 @@ class ReVerbExtraction(
   override def relTokens = sentenceTokens(relInterval)
 
   override def arg2Tokens = sentenceTokens(arg2Interval)
-  
-  def normTokens(interval: Interval) = sentenceTokens(interval) filter indexTokenFilter map { token => 
+
+  def normTokens(interval: Interval) = sentenceTokens(interval) filter indexTokenFilter map { token =>
     val stemmer = TaggedStemmer.instance
     val norm = stemmer.stem(token)
     new ChunkedToken(new PostaggedToken(new Token(norm, token.offset), token.postag), token.chunk)
-  } 
+  }
 
   def sentenceTokens(interval: Interval): Seq[ChunkedToken] = interval.map(sentenceTokens(_))
 
   def indexTokenFilter(token: Token) = !strippedDeterminers.contains(token.string.toLowerCase)
-  
+
   // returns an (arg1, rel, arg2) tuple of normalized string tokens
   def indexGroupingKey: (String, String, String) = {
 
@@ -89,15 +89,15 @@ class ReVerbExtraction(
 
      (frontendArgKey(arg1Interval), frontendArgKey(relInterval), frontendArgKey(arg2Interval))
   }
-  
+
   def arg1Head: String = {
     getHead(arg1Interval)
   }
-  
+
   def arg2Head: String = {
     getHead(arg2Interval)
   }
-  
+
   private def getHead(argInterval: Interval): String = {
     val cleaned = sentenceTokens(argInterval).filter { token =>
       if (strippedDeterminers.contains(token.string.toLowerCase)) false
@@ -106,7 +106,7 @@ class ReVerbExtraction(
     }
     cleaned.mkString(" ");
   }
-  
+
   private def frontendArgKey(argInterval: Interval): String = {
     // iterate over tokens. Strip them if they are:
     // 1. A stripped determiner
@@ -134,9 +134,9 @@ object ReVerbExtraction extends TabSerializer[ReVerbExtraction] {
   val strippedDeterminers = Set("a", "an", "the", "these", "those", "this", "that", "which", "what")
 
   val modifierTagsToStrip = Set("JJ", "JJR", "JJS", "RB", "RBR", "RBS", "VBG", "PRP$", "WDT", "WP")
-  
+
   val modifiersToKeep = Set("n't", "not", "no", "as", "rarely", "never", "none", "ought", "would", "could", "should", "all")
-  
+
   def chunkedTokensFromLayers(tokens: Seq[String], posTags: Seq[String], chunkTags: Seq[String]): Seq[ChunkedToken] = {
     var currentOffset = 0
     val offsets = for (token <- tokens) yield {
@@ -195,9 +195,9 @@ object ReVerbExtraction extends TabSerializer[ReVerbExtraction] {
   }
 
   private def intervalFromString(str: String): Option[Interval] = {
-    
+
     val endOpen = str.endsWith(")")
-    
+
     val matches = for (s <- numExtractorPattern.findAllIn(str)) yield s
     matches toSeq match {
       case Seq(num1, num2) => {
@@ -262,7 +262,7 @@ private class ReVerbExtractionSerializationProxy(
     // read in pos tags
     val posTags = for (_ <- 1 to numTokens) yield ois.readObject.asInstanceOf[String]
     // read in chunk tags
-    val chunkTags = for (_ <- 1 to numTokens) yield ois.readObject.asInstanceOf[String] 
+    val chunkTags = for (_ <- 1 to numTokens) yield ois.readObject.asInstanceOf[String]
     this.sentenceTokens = ReVerbExtraction.chunkedTokensFromLayers(tokens, posTags, chunkTags).toIndexedSeq
   }
 }

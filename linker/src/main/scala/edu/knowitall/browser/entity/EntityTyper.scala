@@ -11,19 +11,19 @@ class EntityTyper(val fbLookupTable: FbTypeLookup) {
   def this(basePath: String) = this(new FbTypeLookup(basePath+Constants.mainIndexPath+EntityTyper.typeLookupIndex, EntityTyper.fbTypeEnumFile))
 
   /**
-   * mutator method to 
+   * mutator method to
    */
   def typeEntity(link: EntityLink): EntityLink = {
-    
+
     val fbid = link.entity.fbid
 
     val types = fbLookupTable.getTypesForEntity(link.entity.fbid)
-    
+
     link.attachTypes(types)
 
     return link
   }
-  
+
   def typeFbid(fbid: String): Iterable[String] = fbLookupTable.getTypesForEntity(fbid)
 }
 

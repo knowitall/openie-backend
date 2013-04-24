@@ -6,7 +6,7 @@ import edu.knowitall.tool.postag.PostaggedToken
 object HeadPhraseFinder {
   def getHeadPhrase(postagTokens: Seq[PostaggedToken], cwHandler: CrosswikisHandler): String = {
     var headPhrase = postagTokens
-    
+
     // Strip "(DT | CD | JJ | RBS) of" from the beginning.
     if (postagTokens.length >= 3 && postagTokens(1).string == "of") {
       val firstToken = postagTokens(0)
@@ -15,7 +15,7 @@ object HeadPhraseFinder {
         headPhrase = headPhrase.drop(2)
       }
     }
-    
+
     // Strip "(DT)+ JJ of" from the beginning.
     if (postagTokens.length >= 4 && postagTokens(0).isDeterminer) {
       val dtIndex = postagTokens.lastIndexWhere(postagToken => postagToken.isDeterminer)
@@ -24,7 +24,7 @@ object HeadPhraseFinder {
         headPhrase = postagTokens.drop(dtIndex+3)
       }
     }
-    
+
     // Truncate at first punctuation, conjunction, or preposition.
     val truncateIndex = headPhrase.indexWhere(postagToken =>
       postagToken.isPunctuation || postagToken.isConjunction || postagToken.isPreposition
@@ -40,13 +40,13 @@ object HeadPhraseFinder {
     if (lastNounIndex >= 0) {
       headPhrase = headPhrase.take(lastNounIndex + 1)
     }
-    
+
     // Remove determiners and possessive pronouns.
     val filtered = headPhrase.filter { token => !(token.isDeterminer || token.isPossessivePronoun) }
     if (!filtered.isEmpty) {
       headPhrase = filtered
     }
-    
+
     // Check if the phrase is in Crosswikis, stripping off the leading word until one is found. If
     // no phrase is found, return headPhrase.
     var dropIndex = 0

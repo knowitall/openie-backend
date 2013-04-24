@@ -17,7 +17,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     val typer: EntityTyper) {
   private val PAD_SOURCES = 4 // extend source sentences to this
   // number minimum
-  
+
   private var totalLookups = 0
   private var cacheHits = 0
   private var cacheTimeouts = 0
@@ -27,7 +27,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     new CrosswikisCandidateFinder(basePath),
     new EntityTyper(basePath)
   )
-  
+
   /** A default constructor that uses /scratch/browser-freebase/ as the location for its supporting
    * dictionaries */
   def this() = this("/scratch/browser-freebase/")
@@ -36,15 +36,15 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     candidateFinder.linkToFbids(arg)
 
   def getBestEntity(arg: String, sourceSentences: Seq[String]): EntityLink = {
-    
+
     val entity = getBestFbidFromSources(arg, sourceSentences)
     if (entity == null) return null
-    
+
     val typedEntity = typer.typeEntity(entity)
-    
+
     return typedEntity
   }
-  
+
   /**
     * returns null for none! Returns an entity without types attached.
     *
@@ -108,7 +108,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     var bestInlinks = 0
 
     var fbidScoresEmpty = true
-    
+
     val fbidCprobs = HashMap[String, java.lang.Double]();
     for (fbidPair <- fbidPairs) {
       val fbid = fbidPair.one
@@ -151,38 +151,38 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
 }
 
 object EntityLinker {
-  
+
   private val tabSplitter = "\t".r
-  
+
   type Args = Seq[String]
   type Context = Seq[String]
-  
+
   // input format: arg:X	arg:X	sent1	sent2	setn3
   // output format: fbid1	fbid2	fbid3	...
   // where fbidX has 5 columns of name,fbid,score,inlinks,types
   def main(args: Array[String]): Unit = {
-    
+
     var baseDir = CandidateFinder.DefaultBaseDir
     var inputFile = Option.empty[String]
     var outputFile = Option.empty[String]
     var numArgs = 1
-    
+
     val parser = new OptionParser() {
       arg("num_args", "Number of input columns that are arg strings to link, any remaining columns are treated as context sentences.", { str => numArgs = str.toInt })
       opt("baseDir", "The base directory for linker support files. Default:%s".format(CandidateFinder.DefaultBaseDir), { str => baseDir = str })
       opt("inputFile", "An optional input file to read input from, default standard input", { str => inputFile = Some(str) })
       opt("outputFile", "An optional output file to write output to, default standard output", { str => outputFile = Some(str) })
     }
-    
+
     if (!parser.parse(args)) return
-    
+
     val linker = new EntityLinker(baseDir)
-    
+
     def parseInputLine(line: String): (Args, Context) = {
       val split = tabSplitter.split(line)
-      (split.take(numArgs), split.drop(numArgs))      
+      (split.take(numArgs), split.drop(numArgs))
     }
-    
+
     def linkLine(line: String): String = {
       val (args, context) = parseInputLine(line)
       val entities = args.map(arg => (arg, Option(linker.getBestEntity(arg, context))))
@@ -198,16 +198,16 @@ object EntityLinker {
       case Some(filename) => Source.fromFile(filename)
       case None => Source.stdin
     }
-    
+
     def getOutput: PrintStream = outputFile match {
       case Some(filename) => new PrintStream(new FileOutputStream(filename))
       case None => System.out
     }
-    
+
     using(getInput) { input =>
-      using(getOutput) { output => 
+      using(getOutput) { output =>
         def printLine(line: String) = output.println(line)
-        getInput.getLines map linkLine foreach printLine 
+        getInput.getLines map linkLine foreach printLine
       }
     }
   }

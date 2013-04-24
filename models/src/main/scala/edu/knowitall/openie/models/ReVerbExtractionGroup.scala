@@ -13,7 +13,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
   type REG = ExtractionGroup[ReVerbExtraction]
 
   val df = new java.text.DecimalFormat("#.###")
-  
+
   val tabDelimitedFormatSpec: List[(String, REG => String)] = List(
     "arg1Norm" -> (_.arg1.norm),
     "relNorm" -> (_.rel.norm),
@@ -117,7 +117,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
 
     if (groups.size == 0) throw new IllegalArgumentException("can't merge zero groups")
     if (groups.size == 1) return groups.head
-    
+
     val entityGroup = groups.find(g=>g.arg1.entity.isDefined || g.arg2.entity.isDefined).getOrElse(groups.head)
 
     val allInstances = groups.flatMap(_.instances)
@@ -180,14 +180,14 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
       group.arg2.types,
       group.instances)
   }
-  
-  
+
+
 }
 
 private object ReVerbInstanceSerializer extends TabSerializer[Instance[ReVerbExtraction]] {
 
   import ReVerbExtractionGroup.df
-  
+
   val tabDelimitedFormatSpec: List[(String, Instance[ReVerbExtraction] => String)] = List(
     "extr" -> (inst => ReVerbExtraction.serializeToString(inst.extraction)),
     "corpus" -> (inst => inst.corpus),

@@ -29,22 +29,22 @@ import scala.io.Source
 import scopt.OptionParser
 
 class FbTypeLookup(val searcher: IndexSearcher, val typeIntToTypeStringMap: Map[Int, String]) {
-  
+
   private var timeouts = 0
-  
+
   import FbTypeLookup.badTypes
   import FbTypeLookup.memcachedTimeoutMillis
-  
+
   // typeIntToTypeStringMap could probably just be an indexedSeq for a slight performance gain,
   // but then you have to deal with the chance that some int isn't in the enumeration separately.
-  
-  def this(indexPath: String, typeEnumFile: String) = 
+
+  def this(indexPath: String, typeEnumFile: String) =
     this(FbTypeLookup.loadIndex(indexPath), FbTypeLookup.loadEnumFile(typeEnumFile))
 
   def getTypesForEntity(entityFbid: String): List[String] = {
     getOrElseUpdateCache(entityFbid, getTypesForEntityUncached _)
   }
-    
+
   /** please strip off the /m/ first. */
   private def getTypesForEntityUncached(entityFbid: String): List[String] = {
      val query = new TermQuery(new Term("fbid", entityFbid))
@@ -55,15 +55,15 @@ class FbTypeLookup(val searcher: IndexSearcher, val typeIntToTypeStringMap: Map[
        val typeEnumInts = doc.get("types").split(",").filter(!_.isEmpty).map(_.toInt)
        typeEnumInts.flatMap(typeIntToTypeStringMap.get(_))
      }
-     
+
      rawTypes.filter(!badTypes.contains(_)).toList
   }
-  
+
   private def getOrElseUpdateCache(entityFbid: String, updater: String => List[String]): List[String] = {
 
     return updater(entityFbid)
   }
-  
+
   def memcachedKey(fbid: String): String = {
     "Typelookup(%s)".format(fbid)
   }
@@ -86,15 +86,15 @@ object FbTypeLookup {
 import FbTypeLookupGenerator.tabRegex
 
   private val memcachedTimeoutMillis = 20
-  
+
   private val badTypes = Set("Topic")
-  
+
   def loadIndex(path: String): IndexSearcher = {
     val dir = FSDirectory.open(new File(path))
     val indexReader = IndexReader.open(dir)
     new IndexSearcher(indexReader)
   }
-  
+
   def loadEnumFile(enumFile: String): SortedMap[Int, String] = {
     System.err.println("Loading type enumeration...")
     using(Source.fromInputStream(this.getClass.getClassLoader.getResource(enumFile).openStream())) { source =>
@@ -117,11 +117,11 @@ import FbTypeLookupGenerator.tabRegex
       arg("typeEnumFile", "output file to contain type enumeration", { str => enumFile = str })
     }
     if (!parser.parse(args)) return
-    
+
     val lookup = new FbTypeLookup(entityFile, enumFile)
 
     val fbids = Seq("03gss12", "0260w54", "0260xrp", "02610rn", "02610t0")
-    
+
     fbids.foreach(line => println("%s, %s".format(line, lookup.getTypesForEntity(line))))
   }
 }
@@ -186,22 +186,22 @@ object FbTypeLookupGenerator {
     println("Reading file...")
 
     // convert maps to lists of entry pairs and serialize to disk.
-    
+
     val indexWriter = getIndexWriter(entityToTypeNumFile)
     parsedLines.foreach { parsedLine =>
 
       val typeInts = parsedLine.typeStrings.map { typeString =>
         typesToInts.getOrElseUpdate(typeString, { val next = nextTypeInt; nextTypeInt += 1; next })
       }.sorted
-      
+
       val enumInts = new ArrayList(typeInts)
       val fbPair = FbPair(parsedLine.entityFbid, enumInts)
-      
+
       indexWriter.addDocument(fbPair.toDocument)
       linesDone += 1;
       if (linesDone % 100000 == 0) System.err.println("Lines done: %s".format(linesDone))
     }
-    
+
     indexWriter.close()
 
     val enumWriter = new PrintWriter(typeEnumFile)
@@ -216,7 +216,7 @@ object FbTypeLookupGenerator {
 
     println("Finished.")
   }
-  
+
   private def getIndexWriter(path: String): IndexWriter = {
     val analyzer = new WhitespaceAnalyzer(Version.LUCENE_36)
     val config = new IndexWriterConfig(Version.LUCENE_36, analyzer)

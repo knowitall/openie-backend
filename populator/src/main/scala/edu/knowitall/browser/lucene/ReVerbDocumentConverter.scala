@@ -31,7 +31,7 @@ object ReVerbDocumentConverter {
     doc.add(new Field("arg1Norm", group.arg1.norm, Field.Store.YES, Field.Index.ANALYZED_NO_NORMS));
     doc.add(new Field("relNorm", group.rel.norm, Field.Store.YES, Field.Index.ANALYZED_NO_NORMS));
     doc.add(new Field("arg2Norm", group.arg2.norm, Field.Store.YES, Field.Index.ANALYZED_NO_NORMS));
-    
+
     // add searchable field for source corpora
     doc.add(new Field("corpora", group.corpora.mkString(" "), Field.Store.NO, Field.Index.ANALYZED_NO_NORMS))
 
@@ -69,7 +69,7 @@ object ReVerbDocumentConverter {
     ///
     /// NON-INDEXED FIELDS
     ///
-    
+
     // add a Numeric field for the number of instances in this group
     val sizeField = new NumericField("size", Field.Store.YES, true).setIntValue(group.instances.size)
     doc.add(sizeField)

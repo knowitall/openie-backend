@@ -11,11 +11,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import scala.actors.threadpool.Arrays;
-import edu.knowitall.browser.util.SortedFileMap;
 
-import com.google.common.collect.Lists;
 import com.google.common.base.Function;
-import com.google.common.base.Functions;
+import com.google.common.collect.Lists;
+
+import edu.knowitall.browser.util.SortedFileMap;
 
 /**
  * A supertype for candidate generators derived from Tom's original freebase linker.

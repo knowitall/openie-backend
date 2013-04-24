@@ -195,6 +195,8 @@ public class SortedFileMap {
             }
             
         }
+        
+        inputReader.close();
         System.out.println("Total failures: " + failed);
     }
     

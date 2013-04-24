@@ -6,7 +6,7 @@ import AssemblyKeys._
 
 object NlpToolsBuild extends Build {
   // settings
-  val buildOrganization = "edu.washington.cs.knowitall.openie.backend"
+  val buildOrganization = "edu.washington.cs.knowitall.openie"
   val buildVersion = "1.0.0-SNAPSHOT"
   val buildScalaVersions = Seq("2.9.3")
 
@@ -24,7 +24,7 @@ object NlpToolsBuild extends Build {
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     publish := { },
     publishLocal := { }
-  ) aggregate(models, backend, hadoop, linker)
+  ) aggregate(models, populator, hadoop, linker)
 
   // parent build definition
   val buildSettings = Defaults.defaultSettings ++ Seq (
@@ -48,7 +48,7 @@ object NlpToolsBuild extends Build {
     )
   ))
 
-  lazy val backend = Project(id = "openie-backend", base = file("backend"), settings = buildSettings ++ Seq(
+  lazy val populator = Project(id = "openie-populator", base = file("populator"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
       "org.apache.lucene" % "lucene-core" % "3.6.1",
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
@@ -73,7 +73,7 @@ object NlpToolsBuild extends Build {
     ),
     resolvers ++= Seq("nicta" at "http://nicta.github.com/scoobi/releases",
       "cloudera" at "https://repository.cloudera.com/content/repositories/releases")
-  )) dependsOn(backend, linker)
+  )) dependsOn(populator, linker)
 
   lazy val linker = Project(id = "openie-linker", base = file("linker"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
@@ -92,5 +92,5 @@ object NlpToolsBuild extends Build {
       "org.scalatest" % "scalatest_2.9.2" % "1.7.1",
       "org.apache.derby" % "derby" % "10.9.1.0"
     )
-  )) dependsOn(backend)
+  )) dependsOn(models)
 }

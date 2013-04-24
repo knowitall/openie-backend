@@ -25,10 +25,10 @@ import org.slf4j.LoggerFactory
 class IndexBenchmarker(val fetcher: GroupFetcher, numQueries: Int) {
 
   def println(str: String):Unit = { System.out.println("Benchmark: %s".format(str)) }
-  
+
   abstract class SomeTime { def time: Long }
   case class SearchTime(val time: Long) extends SomeTime { override def toString = Seconds.format(time) }
-  
+
   import IndexBenchmarker.{ fieldMasks, commonNouns, commonVerbs }
 
   /** Runs the benchmark queries over the specified "corpus" */
@@ -49,15 +49,15 @@ class IndexBenchmarker(val fetcher: GroupFetcher, numQueries: Int) {
   def printResults: Unit = {
     val resultsIterator = runResults()
     val results = resultsIterator.map { case (querySpec, resultSet, searchTime) =>
-      
+
       val totalHits = resultSet match{
         case Success(_) => resultSet.numGroups
         case Limited(_, hits) => hits
         case Timeout(_, hits) => hits
       }
-      
+
       def resultString(prefix:String) = "%s\t%d\t%d\t%d\t%s".format(searchTime, resultSet.numGroups, resultSet.numInstances, totalHits, prefix+queryTitle(querySpec))
-      
+
       resultSet match {
         case Success(_) => println(resultString("SUCCESS"))
         case Limited(_, _) => println(resultString("LIMITED"))
@@ -109,9 +109,9 @@ class IndexBenchmarker(val fetcher: GroupFetcher, numQueries: Int) {
 }
 
 object IndexBenchmarker {
-  
+
   import edu.knowitall.common.Resource.using
-  
+
   private val COMMON_NOUNS = "/common-nouns.txt"
 
   private val COMMON_VERBS = "/common-verbs.txt"
@@ -119,7 +119,7 @@ object IndexBenchmarker {
   private lazy val commonNouns: IndexedSeq[String] = using(Source.fromInputStream(this.getClass.getResource(COMMON_NOUNS).openStream)) { source =>
     source.getLines.toList.toIndexedSeq
   }
-  
+
   private lazy val commonVerbs: IndexedSeq[String] = using(Source.fromInputStream(this.getClass.getResource(COMMON_VERBS).openStream)) { source =>
     source.getLines.toList.toIndexedSeq
   }
@@ -139,23 +139,23 @@ object IndexBenchmarker {
     var timeout = -1
     var maxGroups = -1
     var maxInstances = -1
-    
+
     val parser = new OptionParser() {
       arg("indexPath", "Path to single index", {str=>fetcherIndexPath=str})
       arg("numQueries", "Number of random queries to run (make it divisible by 6)", {str=>numQueries=str.toInt})
-      
+
       arg("maxGroups", "maximum groups", {str=>maxGroups=str.toInt})
       arg("maxInstances", "maximum instances", {str=>maxInstances=str.toInt})
-      
+
       arg("timeout", "timeout in milliseconds", {str=>timeout=str.toInt})
     }
-    
+
     if (!parser.parse(args)) return
-    
+
     new IndexBenchmarker(new ExtractionGroupFetcher(fetcherIndexPath, maxGroups, maxInstances, timeout), numQueries).printResults
   }
 }
-  
+
 object ParallelIndexBenchmarker {
 
   import IndexBenchmarker.COMMON_NOUNS
@@ -169,19 +169,19 @@ object ParallelIndexBenchmarker {
     var timeout = -1
     var maxGroups = -1
     var maxInstances = -1
-    
+
     val parser = new OptionParser() {
       arg("indexPaths", "Paths to mutliple indexes, colon delimited", {str=>fetcherIndexPaths=str.split(":")})
       arg("numQueries", "Number of random queries to run (make it divisible by 6)", {str=>numQueries=str.toInt})
-      
+
       arg("maxGroups", "maximum groups", {str=>maxGroups=str.toInt})
       arg("maxInstances", "maximum instances", {str=>maxInstances=str.toInt})
-      
+
       arg("timeout", "timeout in milliseconds", {str=>timeout=str.toInt})
     }
-    
+
     if (!parser.parse(args)) return
-    
+
     new IndexBenchmarker(new ParallelExtractionGroupFetcher(fetcherIndexPaths, maxGroups, maxInstances, timeout), numQueries).printResults
   }
 }

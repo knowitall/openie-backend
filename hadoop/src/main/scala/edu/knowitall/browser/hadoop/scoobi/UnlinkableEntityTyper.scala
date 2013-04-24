@@ -31,7 +31,7 @@ case class TyperSettings(
   val keepRelString: Boolean = false, // Carry around the original relation string while predicting types? (only needed for debugging)
   val maxEntitiesReadPerRel: Int = 5000, // Read into memory at most this many entities per relation
   val maxEntitiesWritePerRel: Int = 150, // Write to intermediate output at most this many entities per relation (a uniform sample of entities read)
-  val maxRelInfosReadPerArg: Int = 20000, // Read into memory at most this many RelInfos per argument 
+  val maxRelInfosReadPerArg: Int = 20000, // Read into memory at most this many RelInfos per argument
   val maxArgsPerRelInfo: Int = 1000) // Duplicate each relInfo at most this many times
 
 // Wrapper superclass for input records to unlinkable typer.
@@ -114,7 +114,7 @@ class UnlinkableEntityTyper[T <: ExtractionTuple](val settings: TyperSettings, v
   def calculateRelWeightUntimed(entities: IndexedSeq[EntityInfo]): Double = {
 
     if (entities.size <= 1) return 0.0
-    // now we perform the summation tom describes 
+    // now we perform the summation tom describes
     // the first map produces the terms of the sum
     val terms = allPairs(entities) map {
       case (info1, info2) =>
@@ -124,7 +124,7 @@ class UnlinkableEntityTyper[T <: ExtractionTuple](val settings: TyperSettings, v
         // do types1 and types2 intersect? Computing full intersection is unnecessary.
         if (types1.exists(types2.contains(_))) 1.0 else 0.0
     }
-    // we sum the terms and then apply tom's denominator 
+    // we sum the terms and then apply tom's denominator
     val domainSize = entities.size.toDouble
     val denominator = (domainSize * (domainSize - 1.0)) / 2.0
     terms.sum / denominator
@@ -168,11 +168,11 @@ class UnlinkableEntityTyper[T <: ExtractionTuple](val settings: TyperSettings, v
   def phaseOne(rawRegStrings: DList[String]): DList[(String, String)] = {
 
     // (relation, REG w/ relation) pairs
-    // first, we want to group by relation in order to compute relation weight and entity range. 
+    // first, we want to group by relation in order to compute relation weight and entity range.
     val relEntityPairs = rawRegStrings flatMap relationEntityKv
 
     // (relation, Iterable[REG w/ relation]), e.g. the above, grouped by the first element.
-    // begin the reduce phase by calling groupByKey 
+    // begin the reduce phase by calling groupByKey
     def relEntityGrouped = relEntityPairs.groupByKey
 
     // (relation, RelInfo) pairs
@@ -185,7 +185,7 @@ class UnlinkableEntityTyper[T <: ExtractionTuple](val settings: TyperSettings, v
 
     val relArgPairs = rawRegStrings flatMap relationArgKv
 
-    // (relation, Singleton[RelInfo], Groups of REG w/ relation) 
+    // (relation, Singleton[RelInfo], Groups of REG w/ relation)
     // groups of relInfoPairs in the result are always singleton iterables, since there is only one relInfo per rel.
     val relInfoRelArgsGrouped = Relational.coGroup(relInfoPairs, relArgPairs)
 
@@ -195,7 +195,7 @@ class UnlinkableEntityTyper[T <: ExtractionTuple](val settings: TyperSettings, v
       relInfoRelArgsGrouped.flatMap {
         case (relString, (relInfoSingleton, relArgStrings)) =>
           val relInfoStringOpt = relInfoSingleton.headOption
-          // attach relInfo to every argRelReg 
+          // attach relInfo to every argRelReg
           relInfoStringOpt match {
             case Some(relInfoString) => {
               relArgStrings.take(maxArgsPerRelInfo).toSeq.distinct.map { argString =>

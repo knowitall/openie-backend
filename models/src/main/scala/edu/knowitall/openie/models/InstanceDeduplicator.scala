@@ -29,7 +29,7 @@ object InstanceDeduplicator {
 
     // we keep a sentence only if it contributes a new token, and only if it doesn't repeat too many
     // tokens we've already seen in positions we've seen them in.
-    
+
     // hack - give wiki extractions a slightly higher confidence in order to prefer while deduping
     def hackConf(inst: Instance[ReVerbExtraction]): Double = -(inst.confidence + (if (inst.corpus.equals("wiki")) 0.1 else 0.0))
 

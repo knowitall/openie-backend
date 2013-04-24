@@ -16,25 +16,23 @@ import edu.knowitall.openie.models.ReVerbExtractionGroup
 
 import scopt.OptionParser
 
-
-
 /**
  * An index builder creates new indexes and appends to existing indexes, but does not modify existing documents within an index.
  */
 class IndexBuilder(
-    val indexWriter: IndexWriter,
-    val inputLineConverter: String => Iterable[Document],
-    val linesPerCommit: Int) {
+  val indexWriter: IndexWriter,
+  val inputLineConverter: String => Iterable[Document],
+  val linesPerCommit: Int) {
 
   var linesIndexed = 0
   var groupsIndexed = 0
 
   private def indexLines(input: Iterable[String]): Unit = {
 
-    input.flatMap { line => 
-      
+    input.flatMap { line =>
+
       linesIndexed += 1
-      inputLineConverter(line) 
+      inputLineConverter(line)
     }.foreach { doc =>
       groupsIndexed += 1
       indexWriter.addDocument(doc)
@@ -47,7 +45,6 @@ class IndexBuilder(
     indexWriter.commit
     indexWriter.message("Lines indexed: %s, Groups indexed: %s".format(linesIndexed.toString, groupsIndexed.toString))
   }
-
 
   def indexAll(input: Iterator[String]): Unit = {
 
@@ -76,7 +73,7 @@ object ReVerbIndexBuilder {
     try {
       val groupOption = ReVerbExtractionGroup.deserializeFromString(line)
       groupOption match {
-        case Some(group) => group.reNormalize.map(newGroup=>ReVerbDocumentConverter.toDocument(newGroup))
+        case Some(group) => group.reNormalize.map(newGroup => ReVerbDocumentConverter.toDocument(newGroup))
         case None => Set.empty
       }
     } catch {
@@ -86,7 +83,7 @@ object ReVerbIndexBuilder {
       }
     }
   }
-  
+
   private def standardInputLineConverter(line: String): Iterable[Document] = {
     val groupOption = ReVerbExtractionGroup.deserializeFromString(line)
     groupOption.map(group => ReVerbDocumentConverter.toDocument(group))
@@ -96,7 +93,7 @@ object ReVerbIndexBuilder {
     case true => regroupingInputLineConverter _
     case false => standardInputLineConverter _
   }
-  
+
   def main(args: Array[String]): Unit = {
 
     var indexPath = ""
@@ -116,7 +113,7 @@ object ReVerbIndexBuilder {
     indexWriter.setInfoStream(System.err)
 
     val lineConverter = inputLineConverter(regroup)
-    
+
     val indexBuilder = new IndexBuilder(indexWriter, lineConverter, linesPerCommit)
 
     indexBuilder.indexAll(Source.fromInputStream(System.in).getLines)
@@ -124,4 +121,3 @@ object ReVerbIndexBuilder {
     indexWriter.close
   }
 }
-
