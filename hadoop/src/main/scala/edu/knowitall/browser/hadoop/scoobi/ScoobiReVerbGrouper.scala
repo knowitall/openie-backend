@@ -94,36 +94,26 @@ class ScoobiReVerbGrouper(val stemmer: TaggedStemmer, val corpus: String) {
 }
 
 object ReVerbGrouperStaticVars {
-  val grouperCache = new mutable.HashMap[Thread, ScoobiReVerbGrouper] with mutable.SynchronizedMap[Thread, ScoobiReVerbGrouper]
-  val max_group_size = 40000
+  final val max_group_size = 40000
 }
 
 object ScoobiReVerbGrouper extends ScoobiApp {
   import ReVerbGrouperStaticVars._
 
-  var calls = 0L
-
   /** extrs --> grouped by normalization key */
   def groupExtractions(extrs: DList[String], corpus: String): DList[String] = {
-
+    lazy val grouper = new ScoobiReVerbGrouper(TaggedStemmer.instance, corpus)
     val keyValuePair: DList[(String, String)] = extrs.flatMap { line =>
-      calls += 1
-      if (calls % 10000 == 0) System.err.println("Grouper Cache size: " + grouperCache.size)
-      val grouper = grouperCache.getOrElseUpdate(Thread.currentThread, new ScoobiReVerbGrouper(TaggedStemmer.instance, corpus))
       grouper.getKeyValuePair(line)
     }
 
     keyValuePair.groupByKey.flatMap {
       case (key, sources) =>
-        calls += 1
-        if (calls % 10000 == 0) System.err.println("Grouper Cache size: " + grouperCache.size)
-        val grouper = grouperCache.getOrElseUpdate(Thread.currentThread, new ScoobiReVerbGrouper(TaggedStemmer.instance, corpus))
         grouper.processGroup(key, sources) match {
           case Some(group) => Some(ReVerbExtractionGroup.serializeToString(group))
           case None => None
         }
     }
-
   }
 
   def run() = {
