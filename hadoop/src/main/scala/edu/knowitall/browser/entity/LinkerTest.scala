@@ -23,7 +23,7 @@ class LinkerTest {
     val lostEvidence = new mutable.HashSet[Link]
     val newEvidence = new mutable.HashSet[Link]
 
-    def register(beforePart: ExtractionPart, afterPart: ExtractionPart): Unit = {
+    def register(beforePart: ExtractionArgument, afterPart: ExtractionArgument): Unit = {
       val bef = beforePart.entity.map(ent => Link(beforePart.norm, ent))
       val aft = afterPart.entity.map(ent => Link(afterPart.norm, ent))
       if (bef.isDefined) beforeLinks += 1

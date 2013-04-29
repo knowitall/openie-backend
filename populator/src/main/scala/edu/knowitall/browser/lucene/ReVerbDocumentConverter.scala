@@ -66,6 +66,14 @@ object ReVerbDocumentConverter {
       doc.add(new Field("arg2TypeDomains", group.arg2.types.toSeq.map(_.domain.toLowerCase).mkString(" "), Field.Store.YES, Field.Index.NO))
     }
 
+    // if relation has a link, add a field for it
+    group.rel.link match {
+      case Some(link) => {
+        doc.add(new Field("relLink", link, Field.Store.YES, Field.Index.ANALYZED_NO_NORMS))
+      }
+      case None =>
+    }
+
     ///
     /// NON-INDEXED FIELDS
     ///
@@ -138,6 +146,11 @@ object ReVerbDocumentConverter {
       case _ => Set.empty[FreeBaseType]
     }
 
+    val relLink = fields.get("relLink") match {
+      case Some(link) => Some(link.stringValue)
+      case _ => None
+    }
+
     val byteInput = new ByteArrayInputStream(fields("instances").getBinaryValue())
     val objectInput = new ObjectInputStream(byteInput)
     val instances = objectInput.readObject().asInstanceOf[Stream[Instance[ReVerbExtraction]]]
@@ -150,6 +163,7 @@ object ReVerbDocumentConverter {
       arg2Entity,
       arg1Types,
       arg2Types,
+      relLink,
       instances.toSet)
 
     desGroup

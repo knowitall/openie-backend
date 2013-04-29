@@ -22,6 +22,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
     "arg2Entity" -> (e => serializeEntity(e.arg2.entity)),
     "arg1Types" -> (e => serializeTypeList(e.arg1.types)),
     "arg2Types" -> (e => serializeTypeList(e.arg2.types)),
+    "relLink" -> (_.rel.link.getOrElse("X")),
     "instances" -> (e => e.instances.iterator.map(t => ReVerbInstanceSerializer.serializeToString(t)).mkString("\t")))
 
   override def deserializeFromTokens(tokens: Seq[String]): Option[ExtractionGroup[ReVerbExtraction]] = {
@@ -40,6 +41,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
     val arg2Entity = if (split(4).equals("X")) None else deserializeEntity(split(4))
     val arg1Types = if (split(5).equals("X")) Set.empty[FreeBaseType] else deserializeTypeList(split(5))
     val arg2Types = if (split(6).equals("X")) Set.empty[FreeBaseType] else deserializeTypeList(split(6))
+    val relLink = if (split(7).equals("X")) None else Some(split(7))
 
     var rest = tokens.drop(tabDelimitedFormatSpec.length - 1)
     var instances: List[Instance[ReVerbExtraction]] = Nil
@@ -53,7 +55,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
       System.err.println("Error: Empty set of instances!")
       None
     } else {
-      val newGroup = new ExtractionGroup(arg1Norm, relNorm, arg2Norm, arg1Entity, arg2Entity, arg1Types, arg2Types, instances.toSet)
+      val newGroup = new ExtractionGroup(arg1Norm, relNorm, arg2Norm, arg1Entity, arg2Entity, arg1Types, arg2Types, relLink, instances.toSet)
       Some(newGroup)
     }
   }
@@ -61,7 +63,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
   private val commaEscapeString = Pattern.compile(Pattern.quote("|/|")) // something not likely to occur
   private val commaString = Pattern.compile(",")
 
-  private[this] def serializeEntity(opt: Option[FreeBaseEntity]): String = opt match {
+  def serializeEntity(opt: Option[FreeBaseEntity]): String = opt match {
 
     case Some(t) => {
       val escapedName = commaString.matcher(t.name).replaceAll("|/|")
@@ -71,7 +73,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
   }
 
   // assumes that input represents an entity that is present, not empty
-  private[this] def deserializeEntity(input: String): Option[FreeBaseEntity] = {
+  def deserializeEntity(input: String): Option[FreeBaseEntity] = {
 
     def fail = { System.err.println("Error parsing entity: " + input); None }
 
@@ -84,13 +86,13 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
     }
   }
 
-  private def serializeTypeList(types: Iterable[FreeBaseType]): String = {
+  def serializeTypeList(types: Iterable[FreeBaseType]): String = {
 
     if (types.isEmpty) "X" else types.map(_.name).mkString(",")
   }
 
   // assumes that input represents a non-empty list
-  private def deserializeTypeList(input: String): Set[FreeBaseType] = {
+  def deserializeTypeList(input: String): Set[FreeBaseType] = {
 
     val split = input.split(",").filter(str => !str.isEmpty && !str.equals("Topic")) // I have no idea how "Topic" got in as a type
     val parsed = split.flatMap(str => FreeBaseType.parse(str.toLowerCase))
@@ -118,7 +120,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
     if (groups.size == 0) throw new IllegalArgumentException("can't merge zero groups")
     if (groups.size == 1) return groups.head
 
-    val entityGroup = groups.find(g=>g.arg1.entity.isDefined || g.arg2.entity.isDefined).getOrElse(groups.head)
+    val linkGroup = groups.find(g=>g.arg1.hasEntity || g.arg2.hasEntity || g.rel.hasLink).getOrElse(groups.head)
 
     val allInstances = groups.flatMap(_.instances)
     val head = groups.head
@@ -126,10 +128,11 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
       key._1,
       key._2,
       key._3,
-      entityGroup.arg1.entity,
-      entityGroup.arg2.entity,
-      entityGroup.arg1.types,
-      entityGroup.arg2.types,
+      linkGroup.arg1.entity,
+      linkGroup.arg2.entity,
+      linkGroup.arg1.types,
+      linkGroup.arg2.types,
+      linkGroup.rel.link,
       allInstances.toSet)
   }
 
@@ -178,13 +181,14 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
       group.arg2.entity,
       group.arg1.types,
       group.arg2.types,
+      group.rel.link,
       group.instances)
   }
 
 
 }
 
-private object ReVerbInstanceSerializer extends TabSerializer[Instance[ReVerbExtraction]] {
+object ReVerbInstanceSerializer extends TabSerializer[Instance[ReVerbExtraction]] {
 
   import ReVerbExtractionGroup.df
 
