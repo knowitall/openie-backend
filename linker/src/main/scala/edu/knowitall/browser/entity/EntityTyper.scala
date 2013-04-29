@@ -1,5 +1,7 @@
 package edu.knowitall.browser.entity
 
+import java.io.File
+
 import edu.knowitall.browser.entity.util.FbTypeLookup
 import scala.collection.JavaConversions.seqAsJavaList
 
@@ -8,7 +10,7 @@ import scala.collection.JavaConversions.seqAsJavaList
   */
 class EntityTyper(val fbLookupTable: FbTypeLookup) {
 
-  def this(basePath: String) = this(new FbTypeLookup(basePath+Constants.mainIndexPath+EntityTyper.typeLookupIndex, EntityTyper.fbTypeEnumFile))
+  def this(basePath: String) = this(new FbTypeLookup(new File(basePath+Constants.mainIndexPath+EntityTyper.typeLookupIndex), EntityTyper.fbTypeEnumFile))
 
   /**
    * mutator method to

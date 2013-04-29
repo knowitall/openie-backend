@@ -32,6 +32,7 @@ object NlpToolsBuild extends Build {
     version      := buildVersion,
     crossScalaVersions := buildScalaVersions,
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
+    javacOptions ++= Seq("-source", "1.6", "-target", "1.6"),
     libraryDependencies ++= Seq(junit % "test", specs2 % "test", scalatest % "test"),
     resolvers ++= Seq(
       "knowitall" at "http://knowitall.cs.washington.edu/maven2",
@@ -51,6 +52,8 @@ object NlpToolsBuild extends Build {
   lazy val populator = Project(id = "openie-populator", base = file("populator"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
       "org.apache.lucene" % "lucene-core" % "3.6.1",
+      "org.apache.solr" % "solr-solrj" % "4.2.1",
+      "net.liftweb" % "lift-json_2.9.2" % "2.5-RC5",
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion,
       "com.google.guava" % "guava" % "14.0.1",
@@ -87,7 +90,7 @@ object NlpToolsBuild extends Build {
   lazy val linker = Project(id = "openie-linker", base = file("linker"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
       "edu.washington.cs.knowitall" % "reverb-core" % "1.4.0",
-      nlptoolsPackage % "nlptools-core_2.9.2" % "2.3.1-SNAPSHOT",
+      nlptoolsPackage % "nlptools-core_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion,
       "org.apache.lucene" % "lucene-core" % "3.0.3",

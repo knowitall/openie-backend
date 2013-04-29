@@ -38,8 +38,8 @@ class FbTypeLookup(val searcher: IndexSearcher, val typeIntToTypeStringMap: Map[
   // typeIntToTypeStringMap could probably just be an indexedSeq for a slight performance gain,
   // but then you have to deal with the chance that some int isn't in the enumeration separately.
 
-  def this(indexPath: String, typeEnumFile: String) =
-    this(FbTypeLookup.loadIndex(indexPath), FbTypeLookup.loadEnumFile(typeEnumFile))
+  def this(indexFile: File, typeEnumFile: String) =
+    this(FbTypeLookup.loadIndex(indexFile), FbTypeLookup.loadEnumFile(typeEnumFile))
 
   def getTypesForEntity(entityFbid: String): List[String] = {
     getOrElseUpdateCache(entityFbid, getTypesForEntityUncached _)
@@ -89,15 +89,15 @@ import FbTypeLookupGenerator.tabRegex
 
   private val badTypes = Set("Topic")
 
-  def loadIndex(path: String): IndexSearcher = {
-    val dir = FSDirectory.open(new File(path))
+  def loadIndex(file: File): IndexSearcher = {
+    val dir = FSDirectory.open(file)
     val indexReader = IndexReader.open(dir)
     new IndexSearcher(indexReader)
   }
 
   def loadEnumFile(enumFile: String): SortedMap[Int, String] = {
     System.err.println("Loading type enumeration...")
-    using(Source.fromInputStream(this.getClass.getClassLoader.getResource(enumFile).openStream())) { source =>
+    using(Source.fromInputStream(Source.fromFile(enumFile))) { source =>
       val elements = source.getLines.flatMap { line =>
         tabRegex.split(line) match {
           case Array(typeInt, typeString, _*) => Some((typeInt.toInt, typeString))
@@ -109,11 +109,15 @@ import FbTypeLookupGenerator.tabRegex
   }
 
   def main(args: Array[String]): Unit = {
-    var entityFile = ""
-    var enumFile = ""
+    var entityFile: File = null
+    var enumFile: String = null
     val parser = new OptionParser() {
 
-      arg("entityToTypeNumFile", "output file to contain entity to type enum data", { str => entityFile = str })
+      arg("entityToTypeNumFile", "output file to contain entity to type enum data", { str =>
+        val file = new File(str)
+        require(file.exists, "file does not exists: " + str)
+        entityFile = file
+      })
       arg("typeEnumFile", "output file to contain type enumeration", { str => enumFile = str })
     }
     if (!parser.parse(args)) return
