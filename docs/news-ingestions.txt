@@ -1,0 +1,107 @@
+News Ingestion Documentation
+by Robert Bart
+
+-- Introduction/Overview
+
+At a high level, the news ingestion system is a simple process
+that reads text from recent news articles, runs reverb over
+that text, and inserts the resulting extractions into
+an existing index of extractions. 
+
+At a lower level, the system is more complicated, and relies on
+several modules in order to do its job. Cron-jobs invoke the
+ingestion process on a daily basis. Each time the job runs,
+the following steps are performed:
+
+1. News is scraped from a variety of sites (e.g. Yahoo news, Google news) 
+and placed in a raw form under /scratch/newsdata_final/.
+2. ReVerb is run over the scraped news, and extractions are written
+to /scratch/newsdata_final/extracted_data in a JSON format.
+3. The JSON extractions are converted to serialized ReVerbExtraction
+objects,
+   i.  Ingested into HDFS, and also
+   ii. Ingested into the index.
+
+-- Code location:
+The code that performs news ingestion is located in David Jung's
+NewsScraper project, and in the browser-hadoop project on RV.
+news-scraper: https://github.com/xdavidjung/NewsScraper.git
+browser-hadoop: ssh://rv.cs/home/knowall/repo/git/scala/browser-hadoop.git
+
+-- Code Overview
+The code that scrapes news from various news sites is located under
+the "news-scraper" subfolder of the NewsScraper project, and
+code that performs the JSON to ReVerbExtraction conversion is 
+located under the "news-converter" folder. This conversion
+code builds to a single assembly "converter.jar".
+
+The code that peforms the ingestion into HDFS and Indexes is located
+in the browser-hadoop project under the 
+edu.washington.cs.knowitall.browser.lucene package. Here is an overview
+of the source files in that package:
+
+IndexModifier
+  input: ReVerbExtractions, and an index to add them to.
+  output: None (modifies the index in place)
+
+ParallelIndexModifier
+  input: ReVerbExtractions via stdin, indexes to add to via CL arg.
+  output: None, modifies indexes in place.
+  Notes: Main program for adding ReVerbExtractions to an index.
+  
+Ingester
+  input: 
+    path to indexes to modify
+    path to converter.jar (see NewsScraper project)
+    remote host where JSON extractions are located (e.g. rv-n14)
+    directory on remote host where JSON extractions are located (e.g. /scratch/newsdata_final/extracted_data)
+    hdfs directory for converted ReVerbExtractionss
+    path to ssh key to use when accessing remote host
+    corpus identifier to use in ReVerbExtractionGroups, e.g. "news"
+	
+	Notes: This complicated process ties together all of the components into a single 
+	command-line program, meant to be run from a crontab. An example of such a crontab
+	might be:
+	
+24 2 * * * java -jar /home/rbart/source/ingester-cron/browser-hadoop-0.0.1-SNAPSHOT-jar-with-dependencies.jar /scratch/common/openie-demo/index-1.0.4:/scratch2/common/openie-demo/index-1.0.4:/scratch3/common/openie-demo/index-1.0.4:/scratch4/common/openie-demo/index-1.0.4 /home/rbart/news-converter.jar rv-n14 /scratch/newsdata_final/extracted_data news-extractions /home/rbart/.ssh/rbart_rsa news &> /home/rbart/source/ingester-cron/logs/`date +\%Y-\%m-\%d`.txt
+
+-- Technical notes:
+1. The main reason that data is copied into HDFS is to make it available
+for future Hadoop processes. For example, it might be a good idea to re-group
+ingested news periodically into the larger corpus of clueweb data, and
+ to run the linker over the data.
+2. Ingester makes a lazy attempt to update entity links on extraction groups
+that it ingests, in such a way that REGs are only re-linked some of the time,
+but also so that all REGs should eventually get their links updated over a long
+period of news ingestion. However, it is still recommended to re-run the linker
+over all of the news data in HDFS from time to time. 
+3. When Ingester is run, it determines what JSON extractions need to be ingested
+by comparing the files present in the local JSON directory to the files in
+the HDFS ingestion directory. Any files that are present in the former but
+not in the latter are considered to be 'new', and are ingested. 
+
+-- Ideas for fixing the ingester after the Nov. 2012 HDFS crash:
+After the crash, the HDFS ingestion directory was lost, so the cron job
+would fail as soon as the old HDFS directory was found to be missing.
+As a result, the crontab was disabled until someone could sort it out.
+
+Now, the Ingester crontab can't just be 'turned back on', because it
+would re-ingest everything, which would take a day or more to run,
+and it would be duplicating a lot of already-ingested data. 
+
+However, we know the crash occurred around 11-13-2012, so we could
+run the ingestion process for data prior to that date, but only
+do the HDFS part, not the index ingestion part. That would effectively
+re-construct the lost HDFS folder as it was at the time of the crash.
+Then, it should be possible to turn on the Ingester job again,
+but care would need to be taken to avoid ingesting a month or more 
+worth of data at once.
+
+To implement this, Ingester would just need some kind of CL option
+that would allow you to run it without actually doing the Index ingestion
+(so just the HDFS ingestion)
+
+
+
+
+ 

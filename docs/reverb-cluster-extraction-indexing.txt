@@ -1,0 +1,152 @@
+How to process and index a corpus of data using ReVerb on the RV cluster
+
+Table of contents:
+- Location of the code
+- How to build the code
+- Overview of Scoobi Modules for processing extractions
+- Overview of Scala Modules for indexing extractions
+- Instructions for running it all together over a corpus
+- General notes on the hadoop process
+- General notes on the non-hadoop process
+
+-- Location of the code:
+The code you will need is located in the 'openie-backend' and 'browser-hadoop'
+projects. The Git repositories for these projects are located at:
+openie-backend: rv.cs/home/knowall/repo/git/scala/openie-backend.git
+browser-hadoop: rv.cs/home/knowall/repo/git/scala/browser-hadoop.git
+
+-- How to build the code
+The code is built using Apache Maven. browser-hadoop depends on the 'indexfilter'
+branch of openie-backend, so be sure to check out and install that before building
+browser-hadoop. 
+Assuming you've checked out openie-backend and browser-hadoop into the working
+directory, the following commands will build a hadoop-runnable jar in
+the browser-hadoop/target directory.
+
+> cd openie-backend
+> git checkout -b indexfilter 
+> mvn clean compile install
+> cd ../browser-hadoop
+> mvn clean compile assembly:single
+
+-- Overview of Scoobi Modules for processing extractions:
+Code for the following modules is located in the 
+edu.washington.cs.knowitall.browser.hadoop.scoobi package of browser-hadoop
+In order to run a particular module described below, make sure to edit
+the mainClass element of pom.xml for the maven-assembly-plugin prior to
+running assembly:single.
+Code is run from one of the rv nodes using the command:
+> hadoop jar <assembly-jarfile> <hadoop options> <job-specific args>
+Each takes input from a directory in HDFS and writes output to a new 
+directory in HDFS. Run each with --help for more info.
+
+ScoobiSentenceChunker
+  input: tab delimited [sentence text, source url]
+  output: tab delimited [space delimited sentence tokens, space delimited postags, space delimited chunktags, source url]
+  Notes: Chunks sentences for ScoobiReVerb. Include the source url as the second input column. Uses OpenNlpSentenceChunker
+  
+ScoobiReVerb
+  input: tab delimited [space delimited sentence tokens, space delimited postags, space delimited chunktags, source url]
+  output: serialized ReVerbExtraction (see ReVerbExtraction.serializeToString)
+  Notes: This is what actually runs ReVerb. Expects input in same form as output from ScoobiSentenceChunker.
+  
+ScoobiReVerbGrouper
+  input: serialized ReVerbExtraction
+  output: serialized ExtractionGroup[ReVerbExtraction] (see ReVerbExtractionGroup.serializeToString)
+  Notes: This groups ReVerbExtractions by their 'norms', e.g. (arg1Norm, relNorm, arg2Norm) tuple, and
+         aggregates them into ExtractionGroup[ReVerbExtraction] objects, (otherwise known in the docs as
+         ReVerbExtractionGroups, REGs, or just regs.) These are typically the unit of data that is passed around
+         between most parts of the backend code, and between the frontend-backend interface. 
+         
+ScoobiEntityLinker
+  input: serialized ExtractionGroup[ReVerbExtraction]
+  output: serialized ExtractionGroup[ReVerbExtraction]
+  Notes: This is the cluster implementation of Tom Lin's entity linker. Each input REG is annotated
+         with Entity links and types, if any, and written to output. Some CLI options exist for doing 
+         frequency-based filtering, run with --help for more info.
+  
+ScoobiReVerbGroupFilter
+  input: serialized ExtractionGroup[ReVerbExtraction]
+  output: serialized ExtractionGroup[ReVerbExtraction]
+  Notes: This runs the frontend's aesthetic filtering code over the input. Each input REG has its
+         fields cleaned up (filtered) and is then either written to output or discarded entirely.
+         This is intended to streamline a set of data for backing the frontend.
+
+-- Overview of Scala Modules for indexing extractions:
+Code for the following modules is located in the
+edu.washington.cs.knowitall.browser.lucene package of openie-backend
+These modules typically either consume input directly from stdin, or
+write output to stdout.
+
+IndexBuilder
+  input: serialized ExtractionGroup[ReVerbExtraction] (pipe via stdin)
+  output: Lucene index at user specified location
+  Notes: Creates a single lucene index containing the input.
+
+ParallelIndexBuilder
+  input: serialized ExtractionGroup[ReVerbExtraction] (pipe via stdin)
+  output: Lucene indexes at user specified locations
+  Notes: Input REGS are distributed round-robin amongst the specified index
+         locations. Has options for commit interval, ram usage, 
+		 filtering (use ScoobiReVerbGroupFilter instead), regrouping.
+		 Restartable - in the event of a failure, read the console output
+		 for the last commit point (e.g. commit at X lines). Then
+		 restart your job piping your input through 'tail -n +X'.
+		 
+ParallelIndexPrinter
+  input: Lucene indexes at user specified locations (via CL arg)
+  output: serialized ExtractionGroup[ReVerbExtraction] to stdout
+  Notes: A utility for dumping the contents of an index or indexes
+         to stdout (or redirect to a file, etc). 
+		 
+-- Instructions for using ReVerb to extract at scale from a corpus of [sentence, url] pairs, 
+and to index the resulting extractions into lucene indexes usable by the demo
+
+1. This guide assumes that your input is in HDFS at input/ and is tab delimited
+[sentence text, source url], and that you want indexes at (non-hdfs) /index1 /index2
+/index3 and /index4
+
+// Chunk the input
+2. Build browser-hadoop with ScoobiSentenceChunker as the mainClass.
+3. Run: hadoop jar <assembly-jar> input/ chunked/
+
+// Run ReVerb
+4. Build browser-hadoop with ScoobiReVerb as the mainClass.
+5. Run: hadoop jar <assembly-jar> chunked/ extractions/
+  
+// Group the extractions
+6. Build browser-hadoop with ScoobiReVerbGrouper as the mainClass.
+7. Run: hadoop jar <assembly-jar> -Dmapred.child.java.opts=-Xmx4G extractions/ groups/
+
+// Link the groups (see general hadoop notes)
+8. Build browser-hadoop with ScoobiEntityLinker as the mainClass
+9. Run: hadoop jar <assembly-jar> -Dmapred.child.java.opts=-Xmx4G groups/ groups-linked/
+
+// Filter linked groups for the demo
+10. Build browser-hadoop with ScoobiReVerbGroupFilter as the mainClass
+11. Run: hadoop jar <assembly-jar> -Dmapred.child.java.opts=-Xmx4G groups-linked/ groups-linked-filtered/
+
+// Index the filtered groups 
+12. cd to openie-backend project root. Run mvn compile assembly:single
+13. Run (large command):
+hadoop fs -cat groups-linked-filtered/* | \
+java -cp <openie-backend-assembly-jar> edu.washington.cs.knowitall.browser.lucene.ReVerbParallelIndexBuilder \
+/index1:/index2:/index3:/index4
+
+14. Done. Reconfigure your frontend instance to point to the new indexes.
+
+-- General notes about the hadoop part of the process:
+1. It isn't clear whether the Linker should be run before the Filter. The order of running the two
+jobs can be reversed. Linking first leaves all of the sentence for use as linking context 
+(including duplicates), but at lower precision. Filtering first provides less but higher precision
+data to the linker.
+2. CL Options exist for filtering out REGs outside a size threshold (e.g. to throw away singletons)
+Run ScoobiEntityLinker with --help
+3. The Entity Linker can be difficult to run without carefully increasing the child max heap size
+(e.g. -Dmapred.child.java.opts=-Xmx4G) and limiting the maximum number of mappers. You may
+need to edit hadoops conf/fairscheduler.xml to limit the number of mappers to 20-40 on RV.
+
+-- General notes about the post-hadoop part of the process:
+1. The indexer process can take a long time, so you might want to run it in a screen. 
+2. If the indexer process dies midway through, you might be able to restart it, see notes 
+in the instructions.
