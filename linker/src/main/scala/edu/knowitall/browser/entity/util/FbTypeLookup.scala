@@ -38,7 +38,7 @@ class FbTypeLookup(val searcher: IndexSearcher, val typeIntToTypeStringMap: Map[
   // typeIntToTypeStringMap could probably just be an indexedSeq for a slight performance gain,
   // but then you have to deal with the chance that some int isn't in the enumeration separately.
 
-  def this(indexFile: File, typeEnumFile: String) =
+  def this(indexFile: File, typeEnumFile: File) =
     this(FbTypeLookup.loadIndex(indexFile), FbTypeLookup.loadEnumFile(typeEnumFile))
 
   def getTypesForEntity(entityFbid: String): List[String] = {
@@ -95,9 +95,9 @@ import FbTypeLookupGenerator.tabRegex
     new IndexSearcher(indexReader)
   }
 
-  def loadEnumFile(enumFile: String): SortedMap[Int, String] = {
+  def loadEnumFile(enumFile: File): SortedMap[Int, String] = {
     System.err.println("Loading type enumeration...")
-    using(Source.fromInputStream(Source.fromFile(enumFile))) { source =>
+    using(Source.fromFile(enumFile)) { source =>
       val elements = source.getLines.flatMap { line =>
         tabRegex.split(line) match {
           case Array(typeInt, typeString, _*) => Some((typeInt.toInt, typeString))
@@ -122,7 +122,7 @@ import FbTypeLookupGenerator.tabRegex
     }
     if (!parser.parse(args)) return
 
-    val lookup = new FbTypeLookup(entityFile, enumFile)
+    val lookup = new FbTypeLookup(entityFile, new File(enumFile))
 
     val fbids = Seq("03gss12", "0260w54", "0260xrp", "02610rn", "02610t0")
 

@@ -1,4 +1,4 @@
-package edu.washington.cs.knowitall.browser.solr
+package edu.knowitall.browser.solr
 
 import java.io.{ByteArrayOutputStream, ObjectOutputStream}
 import java.net.{MalformedURLException, URL}
@@ -73,10 +73,6 @@ class SolrJLoader(urlString: String) extends SolrLoader {
       }
       document.setField("arg2_fulltypes", reg.arg2.types.map(_.name).asJava)
       document.setField("arg2_types", reg.arg2.types.map(_.typ).asJava)
-      
-      reg.rel.link.map { link =>
-        document.setField("rel_link_id", link)
-      }
 
       document.setField("corpora", reg.instances.map(_.corpus).toList.asJava)
       document.setField("instances", instanceBytes)
@@ -95,7 +91,7 @@ class SolrJLoader(urlString: String) extends SolrLoader {
   }
 }
 
-class JsonSolrLoader(solrUrl: String) extends SolrLoader {
+class SolrJsonLoader(solrUrl: String) extends SolrLoader {
   import dispatch._
 
   val b64 = new BASE64Encoder()
@@ -131,7 +127,6 @@ class JsonSolrLoader(solrUrl: String) extends SolrLoader {
         ("arg2_entity_score" -> reg.arg2.entity.map(x => JDouble(x.score))) ~
         ("arg2_fulltypes" -> reg.arg2.types.map(_.name)) ~
         ("arg2_types" -> reg.arg2.types.map(_.typ)) ~
-        ("rel_link_id" -> reg.rel.link) ~
         ("corpora" -> reg.instances.map(_.corpus).toList) ~
         ("instances" -> b64.encode(instanceBytes).replaceAll("\n", "")) ~
         ("size" -> reg.instances.size)
@@ -208,7 +203,7 @@ object SolrLoader {
     val parser = new OptionParser[Config]("SolrLoader") {
       def options = Seq(
         arg("solr-url", "solr url") { (str: String, c: Config) => c.copy(url = str) },
-        arg("source", "source") { (str: String, c: Config) =>
+        arg("source", "source (stdin|lucene|url)") { (str: String, c: Config) =>
           str match {
             case "stdin" => c.copy(source = StdinSource())
             case "lucene" => c.copy(source = LuceneSource())
@@ -231,7 +226,7 @@ object SolrLoader {
     using(new SolrJLoader(config.url)) { loader =>
       val regs = config.source.groupIterator
 
-      if (config.stdOut) regs map loader.asInstanceOf[JsonSolrLoader].toJsonString foreach println
+      if (config.stdOut) regs map loader.asInstanceOf[SolrJsonLoader].toJsonString foreach println
       else {
         val lock = new Object()
         val index = new AtomicInteger(0)
