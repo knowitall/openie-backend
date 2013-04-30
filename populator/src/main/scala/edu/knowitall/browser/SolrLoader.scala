@@ -186,7 +186,7 @@ object SolrLoader {
 
   case class UrlSource(url: String) extends Source {
     def groupIterator() = {
-      Source.fromURL(url).getLines map ReVerbExtractionGroup.deserializeFromString map (_.get)
+      Source.fromURL(url, "UTF-8").getLines map ReVerbExtractionGroup.deserializeFromString map (_.get)
     }
 
     def close() {}

@@ -57,9 +57,10 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion,
       "com.google.guava" % "guava" % "14.0.1",
-      "ch.qos.logback" % "logback-classic" % "1.0.7",
+      "ch.qos.logback" % "logback-classic" % "1.0.12",
+      "ch.qos.logback" % "logback-core" % "1.0.12",
+      "commons-logging" % "commons-logging-api" % "1.1", // solrj stupidly needs this?
       "org.slf4j" % "slf4j-api" % "1.7.2",
-      "ch.qos.logback" % "logback-core" % "1.0.7",
       "com.github.scopt" % "scopt_2.9.2" % "2.1.0",
       "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
       "net.databinder.dispatch" %% "dispatch-core" % "0.10.0")
@@ -70,9 +71,9 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage % "nlptools-chunk-opennlp_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
       "com.nicta" % "scoobi_2.9.2" % "0.6.0-cdh3",
-      "log4j" % "log4j" % "1.2.16",
-      "org.slf4j" % "slf4j-api" % "1.6.3",
-      "org.slf4j" % "slf4j-log4j12" % "1.6.3"
+      "ch.qos.logback" % "logback-classic" % "1.0.12",
+      "ch.qos.logback" % "logback-core" % "1.0.12",
+      "org.slf4j" % "slf4j-api" % "1.7.2"
     ),
     resolvers ++= Seq("nicta" at "http://nicta.github.com/scoobi/releases",
       "cloudera" at "https://repository.cloudera.com/content/repositories/releases"),
@@ -97,9 +98,9 @@ object NlpToolsBuild extends Build {
       "org.apache.lucene" % "lucene-queries" % "3.0.3",
       "org.apache.lucene" % "lucene-core" % "3.6.0",
       "com.github.scopt" % "scopt_2.9.2" % "2.1.0",
-      "log4j" % "log4j" % "1.2.17",
+      "ch.qos.logback" % "logback-classic" % "1.0.12",
+      "ch.qos.logback" % "logback-core" % "1.0.12",
       "org.slf4j" % "slf4j-api" % "1.7.2",
-      "org.slf4j" % "slf4j-log4j12" % "1.7.2",
       "junit" % "junit" % "4.10",
       "org.scalatest" % "scalatest_2.9.2" % "1.7.1",
       "org.apache.derby" % "derby" % "10.9.1.0"
