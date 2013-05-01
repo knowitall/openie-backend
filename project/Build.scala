@@ -60,7 +60,7 @@ object NlpToolsBuild extends Build {
       "com.google.guava" % "guava" % "14.0.1",
       "ch.qos.logback" % "logback-classic" % "1.0.12",
       "ch.qos.logback" % "logback-core" % "1.0.12",
-      "commons-logging" % "commons-logging-api" % "1.1", // solrj stupidly needs this?
+      "commons-logging" % "commons-logging-api" % "1.0.4", // solrj stupidly needs this?
       "org.slf4j" % "slf4j-api" % "1.7.2",
       "com.github.scopt" % "scopt_2.9.2" % "2.1.0",
       "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
