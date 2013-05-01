@@ -1,7 +1,7 @@
-*/.cache
-*/.project
-*/.classpath
-*/.settings
-*/target
 target
-project/project
+.project
+.eclipse
+.cache
+.classpath
+.settings
+tags

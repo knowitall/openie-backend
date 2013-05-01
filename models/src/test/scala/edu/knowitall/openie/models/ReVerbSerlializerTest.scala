@@ -11,17 +11,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.scalatest.Suite
 import org.scalatest.junit.JUnitRunner
+import org.scalatest.FlatSpec
 
 @RunWith(classOf[JUnitRunner])
-class ReVerbSerializerTest extends Suite {
-
+class ReVerbSerializerTest extends FlatSpec {
   var inputLines: List[String] = Source.fromInputStream(Resources.reverbExtractionsUrl.openStream(), "UTF-8").getLines.toList
 
   private def getExtrsHelper = inputLines.flatMap(e => ReVerbExtraction.deserializeFromString(e))
 
-  @Test
-  def testSerialization = {
-
+  "extractions" should "deserialize" in {
     val extrs = getExtrsHelper
     extrs.foreach { extr =>
 

@@ -19,31 +19,14 @@ import edu.knowitall.openie.models.util.TaggedStemmer
 import sjson.json.DefaultProtocol
 
 @SerialVersionUID(7720340660222065636L)
-class ReVerbExtraction(
+case class ReVerbExtraction(
   val sentenceTokens: IndexedSeq[ChunkedToken],
   val arg1Interval: Interval,
   val relInterval:  Interval,
   val arg2Interval: Interval,
-  val sourceUrl: String) extends Extraction with scala.Serializable {
+  val sourceUrl: String) extends Extraction {
 
   import ReVerbExtraction.{strippedDeterminers, modifierTagsToStrip, modifiersToKeep}
-
-  override def equals(that: Any): Boolean = {
-
-    if (!that.isInstanceOf[ReVerbExtraction]) return false
-    else {
-      val thatExtr = that.asInstanceOf[ReVerbExtraction]
-      val sentEq = sentenceTokens.equals(thatExtr.sentenceTokens)
-      val arg1Eq = arg1Interval.equals(thatExtr.arg1Interval)
-      val relEq = relInterval.equals(thatExtr.relInterval)
-      val arg2Eq = arg2Interval.equals(thatExtr.arg2Interval)
-      val urlEq = sourceUrl.equals(thatExtr.sourceUrl)
-
-      return sentEq && arg1Eq && relEq && arg2Eq && urlEq
-    }
-  }
-
-  override def hashCode = Seq(sentenceTokens, arg1Interval, relInterval, arg2Interval, sourceUrl).hashCode
 
   override def sentenceText = sentenceTokens.map(_.string).mkString(" ")
 
