@@ -19,6 +19,7 @@ import edu.knowitall.browser.lucene.ParallelIndexPrinter
 import edu.knowitall.common.Resource.using
 import edu.knowitall.common.Timing
 import edu.knowitall.openie.models.{ExtractionGroup, ReVerbExtraction, ReVerbExtractionGroup}
+import edu.knowitall.openie.models.serialize.Chill
 import net.liftweb.json.{compact, render}
 import net.liftweb.json.JObject
 import net.liftweb.json.JsonAST.JDouble
@@ -37,18 +38,22 @@ abstract class SolrLoader {
 class SolrJLoader(urlString: String) extends SolrLoader {
   val solr = new HttpSolrServer(urlString)
   val id = new AtomicInteger(0)
+  val kryo = Chill.createInjection()
 
   def close() {}
 
   def toSolrDocument(reg: REG) = {
     val document = new SolrInputDocument();
 
+    val instanceBytes = kryo(reg.instances.toList)
+    /* // Use Java Serialization
     lazy val instanceBytes = using(new ByteArrayOutputStream()) { bos =>
       using(new ObjectOutputStream(bos)) { out =>
         out.writeObject(reg.instances.toList)
       }
       bos.toByteArray()
     }
+    */
 
     for (f <- reg.getClass.getDeclaredFields) {
       document.setField("id", id.getAndIncrement())
@@ -94,6 +99,8 @@ class SolrJLoader(urlString: String) extends SolrLoader {
 class SolrJsonLoader(solrUrl: String) extends SolrLoader {
   import dispatch._
 
+  val kryo = Chill.createInjection()
+
   val b64 = new BASE64Encoder()
   val http = new Http()
 
@@ -104,12 +111,15 @@ class SolrJsonLoader(solrUrl: String) extends SolrLoader {
   }
 
   def toJsonObject(reg: REG): JObject = {
+    val instanceBytes = kryo(reg.instances.toList)
+    /*
     lazy val instanceBytes = using(new ByteArrayOutputStream()) { bos =>
       using(new ObjectOutputStream(bos)) { out =>
         out.writeObject(reg.instances.toSeq.toStream)
       }
       bos.toByteArray()
     }
+    */
 
     val fieldMap =
       ("arg1" -> reg.arg1.norm) ~
