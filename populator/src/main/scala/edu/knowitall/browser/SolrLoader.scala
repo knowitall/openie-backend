@@ -2,18 +2,14 @@ package edu.knowitall.browser.solr
 
 import java.io.{ByteArrayOutputStream, ObjectOutputStream}
 import java.net.{MalformedURLException, URL}
-
-import scala.actors.Futures.future
-import scala.actors.threadpool.AtomicInteger
+import scala.concurrent._
 import scala.collection.JavaConverters.{asJavaIteratorConverter, seqAsJavaListConverter, setAsJavaSetConverter}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.io.Source
 import scala.util.control
-
 import org.apache.solr.client.solrj.impl.HttpSolrServer
 import org.apache.solr.common.SolrInputDocument
 import org.slf4j.LoggerFactory
-
 import dispatch.{Http, as, enrichFuture, implyRequestHandlerTuple, implyRequestVerbs, url}
 import edu.knowitall.browser.lucene.ParallelIndexPrinter
 import edu.knowitall.common.Resource.using
@@ -26,6 +22,7 @@ import net.liftweb.json.JsonAST.JDouble
 import net.liftweb.json.JsonDSL.{int2jvalue, jobject2assoc, option2jvalue, pair2Assoc, pair2jvalue, seq2jvalue, string2jvalue}
 import scopt.immutable.OptionParser
 import sun.misc.BASE64Encoder
+import java.util.concurrent.atomic.AtomicInteger
 
 abstract class SolrLoader {
   type REG = ExtractionGroup[ReVerbExtraction]
@@ -253,11 +250,10 @@ object SolrLoader {
                 println("Batch " + i + " (" + i * BATCH_SIZE + ") in " + Timing.Seconds.format(ns) + " total " + Timing.Seconds.format(elapsed) + " avg " + Timing.Seconds.format(elapsed / index.get) + ".")
               }
             } catch {
-              case e => e.printStackTrace
+              case e: Throwable => e.printStackTrace
             }
           }
         } else {
-          import scala.actors.Futures._
           regs.grouped(BATCH_SIZE).map( { reg => future {
             try {
               Timing.timeThen {
@@ -268,7 +264,7 @@ object SolrLoader {
                 println("Batch " + i + " (" + i * BATCH_SIZE + ") in " + Timing.Seconds.format(ns) + " total " + Timing.Seconds.format(elapsed) + " avg " + Timing.Seconds.format(elapsed / index.get) + ".")
               }
             } catch {
-              case e => e.printStackTrace
+              case e: Throwable => e.printStackTrace
             }
           }}) foreach (_.apply())
         }
