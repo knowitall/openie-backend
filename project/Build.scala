@@ -45,7 +45,8 @@ object NlpToolsBuild extends Build {
     libraryDependencies ++= Seq(
       nlptoolsPackage % "nlptools-core_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
-      "net.debasishg" % "sjson_2.9.2" % "0.19"
+      "net.debasishg" % "sjson_2.9.2" % "0.19",
+      "com.twitter" % "chill_2.9.2" % "0.2.2"
     )
   ))
 
@@ -101,8 +102,8 @@ object NlpToolsBuild extends Build {
       "ch.qos.logback" % "logback-classic" % "1.0.12",
       "ch.qos.logback" % "logback-core" % "1.0.12",
       "org.slf4j" % "slf4j-api" % "1.7.2",
-      "junit" % "junit" % "4.10",
-      "org.scalatest" % "scalatest_2.9.2" % "1.7.1",
+      junit,
+      scalatest,
       "org.apache.derby" % "derby" % "10.9.1.0"
     )
   )) dependsOn(models)
