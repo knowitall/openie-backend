@@ -67,11 +67,26 @@ object ReVerbDocumentConverter {
     }
 
     // if relation has a link, add a field for it
-    group.rel.link match {
+    group.rel.srlLink match {
       case Some(link) => {
-        doc.add(new Field("relLink", link, Field.Store.YES, Field.Index.ANALYZED_NO_NORMS))
+        doc.add(new Field("srlLink", link, Field.Store.YES, Field.Index.ANALYZED_NO_NORMS))
       }
       case None =>
+    }
+    group.rel.wnLink match {
+      case Some(link) => {
+        doc.add(new Field("wnLink", link, Field.Store.YES, Field.Index.ANALYZED_NO_NORMS))
+      }
+      case None =>
+    }
+    
+    if (!group.rel.vnLinks.isEmpty) {
+      doc.add(new Field(
+        "vnLinks",
+        group.rel.vnLinks.toSeq.mkString(","),
+        Field.Store.YES,
+        Field.Index.ANALYZED_NO_NORMS
+      ))
     }
 
     ///
@@ -103,6 +118,10 @@ object ReVerbDocumentConverter {
     zipped.map { case (domain, types) =>
       FreeBaseType(domain, types)
     } toSet
+  }
+  
+  private def parseVnLinkList(vnLinksString: String): Set[String] = {
+    ",".r.split(vnLinksString).toSet
   }
 
   def fromDocument(doc: Document): ExtractionGroup[ReVerbExtraction] = {
@@ -146,9 +165,19 @@ object ReVerbDocumentConverter {
       case _ => Set.empty[FreeBaseType]
     }
 
-    val relLink = fields.get("relLink") match {
+    val srlLink = fields.get("srlLink") match {
       case Some(link) => Some(link.stringValue)
       case _ => None
+    }
+    val wnLink = fields.get("wnLink") match {
+      case Some(link) => Some(link.stringValue)
+      case _ => None
+    }
+    val vnLinks = fields.get("vnLinks") match {
+      case Some(links) => {
+        parseVnLinkList(links.stringValue)
+      }
+      case _ => Set.empty[String]
     }
 
     val byteInput = new ByteArrayInputStream(fields("instances").getBinaryValue())
@@ -163,7 +192,9 @@ object ReVerbDocumentConverter {
       arg2Entity,
       arg1Types,
       arg2Types,
-      relLink,
+      srlLink,
+      wnLink,
+      vnLinks,
       instances.toSet)
 
     desGroup

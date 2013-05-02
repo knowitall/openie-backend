@@ -31,8 +31,12 @@ case class ExtractionArgument(
 
 case class ExtractionRelation(
     override val norm: String,
-    val link: Option[String] = None) extends ExtractionPart {
-  def hasLink = link.isDefined
+    val srlLink: Option[String] = None,
+    val wnLink: Option[String] = None,
+    val vnLinks: Set[String] = Set.empty[String]) extends ExtractionPart {
+  def hasSrlLink = srlLink.isDefined
+  def hasWnLink = wnLink.isDefined
+  def hasVnLinks = !vnLinks.isEmpty
 }
 
 
@@ -48,17 +52,17 @@ case class ExtractionGroup[E <: Extraction](
       arg1Types: Set[FreeBaseType], arg2Types: Set[FreeBaseType],
       instances: Set[Instance[E]]) = {
     this(ExtractionArgument(arg1Norm, arg1Entity, arg1Types),
-      ExtractionRelation(relNorm, None),
+      ExtractionRelation(relNorm),
       ExtractionArgument(arg2Norm, arg2Entity, arg2Types),
       instances)
   }
 
   def this(arg1Norm: String, relNorm: String, arg2Norm: String,
       arg1Entity: Option[FreeBaseEntity], arg2Entity: Option[FreeBaseEntity],
-      arg1Types: Set[FreeBaseType], arg2Types: Set[FreeBaseType], relLink: Option[String],
-      instances: Set[Instance[E]]) = {
+      arg1Types: Set[FreeBaseType], arg2Types: Set[FreeBaseType], srlLink: Option[String],
+      wnLink: Option[String], vnLinks: Set[String], instances: Set[Instance[E]]) = {
     this(ExtractionArgument(arg1Norm, arg1Entity, arg1Types),
-      ExtractionRelation(relNorm, relLink),
+      ExtractionRelation(relNorm, srlLink, wnLink, vnLinks),
       ExtractionArgument(arg2Norm, arg2Entity, arg2Types),
       instances)
   }
@@ -83,7 +87,7 @@ case class ExtractionGroup[E <: Extraction](
     val newGroups = newGroupsMap.map {
       case (normKey, subInstances) =>
         new ExtractionGroup[E](ExtractionArgument(normKey._1, arg1.entity, arg1.types),
-          ExtractionRelation(normKey._2, rel.link),
+          ExtractionRelation(normKey._2, rel.srlLink, rel.wnLink, rel.vnLinks),
           ExtractionArgument(normKey._3, arg2.entity, arg2.types),
           subInstances)
     } toSet
@@ -105,12 +109,20 @@ object ExtractionGroupProtocol extends DefaultProtocol {
   import ExtractionArgumentProtocol._
 
   implicit val ExtractionGroupFormat: Format[ExtractionGroup[ReVerbExtraction]] =
-    asProduct4("arg1", "rel", "arg2", "instances")(ExtractionGroup.apply[ReVerbExtraction])(ExtractionGroup.unapply(_).get)
+    (
+      asProduct4("arg1", "rel", "arg2", "instances")
+      (ExtractionGroup.apply[ReVerbExtraction])
+      (ExtractionGroup.unapply(_).get)
+    )
 }
 
 object ExtractionRelationProtocol extends DefaultProtocol {
   implicit val ExtractionRelationFormat: Format[ExtractionRelation] =
-    asProduct2("lemma", "link")(ExtractionRelation.apply)(ExtractionRelation.unapply(_).get)
+    (
+      asProduct4("lemma", "srlLink", "wnLink", "vnLink")
+      (ExtractionRelation.apply)
+      (ExtractionRelation.unapply(_).get)
+    )
 }
 
 object ExtractionArgumentProtocol extends DefaultProtocol {
@@ -118,5 +130,9 @@ object ExtractionArgumentProtocol extends DefaultProtocol {
   import FreeBaseEntityProtocol._
 
   implicit val ExtractionArgumentFormat: Format[ExtractionArgument] =
-    asProduct3("lemma", "entity", "types")(ExtractionArgument.apply)(ExtractionArgument.unapply(_).get)
+    (
+      asProduct3("lemma", "entity", "types")
+      (ExtractionArgument.apply)
+      (ExtractionArgument.unapply(_).get)
+    )
 }

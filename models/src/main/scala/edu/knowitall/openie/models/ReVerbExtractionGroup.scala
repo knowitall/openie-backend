@@ -22,11 +22,13 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
     "arg2Entity" -> (e => serializeEntity(e.arg2.entity)),
     "arg1Types" -> (e => serializeTypeList(e.arg1.types)),
     "arg2Types" -> (e => serializeTypeList(e.arg2.types)),
-    "relLink" -> (_.rel.link.getOrElse("X")),
+    "srlLink" -> (_.rel.srlLink.getOrElse("X")),
+    "wnLink" -> (_.rel.wnLink.getOrElse("X")),
+    "vnLink" -> (e => serializeVnLinks(e.rel.vnLinks)),
     "instances" -> (e => e.instances.iterator.map(t => ReVerbInstanceSerializer.serializeToString(t)).mkString("\t")))
 
-  override def deserializeFromTokens(tokens: Seq[String]): Option[ExtractionGroup[ReVerbExtraction]] = {
-
+  override def deserializeFromTokens(tokens: Seq[String]):
+      Option[ExtractionGroup[ReVerbExtraction]] = {
     // first take all non-instance columns
     val split = tokens.take(tabDelimitedFormatSpec.length - 1).toIndexedSeq
 
@@ -41,7 +43,9 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
     val arg2Entity = if (split(4).equals("X")) None else deserializeEntity(split(4))
     val arg1Types = if (split(5).equals("X")) Set.empty[FreeBaseType] else deserializeTypeList(split(5))
     val arg2Types = if (split(6).equals("X")) Set.empty[FreeBaseType] else deserializeTypeList(split(6))
-    val relLink = if (split(7).equals("X")) None else Some(split(7))
+    val srlLink = if (split(7).equals("X")) None else Some(split(7))
+    val wnLink = if (split(8).equals("X")) None else Some(split(8))
+    val vnLinks = if (split(9).equals("X")) Set.empty[String] else deserializeVnLinks(split(9))
 
     var rest = tokens.drop(tabDelimitedFormatSpec.length - 1)
     var instances: List[Instance[ReVerbExtraction]] = Nil
@@ -55,7 +59,10 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
       System.err.println("Error: Empty set of instances!")
       None
     } else {
-      val newGroup = new ExtractionGroup(arg1Norm, relNorm, arg2Norm, arg1Entity, arg2Entity, arg1Types, arg2Types, relLink, instances.toSet)
+      val newGroup = new ExtractionGroup(
+        arg1Norm, relNorm, arg2Norm, arg1Entity, arg2Entity, arg1Types, arg2Types, srlLink, wnLink,
+        vnLinks, instances.toSet
+      )
       Some(newGroup)
     }
   }
@@ -87,17 +94,37 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
   }
 
   def serializeTypeList(types: Iterable[FreeBaseType]): String = {
-
     if (types.isEmpty) "X" else types.map(_.name).mkString(",")
   }
 
   // assumes that input represents a non-empty list
   def deserializeTypeList(input: String): Set[FreeBaseType] = {
-
     val split = input.split(",").filter(str => !str.isEmpty && !str.equals("Topic")) // I have no idea how "Topic" got in as a type
     val parsed = split.flatMap(str => FreeBaseType.parse(str.toLowerCase))
     if (split.length != parsed.length) System.err.println("Warning, Type parse error for: %s".format(input))
     parsed.toSet
+  }
+  
+  /**
+   * Serialize a VerbNet link list.
+   */
+  def serializeVnLinks(vnLinks: Set[String]): String = {
+    if (vnLinks.isEmpty) {
+      "X"
+    } else {
+      vnLinks.mkString(",")
+    }
+  }
+  
+  /**
+   * Deserialize a VerbNet link list.
+   */
+  def deserializeVnLinks(vnLinksString: String): Set[String] = {
+    if (vnLinksString == "X") {
+      Set.empty[String]
+    } else {
+      "r".r.split(vnLinksString).toSet
+    }
   }
 
   // we use this to combine groups that share the same entities but have
@@ -120,20 +147,18 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
     if (groups.size == 0) throw new IllegalArgumentException("can't merge zero groups")
     if (groups.size == 1) return groups.head
 
-    val linkGroup = groups.find(g=>g.arg1.hasEntity || g.arg2.hasEntity || g.rel.hasLink).getOrElse(groups.head)
+    val linkGroup = groups.find(g => {
+      (g.arg1.hasEntity || g.arg2.hasEntity || g.rel.hasSrlLink || g.rel.hasWnLink
+      || g.rel.hasVnLinks)
+    }).getOrElse(groups.head)
 
     val allInstances = groups.flatMap(_.instances)
-    val head = groups.head
-    new ExtractionGroup(
-      key._1,
-      key._2,
-      key._3,
-      linkGroup.arg1.entity,
-      linkGroup.arg2.entity,
-      linkGroup.arg1.types,
-      linkGroup.arg2.types,
-      linkGroup.rel.link,
-      allInstances.toSet)
+    val arg1 = ExtractionArgument(key._1, linkGroup.arg1.entity, linkGroup.arg1.types)
+    val rel = ExtractionRelation(
+      key._2, linkGroup.rel.srlLink, linkGroup.rel.wnLink, linkGroup.rel.vnLinks
+    )
+    val arg2 = ExtractionArgument(key._3, linkGroup.arg2.entity, linkGroup.arg2.types)
+    new ExtractionGroup(arg1, rel, arg2, allInstances.toSet)
   }
 
 
@@ -181,7 +206,9 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
       group.arg2.entity,
       group.arg1.types,
       group.arg2.types,
-      group.rel.link,
+      group.rel.srlLink,
+      group.rel.wnLink,
+      group.rel.vnLinks,
       group.instances)
   }
 
