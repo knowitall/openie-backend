@@ -15,6 +15,10 @@ object NlpToolsBuild extends Build {
   val nlptoolsPackage = "edu.washington.cs.knowitall.nlptools"
   val nlptoolsVersion = "2.4.1"
 
+  val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.12"
+  val logbackCore = "ch.qos.logback" % "logback-core" % "1.0.12"
+  val slf4jApi = "org.slf4j" % "slf4j-api" % "1.7.2"
+
   val junit = "junit" % "junit" % "4.11"
   val specs2 = "org.specs2" % "specs2_2.9.2" % "1.12.3"
   val scalatest = "org.scalatest" %% "scalatest" % "1.9.1"
@@ -24,7 +28,7 @@ object NlpToolsBuild extends Build {
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     publish := { },
     publishLocal := { }
-  ) aggregate(models, populator, hadoop, linker)
+  ) aggregate(models, populator, linker, hadoop)
 
   // parent build definition
   val buildSettings = Defaults.defaultSettings ++ Seq (
@@ -58,10 +62,10 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion,
       "com.google.guava" % "guava" % "14.0.1",
-      "ch.qos.logback" % "logback-classic" % "1.0.12",
-      "ch.qos.logback" % "logback-core" % "1.0.12",
+      logbackClassic,
+      logbackCore,
+      slf4jApi,
       "commons-logging" % "commons-logging-api" % "1.0.4", // solrj stupidly needs this?
-      "org.slf4j" % "slf4j-api" % "1.7.2",
       "com.github.scopt" % "scopt_2.9.2" % "2.1.0",
       "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
       "net.databinder.dispatch" %% "dispatch-core" % "0.10.0")
@@ -72,9 +76,9 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage % "nlptools-chunk-opennlp_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
       "com.nicta" % "scoobi_2.9.2" % "0.6.0-cdh3",
-      "ch.qos.logback" % "logback-classic" % "1.0.12",
-      "ch.qos.logback" % "logback-core" % "1.0.12",
-      "org.slf4j" % "slf4j-api" % "1.7.2"
+      logbackClassic,
+      logbackCore,
+      slf4jApi
     ),
     resolvers ++= Seq("nicta" at "http://nicta.github.com/scoobi/releases",
       "cloudera" at "https://repository.cloudera.com/content/repositories/releases"),
@@ -99,9 +103,9 @@ object NlpToolsBuild extends Build {
       "org.apache.lucene" % "lucene-queries" % "3.0.3",
       "org.apache.lucene" % "lucene-core" % "3.6.0",
       "com.github.scopt" % "scopt_2.9.2" % "2.1.0",
-      "ch.qos.logback" % "logback-classic" % "1.0.12",
-      "ch.qos.logback" % "logback-core" % "1.0.12",
-      "org.slf4j" % "slf4j-api" % "1.7.2",
+      logbackClassic,
+      logbackCore,
+      slf4jApi,
       junit,
       scalatest,
       "org.apache.derby" % "derby" % "10.9.1.0"
