@@ -3,6 +3,9 @@ package edu.knowitall.browser.lucene
 import java.io.File
 
 import scala.io.Source
+import scala.concurrent._
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import org.apache.lucene.index.IndexWriter
 import org.apache.lucene.index.IndexWriterConfig
@@ -48,7 +51,7 @@ class ParallelIndexBuilder(
   private def indexAndCommit(input: Iterable[String]): Unit = {
 
     indexLines(input)
-    indexWriters.map(writer => scala.actors.Futures.future(writer.commit())).foreach(_.apply())
+    indexWriters.map(writer => future { writer.commit() }).foreach(Await.result(_, 60 seconds))
     System.err.println("Lines indexed: %s, Groups indexed: %s".format(linesIndexed.toString, groupsIndexed.toString))
   }
 
@@ -57,7 +60,7 @@ class ParallelIndexBuilder(
     input.grouped(linesPerCommit).foreach(group => indexAndCommit(group))
   }
 
-  def close() = indexWriters.map(writer => scala.actors.Futures.future(writer.close())).foreach(_.apply())
+  def close() = indexWriters.map(writer => future(writer.close())).foreach(Await.result(_, 60 seconds))
 }
 
 object ReVerbParallelIndexBuilder {

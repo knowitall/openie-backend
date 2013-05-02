@@ -5,6 +5,9 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 
 import scala.util.matching.Regex
 import scala.io.Source
+import scala.concurrent._
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import org.apache.lucene.analysis.WhitespaceAnalyzer
 import org.apache.lucene.search.IndexSearcher
@@ -42,7 +45,7 @@ class ParallelExtractionGroupFetcher(val simpleFetchers: Seq[ExtractionGroupFetc
   def getGroups(querySpec: QuerySpec): ResultSet = {
     val parallelwatch = new Stopwatch().start()
     logger.info("Parallel lucene query: %s".format(querySpec.luceneQueryString))
-    val allResults = simpleFetchers.map(fetcher => scala.actors.Futures.future(fetcher.getGroups(querySpec))).map(_.apply())
+    val allResults = simpleFetchers.map(fetcher => future { fetcher.getGroups(querySpec) }).map(Await.result(_, 60 seconds))
     val combinedResults = allResults.reduceOption(_.combineWith(_)).getOrElse(Success.empty)
 
     logger.info("Parallel %s yields %s groups, %s instances in %s ms"
