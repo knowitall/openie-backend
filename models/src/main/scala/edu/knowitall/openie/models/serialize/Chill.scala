@@ -1,11 +1,13 @@
 package edu.knowitall.openie.models.serialize
 
+import scala.util.control.Exception.allCatch
+import com.twitter.bijection.{ Injection }
 import com.twitter.chill._
 import com.twitter.bijection.Bijection
+import com.esotericsoftware.kryo.io.{ Input, Output }
 import edu.knowitall.collection.immutable.Interval
 import edu.knowitall.openie.models._
 import edu.knowitall.tool.chunk.ChunkedToken
-import com.twitter.chill.KryoInjection
 import com.esotericsoftware.kryo.Kryo
 import com.twitter.bijection.ImplicitBijection
 import com.esotericsoftware.kryo.{ Serializer => KSerializer }
@@ -56,8 +58,37 @@ object Chill {
     (ExtractionArgument, ExtractionRelation, ExtractionArgument, Set[Instance[ReVerbExtraction]])
   ](ExtractionGroup.unapply[ReVerbExtraction](_).get)((ExtractionGroup.apply[ReVerbExtraction] _).tupled)
 
-  def createInjection(): KryoBijection = new KryoBijection {
-    override def getKryo: Kryo = {
+  /**
+   * Reuse the Output and Kryo, which is faster
+   * register any additional serializers you need before passing in the
+   * Kryo instance
+   *
+   * This should be available in the next release of Chill.
+   */
+  class KryoInjectionInstance(kryo: Kryo, output: Output) extends Injection[AnyRef, Array[Byte]] {
+    private val input: Input = new Input
+
+    def apply(obj: AnyRef): Array[Byte] = {
+      output.clear
+      kryo.writeClassAndObject(output, obj)
+      output.toBytes
+    }
+
+    def invert(b: Array[Byte]): Option[AnyRef] = {
+      input.setBuffer(b)
+      allCatch.opt(kryo.readClassAndObject(input))
+    }
+  }
+
+
+  def createInjection(): Injection[AnyRef, Array[Byte]] = {
+    def myRegistrations(kryo: Kryo) = kryo
+      .forClassViaBijectionDefault2(intervalBijection)
+      .forClassViaBijection(freebaseEntityBijection)
+      .forClassViaBijection(freebaseTypeBijection)
+      .forClassViaBijection(reverbExtractionBijection)
+      .forClassViaBijection(reverbExtractionGroupBijection)
+    val kryo = {
       val k = new KryoBase
       k.setRegistrationRequired(false)
       k.setInstantiatorStrategy(new StdInstantiatorStrategy)
@@ -65,13 +96,12 @@ object Chill {
       KryoSerializer.registerAll(k)
       k
     }
-
-    def myRegistrations(kryo: Kryo) = kryo
-      .forClassViaBijectionDefault2(intervalBijection)
-      .forClassViaBijection(freebaseEntityBijection)
-      .forClassViaBijection(freebaseTypeBijection)
-      .forClassViaBijection(reverbExtractionBijection)
-      .forClassViaBijection(reverbExtractionGroupBijection)
+    val output = {
+      val init: Int = 1 << 10
+      val max: Int = 1 << 24
+      new Output(init, max)
+    }
+    new KryoInjectionInstance(kryo, output)
   }
 }
 
