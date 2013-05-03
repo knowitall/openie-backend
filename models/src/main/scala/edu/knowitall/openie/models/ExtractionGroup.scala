@@ -119,7 +119,7 @@ object ExtractionGroupProtocol extends DefaultProtocol {
 object ExtractionRelationProtocol extends DefaultProtocol {
   implicit val ExtractionRelationFormat: Format[ExtractionRelation] =
     (
-      asProduct4("lemma", "srlLink", "wnLink", "vnLink")
+      asProduct4("lemma", "srlLink", "wnLink", "vnLinks")
       (ExtractionRelation.apply)
       (ExtractionRelation.unapply(_).get)
     )

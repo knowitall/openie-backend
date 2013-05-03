@@ -123,7 +123,7 @@ object ReVerbExtractionGroup extends TabSerializer[ExtractionGroup[ReVerbExtract
     if (vnLinksString == "X") {
       Set.empty[String]
     } else {
-      "r".r.split(vnLinksString).toSet
+      ",".r.split(vnLinksString).toSet
     }
   }
 
