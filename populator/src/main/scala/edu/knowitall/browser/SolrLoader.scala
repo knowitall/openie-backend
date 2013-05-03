@@ -79,6 +79,13 @@ class SolrJLoader(urlString: String) extends SolrLoader {
       document.setField("corpora", reg.instances.map(_.corpus).toList.asJava)
       document.setField("instances", instanceBytes)
       document.setField("size", reg.instances.size)
+      
+      reg.rel.srlLink.map { link => document.setField("srl_link", link) }
+      reg.rel.wnLink.map { link => document.setField("wn_link", link) }
+      val vnLinks = reg.rel.vnLinks
+      if (!vnLinks.isEmpty) {
+        document.setField("vn_links", vnLinks.asJava)
+      }
     }
 
     document
@@ -134,6 +141,9 @@ class SolrJsonLoader(solrUrl: String) extends SolrLoader {
         ("arg2_entity_score" -> reg.arg2.entity.map(x => JDouble(x.score))) ~
         ("arg2_fulltypes" -> reg.arg2.types.map(_.name)) ~
         ("arg2_types" -> reg.arg2.types.map(_.typ)) ~
+        ("srl_link" -> reg.rel.srlLink.map(x => x)) ~
+        ("wn_link" -> reg.rel.wnLink.map(x => x)) ~
+        ("vn_links" -> reg.rel.vnLinks) ~
         ("corpora" -> reg.instances.map(_.corpus).toList) ~
         ("instances" -> b64.encode(instanceBytes).replaceAll("\n", "")) ~
         ("size" -> reg.instances.size)
