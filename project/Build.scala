@@ -72,7 +72,7 @@ object NlpToolsBuild extends Build {
   )) dependsOn(models)
 
   lazy val hadoop = Project(id = "openie-hadoop", base = file("hadoop"), settings = buildSettings ++ Seq(
-    libraryDependencies ++= Seq("edu.washington.cs.knowitall" % "reverb-core" % "1.4.1",
+    libraryDependencies ++= Seq("edu.washington.cs.knowitall" % "reverb-core" % "1.4.1" excludeAll(ExclusionRule(organization = "jwnl")),
       nlptoolsPackage % "nlptools-chunk-opennlp_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
       "com.nicta" % "scoobi_2.9.2" % "0.6.0-cdh3",
@@ -95,7 +95,7 @@ object NlpToolsBuild extends Build {
 
   lazy val linker = Project(id = "openie-linker", base = file("linker"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
-      "edu.washington.cs.knowitall" % "reverb-core" % "1.4.0",
+      "edu.washington.cs.knowitall" % "reverb-core" % "1.4.0" excludeAll(ExclusionRule(organization = "jwnl")),
       nlptoolsPackage % "nlptools-core_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion,
