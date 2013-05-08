@@ -60,7 +60,7 @@ object NlpToolsBuild extends Build {
       "org.apache.solr" % "solr-solrj" % "4.2.1",
       "net.liftweb" % "lift-json_2.9.2" % "2.5-RC5",
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
-      nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion,
+      nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion excludeAll(ExclusionRule(organization = "jwnl")),
       "com.google.guava" % "guava" % "14.0.1",
       logbackClassic,
       logbackCore,
