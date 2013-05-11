@@ -1,6 +1,7 @@
 package edu.knowitall.browser.entity;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,22 +13,19 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 public class Indices {
-
-    private static final String indices_file = "src/main/resources/indices.txt";
-
     private static final Pattern tabSplit = Pattern.compile("\t");
-
     private static Map<String, Integer> fbidIndexMap = null;
 
-    private static synchronized Map<String, Integer> loadFbidIndices(String resourceName)
-            throws IOException {
+    public Indices(String basePath) {
+        fbidIndexMap = loadFbidIndices(basePath + "browser-freebase/indices.txt");
+    }
 
+    private synchronized Map<String, Integer> loadFbidIndices(String resourceName) {
         System.err.println("Loading fbid indices");
-        
-        InputStream resource = Indices.class.getClassLoader().getResourceAsStream(resourceName);
 
+        try {
         BufferedReader reader = new BufferedReader(
-            new InputStreamReader(resource)
+            new InputStreamReader(new FileInputStream(resourceName))
         );
 
         Map<String, Integer> nakedMap = new TreeMap<String, Integer>();
@@ -53,14 +51,12 @@ public class Indices {
         System.err.println("Done loading fbid indices");
 
         return Collections.unmodifiableMap(nakedMap);
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
     }
 
-    public static synchronized Map<String, Integer> fbidToIndexMap() throws IOException {
-
-        if (fbidIndexMap == null) {
-            fbidIndexMap = loadFbidIndices(indices_file);
-        }
-
+    public synchronized Map<String, Integer> fbidToIndexMap() throws IOException {
         return fbidIndexMap;
     }
 
@@ -69,7 +65,7 @@ public class Indices {
      * 
      * @throws IOException
      */
-    public static List<Integer> convertFbids(List<String> fbids) throws IOException {
+    public List<Integer> convertFbids(List<String> fbids) throws IOException {
         List<Integer> indices = new ArrayList<Integer>(fbids.size());
         for (String fbid : fbids) {
             if (fbid != null && fbidToIndexMap().containsKey(fbid)) {
