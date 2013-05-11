@@ -76,7 +76,7 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
     val (arg1Entity, arg1Types) = if (reuseLinks && group.arg1.entity.isDefined) {
       (group.arg1.entity, group.arg1.types)
     } else {
-      val entity = getEntity(randomLinker, head.arg1Head, head, sources) match {
+      val entity = getEntity(randomLinker, head.arg1Text, head, sources) match {
         case Some(rawEntity) => { arg1sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
@@ -87,7 +87,7 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
     val (arg2Entity, arg2Types) = if (reuseLinks && group.arg2.entity.isDefined) {
       (group.arg2.entity, group.arg2.types)
     } else {
-      val entity = getEntity(randomLinker, head.arg2Head, head, sources) match {
+      val entity = getEntity(randomLinker, head.arg2Text, head, sources) match {
         case Some(rawEntity) => { arg2sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
@@ -138,7 +138,7 @@ object ScoobiEntityLinker extends ScoobiApp {
 
   def getEntityLinker(num: Int): ScoobiEntityLinker = {
     val el = getScratch(num).map(index => new EntityLinker(index)) // java doesn't have Option
-    new ScoobiEntityLinker(el, TaggedStemmer.instance)
+    new ScoobiEntityLinker(Seq(el), TaggedStemmer.instance)
   }
 
   def linkGroups(groups: DList[String], minFreq: Int, maxFreq: Int, reportInterval: Int,
