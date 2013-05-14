@@ -6,8 +6,11 @@ object Constants {
   val mainIndexPath = "browser-freebase"
   val batchMatchPath = List(mainIndexPath, "3-context-sim", "index").mkString(File.separator)
   
-  val defaultDerbyDbPath = "/scratch2"
-  def derbyDbUrl(dbPath: String) = {
-    List("localhost:1527/", dbPath, "entitylinking").mkString(File.separator)
+  val defaultDerbyDbBasePath = "/scratch2"
+  val entityLinkingDbName = "entitylinking"
+  val crosswikisDbName = "crosswikis/crosswikis" // TODO: add crosswikis table to entitylinking DB.
+    
+  def derbyDbUrl(dbBasePath: String, dbName: String) = {
+    "localhost:1527/" + List(dbBasePath, dbName).mkString(File.separator)
   }
 }

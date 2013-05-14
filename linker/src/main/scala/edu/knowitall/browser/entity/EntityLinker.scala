@@ -22,7 +22,9 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
   private var cacheHits = 0
   private var cacheTimeouts = 0
 
-  private val fbidIndices = new Indices(Constants.defaultDerbyDbPath)
+  private val fbidIndices = new Indices(
+    Constants.derbyDbUrl(Constants.defaultDerbyDbBasePath, Constants.entityLinkingDbName)
+  )
 
   def this(basePath: String) = this(
     new batch_match(basePath),

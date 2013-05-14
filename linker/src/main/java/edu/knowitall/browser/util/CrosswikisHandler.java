@@ -81,6 +81,7 @@ public class CrosswikisHandler extends DerbyDb {
             }
             selectStatement.close();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException("Error with Crosswikis lookup in getEntityDistribution.", e);
         }
 

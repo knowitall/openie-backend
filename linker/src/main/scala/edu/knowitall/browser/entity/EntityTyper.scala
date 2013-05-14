@@ -10,8 +10,22 @@ import scala.collection.JavaConversions.seqAsJavaList
   */
 class EntityTyper(val fbLookupTable: FbTypeLookup) {
 
-  def this(basePath: String) = this(new FbTypeLookup(new File(basePath+Constants.mainIndexPath+EntityTyper.typeLookupIndex), new File(new File(basePath+Constants.mainIndexPath), EntityTyper.fbTypeEnumFile)))
-
+  def this(basePath: String) = this(
+    new FbTypeLookup(
+      new File(
+        List(basePath, Constants.mainIndexPath, EntityTyper.typeLookupIndex).mkString(
+          File.separator
+        )
+      ),
+      new File(
+        new File(
+          List(basePath, Constants.mainIndexPath).mkString(File.separator)
+        ),
+        EntityTyper.fbTypeEnumFile
+      )
+    )
+  )
+    
   /**
    * mutator method to
    */
@@ -30,6 +44,6 @@ class EntityTyper(val fbLookupTable: FbTypeLookup) {
 }
 
 object EntityTyper {
-  val typeLookupIndex = "/type-lookup-index/"
-  val fbTypeEnumFile = "/fbTypeEnum.txt"
+  val typeLookupIndex = "type-lookup-index"
+  val fbTypeEnumFile = "fbTypeEnum.txt"
 }
