@@ -22,7 +22,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
   private var cacheHits = 0
   private var cacheTimeouts = 0
 
-  private val fbidIndices = new Indices("/home/jstn/research/cwel/data/")
+  private val fbidIndices = new Indices(Constants.defaultDerbyDbPath)
 
   def this(basePath: String) = this(
     new batch_match(basePath),
@@ -86,7 +86,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     }
 
     val fbids = fbidPairs.map(pair => pair.one)
-    val fbidScores = bm.processSingleArgWithSources(arg, fbidIndices.convertFbids(fbids), sources).toIterable
+    val fbidScores = bm.processSingleArgWithSources(arg, fbidIndices.getIndices(fbids), sources).toIterable
 
     return getBestFbid(arg, fbidPairs, fbidScores);
   }
