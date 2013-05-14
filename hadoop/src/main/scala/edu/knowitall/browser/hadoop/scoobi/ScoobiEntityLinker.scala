@@ -80,7 +80,6 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
         case Some(rawEntity) => { arg1sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
-      //if (group.arg1.entity.isDefined) require(group.arg1.entity.equals(entity._1))
       entity
     }
 
@@ -91,7 +90,6 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
         case Some(rawEntity) => { arg2sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
-      //if (group.arg2.entity.isDefined) require(group.arg2.entity.equals(entity._1))
       entity
     }
 
