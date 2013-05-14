@@ -28,7 +28,7 @@ public class CrosswikisCandidateFinder extends CandidateFinder {
 
     public CrosswikisCandidateFinder(String basePath, double cprobCutoff, int countCutoff) {
         super(basePath + Constants.mainIndexPath());
-        cwHandler = new CrosswikisHandler(basePath);
+        cwHandler = new CrosswikisHandler(Constants.derbyDbUrl(basePath));
         this.cprobCutoff = cprobCutoff;
         this.countCutoff = countCutoff;
     }

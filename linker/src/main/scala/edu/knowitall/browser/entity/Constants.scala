@@ -1,9 +1,12 @@
 package edu.knowitall.browser.entity
 
+import java.io.File
+
 object Constants {
-  val mainIndexPath = "browser-freebase/"
-  val batchMatchPath = "browser-freebase/3-context-sim/index/"
-  val fbidIndicesPath = "browser-freebase/indices.txt"
-  val derbyDbPath = "crosswikis/crosswikis/"
-  val derbyDriver = "org.apache.derby.jdbc.EmbeddedDriver"
+  val mainIndexPath = "browser-freebase"
+  val batchMatchPath = List(mainIndexPath, "3-context-sim", "index").mkString(File.separator)
+  
+  def derbyDbUrl(dbPath: String) = {
+    List("localhost:1527/", dbPath, "entitylinking").mkString(File.separator)
+  }
 }
