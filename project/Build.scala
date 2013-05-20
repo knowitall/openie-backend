@@ -75,7 +75,8 @@ object NlpToolsBuild extends Build {
     libraryDependencies ++= Seq("edu.washington.cs.knowitall" % "reverb-core" % "1.4.1" excludeAll(ExclusionRule(organization = "jwnl")),
       nlptoolsPackage % "nlptools-chunk-opennlp_2.9.2" % nlptoolsVersion,
       nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
-      "com.nicta" % "scoobi_2.9.2" % "0.6.0-cdh3",
+      "org.apache.hadoop" % "hadoop-lzo" % "0.4.13",
+      "com.nicta" % "scoobi_2.9.2" % "0.6.1-cdh3",
       logbackClassic,
       logbackCore,
       slf4jApi

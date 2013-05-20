@@ -1,5 +1,6 @@
 package edu.knowitall.browser.hadoop.scoobi
 
+import com.nicta.scoobi.io.text.LzoTextInput
 import com.nicta.scoobi.Scoobi._
 import java.io.File
 import java.io.FileWriter
@@ -121,7 +122,7 @@ object ScoobiReVerbGrouper extends ScoobiApp {
     val (inputPath, outputPath, corpus) = (args(0), args(1), args(2))
 
     // serialized ReVerbExtractions
-    val extrs: DList[String] = fromTextFile(inputPath)
+    val extrs: DList[String] = LzoTextInput.fromLzoTextFile(inputPath)
 
     val groups = groupExtractions(extrs, corpus)
 

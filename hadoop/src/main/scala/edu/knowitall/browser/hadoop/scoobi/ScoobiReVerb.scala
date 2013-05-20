@@ -1,6 +1,7 @@
 package edu.knowitall.browser.hadoop.scoobi
 
 import com.nicta.scoobi.Scoobi._
+import com.nicta.scoobi.io.text.LzoTextInput
 
 import edu.knowitall.common.Timing
 import edu.knowitall.collection.immutable.Interval
@@ -26,8 +27,8 @@ object ScoobiReVerb extends ScoobiApp {
 
   implicit def rangeToInterval(range: edu.washington.cs.knowitall.commonlib.Range): Interval = Interval.closed(range.getStart, range.getLastIndex)
 
-  private val tabSplit = "\t".r
-  private val wsSplit = "\\s".r
+  private lazy val tabSplit = "\t".r
+  private lazy val wsSplit = "\\s".r
 
   lazy val extractor = new ReVerbExtractor
 
@@ -43,7 +44,7 @@ object ScoobiReVerb extends ScoobiApp {
     if (!parser.parse(args)) return
 
     // serialized ReVerbExtractions
-    val lines: DList[String] = TextInput.fromTextFile(inputPath)
+    val lines: DList[String] = LzoTextInput.fromLzoTextFile(inputPath)
 
     def parseChunkedSentence(strs: Seq[String], poss: Seq[String], chks: Seq[String]): Option[ChunkedSentence] = {
       try {
