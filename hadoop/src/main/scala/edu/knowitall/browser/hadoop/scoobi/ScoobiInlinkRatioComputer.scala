@@ -1,9 +1,7 @@
 package edu.knowitall.browser.hadoop.scoobi
 
 import com.nicta.scoobi.core.WireFormat
-
 import com.nicta.scoobi.Scoobi._
-
 import edu.knowitall.common.Timing._
 import edu.knowitall.openie.models.ReVerbExtraction
 import edu.knowitall.openie.models.FreeBaseEntity
@@ -11,8 +9,9 @@ import edu.knowitall.openie.models.FreeBaseType
 import edu.knowitall.openie.models.Instance
 import edu.knowitall.openie.models.ExtractionGroup
 import edu.knowitall.openie.models.ReVerbExtractionGroup
-
 import scopt.OptionParser
+import com.nicta.scoobi.io.text.TextOutput
+import com.nicta.scoobi.io.text.TextInput
 
 object ScoobiInlinkRatioComputer extends ScoobiApp {
 

@@ -8,7 +8,7 @@ object NlpToolsBuild extends Build {
   // settings
   val buildOrganization = "edu.washington.cs.knowitall.openie"
   val buildVersion = "1.0.0-SNAPSHOT"
-  val buildScalaVersions = Seq("2.9.3")
+  val buildScalaVersions = Seq("2.10.1")
 
   val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
 
@@ -20,7 +20,7 @@ object NlpToolsBuild extends Build {
   val slf4jApi = "org.slf4j" % "slf4j-api" % "1.7.2"
 
   val junit = "junit" % "junit" % "4.11"
-  val specs2 = "org.specs2" % "specs2_2.9.2" % "1.12.3"
+  val specs2 = "org.specs2" %% "specs2" % "1.12.3"
   val scalatest = "org.scalatest" %% "scalatest" % "1.9.1"
 
   lazy val root = Project(id = "openie", base = file(".")) settings (
@@ -47,10 +47,10 @@ object NlpToolsBuild extends Build {
 
   lazy val models = Project(id = "openie-models", base = file("models"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
-      nlptoolsPackage % "nlptools-core_2.9.2" % nlptoolsVersion,
-      nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
-      "net.debasishg" % "sjson_2.9.2" % "0.19",
-      "com.twitter" % "chill_2.9.2" % "0.2.2"
+      nlptoolsPackage %% "nlptools-core" % nlptoolsVersion,
+      nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
+      "net.debasishg" %% "sjson" % "0.19",
+      "com.twitter" %% "chill" % "0.2.2"
     )
   ))
 
@@ -58,31 +58,32 @@ object NlpToolsBuild extends Build {
     libraryDependencies ++= Seq(
       "org.apache.lucene" % "lucene-core" % "3.6.1",
       "org.apache.solr" % "solr-solrj" % "4.2.1",
-      "net.liftweb" % "lift-json_2.9.2" % "2.5-RC5",
-      nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
-      nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion excludeAll(ExclusionRule(organization = "jwnl")),
+      "net.liftweb" %% "lift-json" % "2.5-RC5",
+      nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
+      nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion excludeAll(ExclusionRule(organization = "jwnl")),
       "com.google.guava" % "guava" % "14.0.1",
       logbackClassic,
       logbackCore,
       slf4jApi,
       "commons-logging" % "commons-logging-api" % "1.0.4", // solrj stupidly needs this?
-      "com.github.scopt" % "scopt_2.9.2" % "2.1.0",
+      "com.github.scopt" %% "scopt" % "2.1.0",
       "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
       "net.databinder.dispatch" %% "dispatch-core" % "0.10.0")
   )) dependsOn(models)
 
   lazy val hadoop = Project(id = "openie-hadoop", base = file("hadoop"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq("edu.washington.cs.knowitall" % "reverb-core" % "1.4.1" excludeAll(ExclusionRule(organization = "jwnl")),
-      nlptoolsPackage % "nlptools-chunk-opennlp_2.9.2" % nlptoolsVersion,
-      nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
+      nlptoolsPackage %% "nlptools-chunk-opennlp" % nlptoolsVersion,
+      nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       "org.apache.hadoop" % "hadoop-lzo" % "0.4.13",
-      "com.nicta" % "scoobi_2.9.2" % "0.6.1-cdh3",
+      "com.nicta" %% "scoobi" % "0.7.0-cdh3-SNAPSHOT",
       logbackClassic,
       logbackCore,
       slf4jApi
     ),
     resolvers ++= Seq("nicta" at "http://nicta.github.com/scoobi/releases",
-      "cloudera" at "https://repository.cloudera.com/content/repositories/releases"),
+      "cloudera" at "https://repository.cloudera.com/content/repositories/releases",
+      "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/"),
     mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
       {
         case x => {
@@ -97,13 +98,13 @@ object NlpToolsBuild extends Build {
   lazy val linker = Project(id = "openie-linker", base = file("linker"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
       "edu.washington.cs.knowitall" % "reverb-core" % "1.4.0" excludeAll(ExclusionRule(organization = "jwnl")),
-      nlptoolsPackage % "nlptools-core_2.9.2" % nlptoolsVersion,
-      nlptoolsPackage % "nlptools-stem-morpha_2.9.2" % nlptoolsVersion,
-      nlptoolsPackage % "nlptools-postag-opennlp_2.9.2" % nlptoolsVersion,
+      nlptoolsPackage %% "nlptools-core" % nlptoolsVersion,
+      nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
+      nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion,
       "org.apache.lucene" % "lucene-core" % "3.0.3",
       "org.apache.lucene" % "lucene-queries" % "3.0.3",
       "org.apache.lucene" % "lucene-core" % "3.6.0",
-      "com.github.scopt" % "scopt_2.9.2" % "2.1.0",
+      "com.github.scopt" %% "scopt" % "2.1.0",
       logbackClassic,
       logbackCore,
       slf4jApi,

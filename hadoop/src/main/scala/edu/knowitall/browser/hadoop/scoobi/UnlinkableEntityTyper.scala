@@ -21,6 +21,7 @@ import scopt.OptionParser
 import scala.collection.mutable
 import scala.io.Source
 import edu.knowitall.openie.models.serialize.StringSerializer
+import com.nicta.scoobi.io.text.TextInput
 
 case class TyperSettings(
   val argField: ArgField, // which argument field? (arg1 or arg2)

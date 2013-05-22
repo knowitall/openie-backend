@@ -21,6 +21,8 @@ import edu.washington.cs.knowitall.nlp.extraction.ChunkedArgumentExtraction
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedExtraction
 import scopt.OptionParser
 import edu.knowitall.openie.models.util.TaggedStemmer
+import com.nicta.scoobi.io.text.TextInput
+import com.nicta.scoobi.io.text.TextOutput
 
 /**
   * A mapper job that

@@ -44,7 +44,6 @@ object ArgPairExtractor extends ScoobiApp {
     val input: DList[String] = fromTextFile(inputPath)
 
     def argExtractor(line: String): Option[(String, String)] = {
-
       ReVerbExtractionGroup.deserializeFromString(line).map { reg =>
         (reg.rel.norm, reg.arg1.norm + "+" + reg.arg2.norm)
       }

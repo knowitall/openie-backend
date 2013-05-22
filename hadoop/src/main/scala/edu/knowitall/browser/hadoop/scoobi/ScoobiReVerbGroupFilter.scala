@@ -1,16 +1,12 @@
 package edu.knowitall.browser.hadoop.scoobi
 
 import com.nicta.scoobi.Scoobi._
-import com.nicta.scoobi.io.text.LzoTextInput
-
 import java.io.File
 import java.io.FileWriter
 import java.util.regex.Pattern
-
 import scala.util.Random
 import scala.collection.JavaConversions._
 import scala.collection.mutable
-
 import edu.knowitall.common.Timing._
 import edu.knowitall.tool.postag.Postagger
 import edu.knowitall.openie.models.ReVerbExtraction
@@ -20,6 +16,10 @@ import edu.knowitall.openie.models.ReVerbExtractionGroup
 import edu.knowitall.openie.models.ReVerbExtractionGroup.REG
 import edu.knowitall.browser.entity.EntityLinker
 import edu.knowitall.browser.entity.Pair
+import com.nicta.scoobi.io.text.TextOutput
+import com.nicta.scoobi.io.text.TextInput
+import com.nicta.scoobi.io.text.TextSource
+import com.hadoop.mapreduce.LzoTextInputFormat
 
 object ScoobiReVerbGroupFilter extends ScoobiApp {
   final val INDEX_CONFIDENCE_THRESHOLD = 0.5
@@ -38,7 +38,7 @@ object ScoobiReVerbGroupFilter extends ScoobiApp {
     val (inputPath, outputPath) = (args(0), args(1))
 
     // serialized groups
-    val groups: DList[String] = LzoTextInput.fromLzoTextFile(inputPath)
+    val groups: DList[String] = TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
 
     // serialized ExtractionGroup[ReVerbExtraction]
     val filtered: DList[String] = groups.flatMap  { group =>
