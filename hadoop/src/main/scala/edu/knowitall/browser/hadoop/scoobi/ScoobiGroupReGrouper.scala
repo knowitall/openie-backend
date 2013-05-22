@@ -11,6 +11,8 @@ import edu.knowitall.openie.models.ExtractionGroup
 import edu.knowitall.openie.models.Instance
 import edu.knowitall.openie.models.ReVerbExtractionGroup
 
+import com.nicta.scoobi.io.text.LzoTextInput
+
 import edu.washington.cs.knowitall.commonlib.Range
 import edu.knowitall.collection.immutable.Interval
 
@@ -39,7 +41,7 @@ object ScoobiGroupReGrouper extends ScoobiApp {
     val (inputPath, outputPath) = (args(0), args(1))
 
     // serialized ReVerbExtractions
-    val groups: DList[String] = fromTextFile(inputPath)
+    val groups: DList[String] = LzoTextInput.fromLzoTextFile(inputPath)
 
     val reGroups = groups.map { line =>
       val x = groupMapProcessor(line).get

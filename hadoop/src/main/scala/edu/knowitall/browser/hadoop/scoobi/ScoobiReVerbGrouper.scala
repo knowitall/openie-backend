@@ -32,6 +32,8 @@ class ScoobiReVerbGrouper(val stemmer: TaggedStemmer, val corpus: String) {
 
   private var largestGroup = 0
 
+  private final val MAX_GROUP_SIZE = 1000000
+
   def getKeyValuePair(line: String): Option[(String, String)] = try {
 
     extrsProcessed += 1
@@ -78,17 +80,20 @@ class ScoobiReVerbGrouper(val stemmer: TaggedStemmer, val corpus: String) {
 
     if (instances.size > largestGroup) largestGroup = instances.size
 
-    val newGroup = new ExtractionGroup(
-      normTuple._1,
-      normTuple._2,
-      normTuple._3,
-      arg1Entity,
-      arg2Entity,
-      Set.empty[FreeBaseType],
-      Set.empty[FreeBaseType],
-      instances)
+    if (instances.size > MAX_GROUP_SIZE) None
+    else {
+      val newGroup = new ExtractionGroup(
+        normTuple._1,
+        normTuple._2,
+        normTuple._3,
+        arg1Entity,
+        arg2Entity,
+        Set.empty[FreeBaseType],
+        Set.empty[FreeBaseType],
+        instances)
 
-    Some(newGroup)
+      Some(newGroup)
+    }
   } catch {
     case e: Exception => {System.err.println("empty list!"); e.printStackTrace; None }
   }

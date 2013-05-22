@@ -54,7 +54,7 @@ class batch_match {
     private MoreLikeThis mlt;
 
     public batch_match(String basePath) throws CorruptIndexException, IOException {
-        String index = basePath + Constants.batchMatchPath();
+        String index = basePath + File.separator + Constants.batchMatchPath();
         System.err.println("Using " + index + " as my index.");
 
         reader = IndexReader.open(FSDirectory.open(new File(index)), true);

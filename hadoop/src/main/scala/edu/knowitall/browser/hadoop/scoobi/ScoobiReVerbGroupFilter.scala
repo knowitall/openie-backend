@@ -1,6 +1,7 @@
 package edu.knowitall.browser.hadoop.scoobi
 
 import com.nicta.scoobi.Scoobi._
+import com.nicta.scoobi.io.text.LzoTextInput
 
 import java.io.File
 import java.io.FileWriter
@@ -25,26 +26,29 @@ object ScoobiReVerbGroupFilter extends ScoobiApp {
   final val MIN_GROUP_INSTANCES = 2
   final val MAX_EXTRACTION_LENGTH = 60
 
-  private final val nonQuestionableChars = Pattern.compile("[\\p{Lower}\\p{Digit} ]+")
-  private final val stripExtraWS = Pattern.compile("\\s+")
-  private final val stripChars= Pattern.compile("[^\\p{Graph}\\p{Cntrl} ]+")
-  private final val leadingBadChars = Pattern.compile("^\\s*(\\.|,|\\\"|\\'|\\()\\s")
-  private final val leadingArticle = Pattern.compile("^\\s*(the|this|these|those|that|a|an)\\s*", Pattern.CASE_INSENSITIVE)
-  private final val startCap = Pattern.compile(".*\\b[A-Z].*")
-  private final val likelyErrorPattern = Pattern.compile(".*(http|\\(|\\)|\\\"|\\[|thing).*", Pattern.CASE_INSENSITIVE)
+  private final lazy val nonQuestionableChars = Pattern.compile("[\\p{Lower}\\p{Digit} ]+")
+  private final lazy val stripExtraWS = Pattern.compile("\\s+")
+  private final lazy val stripChars= Pattern.compile("[^\\p{Graph}\\p{Cntrl} ]+")
+  private final lazy val leadingBadChars = Pattern.compile("^\\s*(\\.|,|\\\"|\\'|\\()\\s")
+  private final lazy val leadingArticle = Pattern.compile("^\\s*(the|this|these|those|that|a|an)\\s*", Pattern.CASE_INSENSITIVE)
+  private final lazy val startCap = Pattern.compile(".*\\b[A-Z].*")
+  private final lazy val likelyErrorPattern = Pattern.compile(".*(http|\\(|\\)|\\\"|\\[|thing).*", Pattern.CASE_INSENSITIVE)
 
   def run() = {
     val (inputPath, outputPath) = (args(0), args(1))
 
     // serialized groups
-    val groups: DList[String] = fromTextFile(inputPath)
+    val groups: DList[String] = LzoTextInput.fromLzoTextFile(inputPath)
 
     // serialized ExtractionGroup[ReVerbExtraction]
     val filtered: DList[String] = groups.flatMap  { group =>
-      val reg = ReVerbExtractionGroup.deserializeFromString(group)
-      val filteredInstances = filterInstances(reg)
-      val filteredGroups = filterGroups(filteredInstances)
-      filteredGroups map ReVerbExtractionGroup.serializeToString
+      if (group.size > 10000000) None
+      else {
+        val reg = ReVerbExtractionGroup.deserializeFromString(group)
+        val filteredInstances = filterInstances(reg)
+        val filteredGroups = filterGroups(filteredInstances)
+        filteredGroups map ReVerbExtractionGroup.serializeToString
+      }
     }
 
     persist(TextOutput.toTextFile(filtered, outputPath + "/"));
@@ -68,7 +72,7 @@ object ScoobiReVerbGroupFilter extends ScoobiApp {
     def emptyArg = group.arg1.norm.trim.isEmpty || group.rel.norm.trim.isEmpty || group.arg2.norm.trim.isEmpty
 
     !(emptyArg)
-  } 
+  }
 
   private def instanceFilterCondition(confThreshold: Double)(inst: Instance[ReVerbExtraction]): Boolean = {
     def clean(arg: String) = {
