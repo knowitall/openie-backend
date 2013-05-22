@@ -56,13 +56,6 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
   }
 
   def linkEntities(reuseLinks: Boolean)(group: ExtractionGroup[ReVerbExtraction]): ExtractionGroup[ReVerbExtraction] = {
-    // a hack for the thread problem
-    if (groupsProcessed == 0) {
-      val keys = Thread.getAllStackTraces.keySet
-      System.err.println("Num threads running: " + keys.size)
-      keys.foreach { thread => System.err.println("%s, %s, %s".format(thread.getId, thread.getName, thread.getPriority)) }
-    }
-
     groupsProcessed += 1
 
     val extrs = group.instances.map(_.extraction)
