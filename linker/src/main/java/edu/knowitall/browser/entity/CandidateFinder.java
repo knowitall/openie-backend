@@ -20,8 +20,8 @@ import edu.knowitall.browser.util.SortedFileMap;
 /**
  * A supertype for candidate generators derived from Tom's original freebase linker.
  * This supertype contains the very large dictionaries that Tom's code depended on, as
- * static, synchronized, and lazily initialized SortedFileMaps. 
- *  
+ * static, synchronized, and lazily initialized SortedFileMaps.
+ *
  * @author Rob
  *
  */
@@ -31,12 +31,12 @@ abstract class CandidateFinder {
 	protected static Pattern spacePattern = Pattern.compile(" ");
 	protected static Pattern commaSpacePattern = Pattern.compile(",|\\s");
 	protected static Pattern exactMatch = Pattern.compile("(.*)\\s\\(.*\\)");
-	
+
 	private static SortedFileMap fbidToTitleInlinksRAW = SortedFileMap.empty;
 	private static SortedFileMap titleMapRAW = SortedFileMap.empty;
 	private static SortedFileMap cachedRAW = SortedFileMap.empty;
 
-	private static final Integer FileSearch_CacheSize = 250000; // 300000 is about 10% of the full files' sizes, 
+	private static final Integer FileSearch_CacheSize = 250000; // 300000 is about 10% of the full files' sizes,
 
 	private SortedFileMap fbidToTitleInlinks(String inputFile) 	throws FileNotFoundException, IOException, ClassNotFoundException {
 		if (fbidToTitleInlinksRAW != SortedFileMap.empty)
@@ -75,34 +75,34 @@ abstract class CandidateFinder {
 	}
 
 	private final String fbidTitleFile;
-	
+
 	// original perl scripts called this "fbid_to_line"
 	public SortedFileMap fbidToTitleInlinks() throws FileNotFoundException, IOException, ClassNotFoundException {
-        
+
 	    return fbidToTitleInlinks(fbidTitleFile);
     }
-	
+
 	private final String titleMapFile;
-	
+
 	public SortedFileMap titleMap() throws FileNotFoundException, IOException, ClassNotFoundException {
-	    
+
 	    return titleMap(titleMapFile);
 	}
-	
+
 	private final String cachedMapFile;
-	
+
 	public SortedFileMap cached() throws FileNotFoundException, IOException, ClassNotFoundException {
-	    
+
 	    return cached(cachedMapFile);
 	}
-	
+
 	/**
 	 * Uses the default base dir and default support file locations.
 	 */
 	public CandidateFinder() {
 		this(DefaultBaseDir);
 	}
-	
+
 	/**
 	 * Uses a given base dir for support files
 	 */
@@ -111,7 +111,7 @@ abstract class CandidateFinder {
 	    this.titleMapFile  = baseDir + "/" + titleMapDefaultFile;
 	    this.cachedMapFile = baseDir + "/" + cachedMapDefaultFile;
 	}
-	
+
 	/**
 	 * Allows individually specified support file locations
 	 * @param fbidTitleFile
@@ -126,13 +126,14 @@ abstract class CandidateFinder {
 
 	public abstract List<Pair<String, Double>> linkToFbids(String arg) throws FileNotFoundException,
 	IOException, ClassNotFoundException;
-	
+
 	/** Does not attach types */
 	public List<Pair<Entity, Double>> linkToEntities(String arg) throws FileNotFoundException,
 		IOException, ClassNotFoundException {
 
 		List<Pair<String, Double>> fbids = linkToFbids(arg);
 		Function<Pair<String, Double>, Pair<Entity, Double>> fbidLookupFn = new Function<Pair<String, Double>, Pair<Entity, Double>>() {
+			@Override
 			public Pair<Entity, Double> apply(Pair<String, Double> fbidCprobPair) {
 				try {
 				    String fbid = fbidCprobPair.one;
@@ -145,7 +146,7 @@ abstract class CandidateFinder {
 				} // hi java
 			}
 		};
-		
+
 		return Lists.transform(fbids, fbidLookupFn);
 	}
 
@@ -160,7 +161,7 @@ abstract class CandidateFinder {
 	        String[] split = lookup.split("\t");
 	        return new Pair<String, Integer>(split[0], Integer.parseInt(split[1]));
 	    }
-	    
+
 	}
 
 
@@ -226,37 +227,37 @@ abstract class CandidateFinder {
 			}
 		}
 	}
-	
+
 	public static final String DefaultBaseDir = "/scratch/browser-freebase";
-	
+
 	private static synchronized SortedFileMap loadFbidToTitleInlinks(String inputFile)
 			throws IOException, FileNotFoundException, ClassNotFoundException {
-		System.err.println("Loading Fbid to Title/Inlink Map (fbid_to_line)");
-		
+		System.err.println("Loading Fbid to Title/Inlink Map (fbid_to_line): " + inputFile);
+
 		return new SortedFileMap(inputFile, FileSearch_CacheSize);
 	}
 
 	private static final String fbidToTitleInlinksDefaultFile = "fbid_to_line.sorted";
-	
+
 	private static synchronized SortedFileMap loadTitleMap(String inputFile) throws IOException,
 			FileNotFoundException, ClassNotFoundException {
-		System.err.println("Load entity name to fbid map \"titleMap\"");
-		
+		System.err.println("Load entity name to fbid map \"titleMap\": " + inputFile);
+
 		return new SortedFileMap(inputFile, FileSearch_CacheSize);
 	}
 
 	private static final String titleMapDefaultFile = "titleMap.sorted";
-	
+
 	private static synchronized SortedFileMap loadCachedMap(String inputFile) throws IOException,
 			FileNotFoundException, ClassNotFoundException {
 		System.err
 				.println("Loading \"cached\" token to fbid candidate map");
-		
+
 		return new SortedFileMap(inputFile, FileSearch_CacheSize);
 	}
 
 	private static final String cachedMapDefaultFile = "cached.sorted";
-	
+
 	protected static void println(String line) {
 		System.out.println(line);
 	}
