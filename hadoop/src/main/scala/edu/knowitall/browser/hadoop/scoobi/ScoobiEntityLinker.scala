@@ -56,13 +56,6 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
   }
 
   def linkEntities(reuseLinks: Boolean)(group: ExtractionGroup[ReVerbExtraction]): ExtractionGroup[ReVerbExtraction] = {
-    // a hack for the thread problem
-    if (groupsProcessed == 0) {
-      val keys = Thread.getAllStackTraces.keySet
-      System.err.println("Num threads running: " + keys.size)
-      keys.foreach { thread => System.err.println("%s, %s, %s".format(thread.getId, thread.getName, thread.getPriority)) }
-    }
-
     groupsProcessed += 1
 
     val extrs = group.instances.map(_.extraction)
@@ -76,22 +69,20 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
     val (arg1Entity, arg1Types) = if (reuseLinks && group.arg1.entity.isDefined) {
       (group.arg1.entity, group.arg1.types)
     } else {
-      val entity = getEntity(randomLinker, head.arg1Head, head, sources) match {
+      val entity = getEntity(randomLinker, head.arg1Text, head, sources) match {
         case Some(rawEntity) => { arg1sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
-      //if (group.arg1.entity.isDefined) require(group.arg1.entity.equals(entity._1))
       entity
     }
 
     val (arg2Entity, arg2Types) = if (reuseLinks && group.arg2.entity.isDefined) {
       (group.arg2.entity, group.arg2.types)
     } else {
-      val entity = getEntity(randomLinker, head.arg2Head, head, sources) match {
+      val entity = getEntity(randomLinker, head.arg2Text, head, sources) match {
         case Some(rawEntity) => { arg2sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
-      //if (group.arg2.entity.isDefined) require(group.arg2.entity.equals(entity._1))
       entity
     }
 

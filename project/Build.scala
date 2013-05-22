@@ -109,7 +109,8 @@ object NlpToolsBuild extends Build {
       slf4jApi,
       junit,
       scalatest,
-      "org.apache.derby" % "derby" % "10.9.1.0"
+      "org.apache.derby" % "derby" % "10.9.1.0",
+      "org.apache.derby" % "derbyclient" % "10.9.1.0"
     )
   )) dependsOn(models)
 }

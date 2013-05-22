@@ -22,6 +22,10 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
   private var cacheHits = 0
   private var cacheTimeouts = 0
 
+  private val fbidIndices = new Indices(
+    Constants.derbyDbUrl(Constants.defaultDerbyDbBasePath, Constants.entityLinkingDbName)
+  )
+
   def this(basePath: String) = this(
     new batch_match(basePath),
     new CrosswikisCandidateFinder(basePath),
@@ -84,7 +88,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     }
 
     val fbids = fbidPairs.map(pair => pair.one)
-    val fbidScores = bm.processSingleArgWithSources(arg, Indices.convertFbids(fbids), sources).toIterable
+    val fbidScores = bm.processSingleArgWithSources(arg, fbidIndices.getIndices(fbids), sources).toIterable
 
     return getBestFbid(arg, fbidPairs, fbidScores);
   }
