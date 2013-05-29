@@ -23,6 +23,8 @@ import scopt.OptionParser
 import edu.knowitall.openie.models.util.TaggedStemmer
 import com.nicta.scoobi.io.text.TextInput
 import com.nicta.scoobi.io.text.TextOutput
+import com.nicta.scoobi.io.text.TextSource
+import com.hadoop.mapreduce.LzoTextInputFormat
 
 /**
   * A mapper job that
@@ -206,7 +208,10 @@ object ScoobiEntityLinker extends ScoobiApp {
     }
 
     if (parser.parse(args)) {
-      val lines: DList[String] = TextInput.fromTextFile(inputPath)
+      val lines: DList[String] = TextInput.fromTextSource(
+        new TextSource(
+          Seq(inputPath),
+          inputFormat = classOf[LzoTextInputFormat]))
       val linkedGroups: DList[String] = linkGroups(lines, minFreq, maxFreq, reportInterval, skipLinking)
 
       persist(TextOutput.toTextFile(linkedGroups, outputPath + "/"));
