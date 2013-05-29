@@ -57,7 +57,7 @@ object NlpToolsBuild extends Build {
   lazy val populator = Project(id = "openie-populator", base = file("populator"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
       "org.apache.lucene" % "lucene-core" % "3.6.1",
-      "org.apache.solr" % "solr-solrj" % "4.2.1",
+      "org.apache.solr" % "solr-solrj" % "4.3.0",
       "net.liftweb" %% "lift-json" % "2.5-RC5",
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion excludeAll(ExclusionRule(organization = "jwnl")),
