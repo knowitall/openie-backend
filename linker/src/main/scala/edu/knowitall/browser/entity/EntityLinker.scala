@@ -13,7 +13,7 @@ import scala.collection.mutable.HashMap
 
 //import edu.knowitall.browser.hadoop.scoobi.EntityTyper
 
-class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
+class EntityLinker(val bm: batch_match, val candidateFinder: CrosswikisCandidateFinder,
     val typer: EntityTyper) {
   private val PAD_SOURCES = 4 // extend source sentences to this
   // number minimum
