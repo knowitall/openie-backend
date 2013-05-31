@@ -56,8 +56,19 @@ object NlpToolsBuild extends Build {
 
   lazy val populator = Project(id = "openie-populator", base = file("populator"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
-      "org.apache.lucene" % "lucene-core" % "3.6.1",
       "org.apache.solr" % "solr-solrj" % "4.2.1",
+      logbackClassic,
+      logbackCore,
+      slf4jApi,
+      "commons-logging" % "commons-logging-api" % "1.0.4", // solrj stupidly needs this?
+      "com.github.scopt" %% "scopt" % "2.1.0",
+      "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
+      "net.databinder.dispatch" %% "dispatch-core" % "0.10.0")
+  )) dependsOn(backend)
+
+  lazy val backend = Project(id = "openie-backend", base = file("backend"), settings = buildSettings ++ Seq(
+    libraryDependencies ++= Seq(
+      "org.apache.lucene" % "lucene-core" % "3.6.1",
       "net.liftweb" %% "lift-json" % "2.5-RC5",
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion excludeAll(ExclusionRule(organization = "jwnl")),
@@ -66,9 +77,7 @@ object NlpToolsBuild extends Build {
       logbackCore,
       slf4jApi,
       "commons-logging" % "commons-logging-api" % "1.0.4", // solrj stupidly needs this?
-      "com.github.scopt" %% "scopt" % "2.1.0",
-      "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
-      "net.databinder.dispatch" %% "dispatch-core" % "0.10.0")
+      "com.github.scopt" %% "scopt" % "2.1.0")
   )) dependsOn(models)
 
   lazy val hadoop = Project(id = "openie-hadoop", base = file("hadoop"), settings = buildSettings ++ Seq(
@@ -93,7 +102,7 @@ object NlpToolsBuild extends Build {
         }
       }
     }
-  )) dependsOn(populator, linker)
+  )) dependsOn(backend, linker)
 
   lazy val linker = Project(id = "openie-linker", base = file("linker"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
