@@ -35,7 +35,7 @@ class ScoobiReVerbGrouper(val stemmer: TaggedStemmer, val corpus: String) {
 
   private var largestGroup = 0
 
-  private final val MAX_GROUP_SIZE = 1000000
+  private final val MAX_GROUP_SIZE = 500000
 
   def getKeyValuePair(line: String): Option[(String, String)] = try {
 
@@ -47,8 +47,12 @@ class ScoobiReVerbGrouper(val stemmer: TaggedStemmer, val corpus: String) {
 
     extrOpt match {
       case Some(extr) => {
-        val key = extr.indexGroupingKeyString
-        Some((key, line))
+        val key = extr.indexGroupingKey
+        val keyString = "%s__%s__%s".format(key._1, key._2, key._3)
+
+        // don't output if part of the key is empty
+        if (key.productIterator.exists(_.asInstanceOf[String].isEmpty)) None
+        else Some((keyString, line))
       }
       case None => None
     }
