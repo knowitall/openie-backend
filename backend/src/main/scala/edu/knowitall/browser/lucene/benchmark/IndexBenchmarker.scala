@@ -9,6 +9,8 @@ import edu.knowitall.browser.lucene._
 import edu.knowitall.common.Timing.{ Seconds, Milliseconds }
 import edu.knowitall.common.Timing
 
+import edu.knowitall.openie.models._
+
 import org.slf4j.LoggerFactory
 
 /**
@@ -22,7 +24,11 @@ import org.slf4j.LoggerFactory
   *
   * @author Rob
   */
-class IndexBenchmarker(val fetcher: GroupFetcher, numQueries: Int) {
+abstract class IndexBenchmarker(numQueries: Int) {
+  import IndexBenchmarker.Query
+
+  def fetch(arg1: Option[String] = None, rel: Option[String] = None, arg2: Option[String] = None): Seq[ReVerbExtractionGroup.REG]
+  def fetch(query: Query): Seq[ReVerbExtractionGroup.REG] = fetch(arg1 = query.arg1, rel = query.rel , arg2 = query.arg2)
 
   def println(str: String):Unit = { System.out.println("Benchmark: %s".format(str)) }
 
@@ -32,16 +38,16 @@ class IndexBenchmarker(val fetcher: GroupFetcher, numQueries: Int) {
   import IndexBenchmarker.{ fieldMasks, commonNouns, commonVerbs }
 
   /** Runs the benchmark queries over the specified "corpus" */
-  def runResults(): Iterator[(QuerySpec, ResultSet, SearchTime)] = {
+  def runResults(): Iterator[(Query, Seq[ReVerbExtractionGroup.REG], SearchTime)] = {
 
     println("Running Warm-up Queries...")
     println("Time\tGroups\tInstances\tTotalHits\tQuery Status")
-    fetcher.getGroups(arg1 = Some("Bill"), arg2 = Some("Microsoft"))
-    fetcher.getGroups(rel = Some("conjugate"))
-    fetcher.getGroups(arg1 = Some("Etzioni"))
+    fetch(arg1 = Some("Bill"), arg2 = Some("Microsoft"))
+    fetch(rel = Some("conjugate"))
+    fetch(arg1 = Some("Etzioni"))
 
     randomQueries(numQueries).iterator.map { querySpec =>
-      val (searchTime, resultSet) = Timing.time(fetcher.getGroups(querySpec))
+      val (searchTime, resultSet) = Timing.time(fetch(querySpec))
       (querySpec, resultSet, SearchTime(searchTime))
     }
   }
@@ -50,19 +56,11 @@ class IndexBenchmarker(val fetcher: GroupFetcher, numQueries: Int) {
     val resultsIterator = runResults()
     val results = resultsIterator.map { case (querySpec, resultSet, searchTime) =>
 
-      val totalHits = resultSet match{
-        case Success(_) => resultSet.numGroups
-        case Limited(_, hits) => hits
-        case Timeout(_, hits) => hits
-      }
+      val totalHits = resultSet.size
 
-      def resultString(prefix:String) = "%s\t%d\t%d\t%d\t%s".format(searchTime, resultSet.numGroups, resultSet.numInstances, totalHits, prefix+queryTitle(querySpec))
+      def resultString(prefix:String) = "%s\t%d\t%d\t%d\t%s".format(searchTime, resultSet.size, resultSet.iterator.map(_.instances.size).sum, totalHits, prefix+queryTitle(querySpec))
 
-      resultSet match {
-        case Success(_) => println(resultString("SUCCESS"))
-        case Limited(_, _) => println(resultString("LIMITED"))
-        case Timeout(_, _) => println(resultString("TIMEOUT"))
-      }
+      println(resultString(""))
       (querySpec, resultSet, SearchTime(searchTime.time))
     } toSeq
 
@@ -75,7 +73,7 @@ class IndexBenchmarker(val fetcher: GroupFetcher, numQueries: Int) {
     println("Avg Search Time: %s".format(avgSearchTime))
   }
 
-  private def randomQueries(numQueries: Int): Seq[QuerySpec] = {
+  private def randomQueries(numQueries: Int): Seq[Query] = {
 
     val nq = numQueries / fieldMasks.length
 
@@ -85,7 +83,7 @@ class IndexBenchmarker(val fetcher: GroupFetcher, numQueries: Int) {
     }
   }
 
-  private def queryTitle(qs: QuerySpec): String = {
+  private def queryTitle(qs: Query): String = {
 
     val arg1Str = qs.arg1.getOrElse("___")
     val relStr = qs.rel.getOrElse("___")
@@ -94,13 +92,13 @@ class IndexBenchmarker(val fetcher: GroupFetcher, numQueries: Int) {
     "(%s, %s, %s)".format(arg1Str, relStr, arg2Str)
   }
 
-  private def randomQuery(arg1: Boolean, rel: Boolean, arg2: Boolean): QuerySpec = {
+  private def randomQuery(arg1: Boolean, rel: Boolean, arg2: Boolean): Query = {
 
     val arg1Op = if (arg1) Some(randomCommonNoun()) else None
     val relOp = if (rel) Some(randomCommonVerb()) else None
     val arg2Op = if (arg2) Some(randomCommonNoun()) else None
 
-    QuerySpec(arg1Op, relOp, arg2Op, None, None, None, None)
+    Query(arg1Op, relOp, arg2Op)
   }
 
   private def randomCommonNoun(): String = commonNouns(Random.nextInt(commonNouns.length))
@@ -109,6 +107,7 @@ class IndexBenchmarker(val fetcher: GroupFetcher, numQueries: Int) {
 }
 
 object IndexBenchmarker {
+  case class Query(arg1: Option[String], rel: Option[String], arg2: Option[String])
 
   import edu.knowitall.common.Resource.using
 
@@ -132,6 +131,7 @@ object IndexBenchmarker {
     (false, true, false),
     (false, false, true))
 
+/*
   def main(args: Array[String]): Unit = {
 
     var fetcherIndexPath = ""
@@ -154,8 +154,10 @@ object IndexBenchmarker {
 
     new IndexBenchmarker(new ExtractionGroupFetcher(fetcherIndexPath, maxGroups, maxInstances, timeout), numQueries).printResults
   }
+  */
 }
 
+/*
 object ParallelIndexBenchmarker {
 
   import IndexBenchmarker.COMMON_NOUNS
@@ -185,3 +187,4 @@ object ParallelIndexBenchmarker {
     new IndexBenchmarker(new ParallelExtractionGroupFetcher(fetcherIndexPaths, maxGroups, maxInstances, timeout), numQueries).printResults
   }
 }
+*/

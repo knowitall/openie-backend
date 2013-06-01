@@ -42,7 +42,7 @@ object ScoobiReVerbGroupFilter extends ScoobiApp {
 
     // serialized ExtractionGroup[ReVerbExtraction]
     val filtered: DList[String] = groups.flatMap  { group =>
-      if (group.size > 10000000) None
+      if (group.size > 500000) None
       else {
         val reg = ReVerbExtractionGroup.deserializeFromString(group)
         val filteredInstances = filterInstances(reg)
