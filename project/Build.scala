@@ -28,7 +28,7 @@ object NlpToolsBuild extends Build {
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     publish := { },
     publishLocal := { }
-  ) aggregate(models, populator, linker, hadoop)
+  ) aggregate(models, populator, backend, linker, hadoop)
 
   // parent build definition
   val buildSettings = Defaults.defaultSettings ++ Seq (
