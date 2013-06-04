@@ -76,7 +76,7 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage %% "nlptools-chunk-opennlp" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       "org.apache.hadoop" % "hadoop-lzo" % "0.4.13",
-      "com.nicta" %% "scoobi" % "0.7.0-cdh3-SNAPSHOT",
+      "com.nicta" %% "scoobi" % "0.7.0-RC2-cdh3",
       logbackClassic,
       logbackCore,
       slf4jApi
