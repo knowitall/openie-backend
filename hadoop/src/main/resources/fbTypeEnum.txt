@@ -1,2500 +1,2500 @@
-0	/projects/project_focus
-1	/architecture/structure
-2	/location/location
-3	/location/dated_location
-4	/location/citytown
-5	/location/statistical_region
-6	/government/political_party
-7	/organization/organization
-8	/book/written_work
-9	/fictional_universe/work_of_fiction
-10	/book/book
-11	/broadcast/radio_station
-12	/broadcast/broadcast
-13	/business/brand
-14	/protected_sites/protected_site
-15	/religion/religious_organization
-16	/people/person
-17	/military/military_person
-18	/royalty/chivalric_order_member
-19	/people/deceased_person
-20	/time/event
-21	/military/military_conflict
-22	/metropolitan_transit/transit_system
-23	/architecture/building
-24	/architecture/museum
-25	/travel/tourist_attraction
-26	/biology/organism_classification
-27	/sports/pro_athlete
-28	/tv/tv_series_episode
-29	/cvg/computer_videogame
-30	/base/sails/sailing_ship
-31	/boats/ship
-32	/royalty/noble_person
-33	/government/u_s_congressperson
-34	/government/politician
-35	/military/military_unit
-36	/olympics/olympic_athlete
-37	/soccer/football_player
-38	/location/uk_civil_parish
-39	/location/administrative_division
-40	/opera/opera
-41	/music/composition
-42	/business/shopping_center
-43	/law/legal_case
-44	/geography/geographical_feature
-45	/geography/body_of_water
-46	/geography/river
-47	/time/recurring_event
-48	/book/literary_series
-49	/architecture/venue
-50	/sports/sports_facility
-51	/medicine/disease
-52	/tv/tv_program
-53	/book/periodical
-54	/book/newspaper
-55	/location/in_district
-56	/sports/sports_team
-57	/baseball/baseball_team
-58	/visual_art/visual_artist
-59	/business/employer
-60	/book/book_subject
-61	/music/composer
-62	/music/artist
-63	/music/group_member
-64	/chess/chess_player
-65	/education/educational_institution
-66	/book/journal
-67	/tv/tv_personality
-68	/fictional_universe/fictional_character
-69	/geography/island
-70	/computer/computer
-71	/soccer/football_league
-72	/sports/sports_league
-73	/business/consumer_product
-74	/sports/multi_event_tournament
-75	/metropolitan_transit/transit_stop
-76	/people/measured_person
-77	/american_football/football_player
-78	/business/business_operation
-79	/music/record_label
-80	/education/school
-81	/medicine/medical_treatment
-82	/medicine/drug
-83	/people/ethnicity
-84	/boats/ship_type
-85	/fictional_universe/character_species
-86	/book/author
-87	/award/award_nominee
-88	/film/actor
-89	/award/award_winning_work
-90	/award/award_nominated_work
-91	/music/guitarist
-92	/base/yalebase/building
-93	/base/yalebase/library
-94	/people/family_name
-95	/base/typefaces/typeface
-96	/biology/deceased_organism
-97	/biology/organism
-98	/baseball/baseball_player
-99	/baseball/baseball_manager
-100	/travel/accommodation
-101	/travel/hotel
-102	/venture_capital/venture_funded_company
-103	/law/invention
-104	/sports/sports_championship_event
-105	/soccer/football_match
-106	/base/ballet/ballet_school
-107	/food/ingredient
-108	/organization/organization_founder
-109	/tv/tv_actor
-110	/sports/sports_league_season
-111	/influence/influence_node
-112	/base/crime/lawyer
-113	/film/film_character
-114	/tv/tv_character
-115	/medicine/anatomical_structure
-116	/medicine/brain
-117	/visual_art/art_period_movement
-118	/geography/mountain
-119	/education/university
-120	/award/award_winner
-121	/comic_books/comic_book_character
-122	/transportation/road
-123	/base/rugby/rugby_player
-124	/library/public_library_system
-125	/people/family_member
-126	/film/cinematographer
-127	/education/academic
-128	/law/judge
-129	/geography/waterfall
-130	/film/film
-131	/media_common/netflix_title
-132	/music/musical_group
-133	/aviation/airport
-134	/internet/website
-135	/location/australian_local_government_area
-136	/film/director
-137	/film/writer
-138	/basketball/basketball_player
-139	/fashion/textile
-140	/base/textiles/textile
-141	/location/ar_department
-142	/book/short_non_fiction
-143	/book/published_work
-144	/soccer/football_team
-145	/architecture/architectural_structure_owner
-146	/base/usnris/nris_listing
-147	/protected_sites/listed_site
-148	/music/concert_tour
-149	/music/album
-150	/cvg/cvg_developer
-151	/education/school_district
-152	/base/givennames/given_name
-153	/book/magazine
-154	/film/person_or_entity_appearing_in_film
-155	/government/government_agency
-156	/computer/software_license
-157	/american_football/football_coach
-158	/government/political_district
-159	/music/conductor
-160	/award/award_category
-161	/games/game
-162	/medicine/notable_person_with_medical_condition
-163	/film/film_story_contributor
-164	/base/americancomedy/borscht_belt_comedian
-165	/base/americancomedy/comedian
-166	/government/general_election
-167	/base/argumentmaps/morally_disputed_activity
-168	/base/engineering/engineering_person
-169	/projects/project_participant
-170	/government/election
-171	/business/board_member
-172	/sports/golfer
-173	/theater/play
-174	/military/armed_force
-175	/event/disaster
-176	/tv/tv_program_creator
-177	/base/yalebase/person
-178	/sports/australian_rules_footballer
-179	/law/inventor
-180	/basketball/basketball_coach
-181	/language/human_language
-182	/architecture/architect
-183	/ice_hockey/hockey_player
-184	/travel/transport_terminus
-185	/comic_books/comic_book_series
-186	/aviation/aircraft_owner
-187	/aviation/airline
-188	/government/governmental_body
-189	/base/hybrids/hybrid_fruit
-190	/amusement_parks/ride
-191	/amusement_parks/disney_ride
-192	/amusement_parks/roller_coaster
-193	/astronomy/extraterrestrial_location
-194	/religion/place_of_worship
-195	/royalty/monarch
-196	/sports/boxer
-197	/transportation/bridge
-198	/book/short_story
-199	/internet/social_network_user
-200	/religion/religious_leader
-201	/automotive/model
-202	/film/film_job
-203	/business/issuer
-204	/base/bioventurist/bv_venture_investor
-205	/venture_capital/venture_investor
-206	/organization/non_profit_organization
-207	/film/film_crewmember
-208	/people/family
-209	/theater/theater_actor
-210	/award/ranked_item
-211	/broadcast/producer
-212	/award/competitor
-213	/boats/ship_builder
-214	/boats/ship_designer
-215	/chemistry/chemical_compound
-216	/base/crime/convicted_criminal
-217	/broadcast/artist
-218	/cricket/cricket_player
-219	/geography/mountain_pass
-220	/olympics/olympic_event_competition
-221	/people/profession
-222	/astronomy/asteroid
-223	/astronomy/astronomical_discovery
-224	/astronomy/near_earth_object
-225	/astronomy/orbital_relationship
-226	/astronomy/celestial_object
-227	/base/petbreeds/dog_breed
-228	/biology/animal_breed
-229	/medicine/hospital
-230	/music/producer
-231	/skiing/ski_area
-232	/film/producer
-233	/sports/sports_official
-234	/media_common/adaptation
-235	/tv/tv_writer
-236	/base/terrorism/terrorist_attack
-237	/organization/organization_scope
-238	/boats/ship_class
-239	/base/juiced/user_of_banned_substances
-240	/award/award
-241	/base/americancomedy/comedy_group_member
-242	/film/music_contributor
-243	/architecture/architectural_style
-244	/location/neighborhood
-245	/meteorology/tropical_cyclone
-246	/business/defunct_company
-247	/language/language_writing_system
-248	/geography/lake
-249	/business/job_title
-250	/symbols/name_source
-251	/film/editor
-252	/people/place_of_interment
-253	/location/cemetery
-254	/broadcast/content
-255	/computer/programming_language
-256	/computer/file_format
-257	/base/saints/saint
-258	/base/adultentertainment/adult_entertainer
-259	/music/festival
-260	/zoos/zoo
-261	/food/dish
-262	/base/activism/activist
-263	/book/poem
-264	/base/fashionmodels/fashion_model
-265	/religion/religious_leadership_jurisdiction
-266	/medicine/symptom
-267	/base/natlang/grouped_topic
-268	/base/animalnames/animal_group_name
-269	/geography/glacier
-270	/royalty/noble_title
-271	/cvg/cvg_platform
-272	/location/hud_county_place
-273	/location/hud_foreclosure_area
-274	/music/performance_role
-275	/music/instrument
-276	/skiing/lift_type
-277	/location/cn_county
-278	/organization/membership_organization
-279	/education/educational_degree
-280	/location/postal_code
-281	/base/greatfilms/ranked_item
-282	/base/wfilmbase/film
-283	/base/thoroughbredracing/thoroughbred_racehorse_trainer
-284	/award/hall_of_fame_inductee
-285	/architecture/skyscraper
-286	/location/australian_suburb
-287	/sports/tournament_event_competition
-288	/base/casinos/casino
-289	/base/yalebase/secret_society_member
-290	/time/calendar
-291	/aviation/airliner_accident
-292	/award/hall_of_fame
-293	/sports/cyclist
-294	/aviation/aircraft_model
-295	/food/brewery_brand_of_beer
-296	/basketball/basketball_team
-297	/wine/wine_producer
-298	/base/bioventurist/product
-299	/base/bioventurist/bv_therapeutic
-300	/base/folklore/mythical_creature
-301	/base/engineering/canal
-302	/biology/pedigreed_animal
-303	/biology/owned_animal
-304	/base/thoroughbredracing/thoroughbred_racehorse
-305	/rail/railway_terminus
-306	/visual_art/artwork
-307	/media_common/adapted_work
-308	/base/computerscience/block_cipher
-309	/organization/endowed_organization
-310	/religion/religion
-311	Topic
-312	/government/legislative_committee
-313	/symbols/flag
-314	/military/military_post
-315	/dining/restaurant
-316	/business/business_location
-317	/tv/tv_producer
-318	/geography/geographical_feature_category
-319	/book/book_edition
-320	/media_common/creative_work
-321	/wine/wine_region
-322	/type/content
-323	/visual_art/color
-324	/computer/software
-325	/atom/feed
-326	/atom/feed_person
-327	/comic_books/comic_book_story
-328	/cvg/game_version
-329	/fictional_universe/fictional_setting
-330	/comic_books/comic_book_issue
-331	/computer/computer_scientist
-332	/business/company_advisor
-333	/time/day_of_year
-334	/base/formula1/formula_1_driver
-335	/tv/tv_series_season
-336	/music/release
-337	/music/release_component
-338	/organization/organization_member
-339	/geography/mountain_range
-340	/base/disaster2/death_causing_event
-341	/music/lyricist
-342	/music/songwriter
-343	/base/computerscience/automaton
-344	/location/jp_district
-345	/transportation/bridge_type
-346	/spaceflight/spacecraft
-347	/spaceflight/satellite
-348	/people/cause_of_death
-349	/fictional_universe/medical_condition_in_fiction
-350	/medicine/risk_factor
-351	/base/bioventurist/bv_medical_condition
-352	/cvg/cvg_designer
-353	/internet/website_owner
-354	/symbols/coat_of_arms
-355	/location/jp_city_town
-356	/visual_art/art_subject
-357	/fictional_universe/character_occupation
-358	/games/playing_card_game
-359	/base/bioventurist/technology_class
-360	/medicine/disease_cause
-361	/religion/founding_figure
-362	/cvg/game_series
-363	/sports/professional_sports_team
-364	/tv/tv_program_guest
-365	/architecture/lighthouse
-366	/book/book_character
-367	/government/government_office_or_title
-368	/internet/top_level_domain_sponsor
-369	/fashion/garment
-370	/business/asset_owner
-371	/base/saturdaynightlive/snl_host
-372	/theater/theatrical_lyricist
-373	/theater/theatrical_composer
-374	/base/saturdaynightlive/snl_musical_guest
-375	/film/film_subject
-376	/location/us_indian_reservation
-377	/book/translated_work
-378	/royalty/royal_line
-379	/royalty/kingdom
-380	/comic_books/comic_book_creator
-381	/base/prison/prison
-382	/interests/collection_category
-383	/base/cocktails/cocktail_drinkware
-384	/fictional_universe/fictional_character_creator
-385	/base/famouspets/pet_owner
-386	/celebrities/celebrity
-387	/sports/sports_award_winner
-388	/base/prison/prisoner
-389	/theater/theater_character
-390	/film/film_location
-391	/sports/sports_team_location
-392	/education/field_of_study
-393	/dining/cuisine
-394	/film/film_festival
-395	/government/form_of_government
-396	/cvg/game_character
-397	/religion/religious_leadership_title
-398	/internet/website_category
-399	/music/track
-400	/language/language_family
-401	/music/genre
-402	/internet/blog
-403	/food/beer_style
-404	/food/beer_style_category
-405	/food/beer
-406	/base/beerbase/beer2
-407	/media_common/media_genre
-408	/comic_strips/comic_strip_genre
-409	/aviation/aircraft_type
-410	/aviation/aircraft_designer
-411	/dataworld/data_task
-412	/spaceflight/astronaut
-413	/base/mystery/ufo_sighting_location
-414	/base/pirates/pirate
-415	/boats/ship_owner
-416	/base/landcover/classification_code
-417	/base/landcover/saf_forest_cover_type
-418	/games/game_genre
-419	/media_common/quotation
-420	/biology/protein
-421	/medicine/physician
-422	/dataworld/mass_data_operation
-423	/language/conlang
-424	/biology/cytogenetic_band
-425	/computer/software_developer
-426	/biology/gene_group
-427	/biology/gene_ontology_group
-428	/base/formula1/race_track
-429	/biology/gene
-430	/aviation/aircraft_manufacturer
-431	/automotive/model_year
-432	/cvg/game_voice_actor
-433	/base/tallships/tall_ship_event_instance
-434	/spaceflight/space_mission
-435	/fashion/fashion_designer
-436	/music/music_video_director
-437	/symbols/namesake
-438	/location/de_city
-439	/base/fight/riot_control_techniques
-440	/fictional_universe/fictional_object
-441	/automotive/generation
-442	/base/argumentmaps/argument
-443	/base/argumentmaps/idea
-444	/book/poetic_verse_form
-445	/book/poetic_meter
-446	/comic_strips/comic_strip_character
-447	/book/literary_genre
-448	/theater/theater_designer
-449	/tv/the_colbert_report_episode
-450	/base/breakfast/breakfast_cereal_mascot
-451	/religion/deity
-452	/media_common/dedicatee
-453	/business/consumer_company
-454	/fictional_universe/fictional_organization
-455	/base/pinball/pinball_machine
-456	/base/noisepop/artist
-457	/location/country
-458	/symbols/flag_referent
-459	/cricket/cricket_bowler
-460	/religion/religious_text
-461	/base/formula1/formula_1_grand_prix
-462	/sports/drafted_athlete
-463	/base/killers/serial_killer
-464	/music/guitar
-465	/tv/tv_director
-466	/base/surfing/surfer
-467	/music/bassist
-468	/sports/golf_facility
-469	/base/grecoromanmythology/source
-470	/martial_arts/martial_artist
-471	/base/classiccars/classic_car
-472	/base/fires/fires
-473	/base/engineering/dam
-474	/award/recurring_competition
-475	/base/animemanga/anime_manga_character
-476	/base/crime/law_firm
-477	/games/game_designer
-478	/broadcast/tv_station
-479	/base/vancouver/podcaster
-480	/tennis/tennis_player
-481	/tennis/tennis_tournament_champion
-482	/law/court
-483	/base/crime/appellate_court
-484	/cvg/computer_game_expansion
-485	/geography/mountaineer
-486	/music/concert_film
-487	/base/fires/explosion
-488	/cricket/cricket_umpire
-489	/food/food
-490	/architecture/architecture_firm
-491	/tv/tv_network
-492	/medicine/drug_ingredient
-493	/conferences/conference_series
-494	/base/realitytv/reality_tv_season
-495	/base/dancingwiththestars/season
-496	/astronomy/nebula
-497	/engineering/engine
-498	/music/soundtrack
-499	/tennis/tennis_tournament
-500	/education/fraternity_sorority
-501	/base/engineering/mine
-502	/award/competition
-503	/architecture/tower
-504	/astronomy/galaxy
-505	/education/department
-506	/broadcast/tv_channel
-507	/film/film_festival_event
-508	/metropolitan_transit/transit_line
-509	/interests/collector
-510	/meteorology/tropical_cyclone_season
-511	/education/school_newspaper
-512	/film/film_company
-513	/government/national_anthem
-514	/base/adultentertainment/adult_media
-515	/cvg/cvg_publisher
-516	/amusement_parks/ride_designer
-517	/amusement_parks/ride_manufacturer
-518	/base/livemusic/concert_venue
-519	/base/classiccars/vintage_car
-520	/base/nascar/nascar_driver
-521	/base/horseracing/horse_race
-522	/organization/club_interest
-523	/business/shareholder
-524	/soccer/football_league_season
-525	/base/animemanga/anime_director
-526	/architecture/house
-527	/education/school_type
-528	/people/professional_field
-529	/comic_strips/comic_strip_creator
-530	/comic_books/comic_book_writer
-531	/comic_strips/comic_strip
-532	/base/tabletennis/athlete
-533	/rail/locomotive_class
-534	/base/ontologies/ontology_class
-535	/astronomy/astronomer
-536	/fictional_universe/person_in_fiction
-537	/base/jamesbond007/bond_girl
-538	/education/academic_institution
-539	/astronomy/moon
-540	/base/birdwatching/checklist_bird
-541	/base/litcentral/focal_taxa
-542	/music/single
-543	/base/parody/parodied_subject
-544	/base/ancientegypt/pyramid_owner
-545	/base/ancientegypt/pharaoh
-546	/film/production_company
-547	/tv/tv_genre
-548	/tv/tv_subject
-549	/base/ikariam/ikariam_research
-550	/base/fight/crime_type
-551	/media_common/quotation_subject
-552	/base/crime/acquitted_person
-553	/soccer/football_referee
-554	/base/mystery/ufo_sighting
-555	/cvg/musical_game_song
-556	/conferences/conference_venue
-557	/games/game_publisher
-558	/finance/currency
-559	/business/issue
-560	/base/column/column_author
-561	/book/periodical_publisher
-562	/media_common/quotation_source
-563	/military/military_combatant
-564	/government/governmental_jurisdiction
-565	/cvg/computer_game_subject
-566	/sports/sports_equipment
-567	/base/whamoworld/wham_o_toys
-568	/education/school_mascot
-569	/computer/programming_language_designer
-570	/base/scubadiving/marine_creature
-571	/soccer/football_team_manager
-572	/people/canadian_aboriginal_group
-573	/theater/theater_company
-574	/business/product_line
-575	/tv/non_character_role
-576	/base/skateboarding/skateboarder
-577	/business/sponsored_recipient
-578	/media_common/dedicated_work
-579	/ice_hockey/hockey_team
-580	/spaceflight/rocket_engine_manufacturer
-581	/spaceflight/rocket_engine_designer
-582	/dataworld/information_source
-583	/spaceflight/bipropellant_rocket_engine
-584	/spaceflight/rocket_engine
-585	/time/geologic_time_period
-586	/military/military_commander
-587	/fictional_universe/fictional_organization_type
-588	/rail/railway
-589	/baseball/baseball_league
-590	/base/nascar/nascar_race_instance
-591	/event/disaster_victim
-592	/medicine/icd_9_cm_classification
-593	/base/dancingwiththestars/contestant
-594	/location/ca_census_division
-595	/base/braziliangovt/politician
-596	/base/saturdaynightlive/snl_actor
-597	/base/saturdaynightlive/snl_cast_member
-598	/soccer/football_award
-599	/music/drummer
-600	/dining/chef
-601	/music/engineer
-602	/base/localfood/produce
-603	/medicine/drug_manufacturer
-604	/religion/prayer
-605	/computer/web_browser
-606	/base/mystery/alien_abduction
-607	/exhibitions/exhibition_subject
-608	/base/lewisandclark/places_westward
-609	/base/worldwonders/ancient_wonder
-610	/base/ancientegypt/pyramid
-611	/medicine/surgeon
-612	/location/it_comune
-613	/zoos/zoo_animal
-614	/base/mystery/cryptid_alternative
-615	/biology/animal
-616	/fictional_universe/event_in_fiction
-617	/music/multipart_release
-618	/martial_arts/martial_art
-619	/sports/sport
-620	/olympics/olympic_sport
-621	/cricket/cricket_coach
-622	/base/underwater/underwater_thing
-623	/base/underwater/sunken_city
-624	/sports/sports_championship
-625	/base/symbols/symbol
-626	/film/film_festival_sponsor
-627	/base/tallships/maritime_museum
-628	/education/student_radio_station
-629	/base/fight/protest
-630	/film/film_set_designer
-631	/book/publishing_company
-632	/food/wine_style
-633	/location/cn_county_level_city
-634	/base/fight/labour_dispute
-635	/location/cn_prefecture_level_city
-636	/film/film_art_director
-637	/film/film_production_designer
-638	/biology/fossil_site
-639	/award/award_presenting_organization
-640	/base/jsbach/bach_composition
-641	/base/mystery/person_with_alleged_paranormal_powers
-642	/music/compositional_form
-643	/base/ballet/ballet
-644	/base/undergroundhumanthings/underground_object
-645	/base/marchmadness/ncaa_basketball_team
-646	/sports/school_sports_team
-647	/location/it_frazione
-648	/book/publication
-649	/book/journal_article
-650	/book/scholarly_work
-651	/base/bioventurist/science_or_technology_company
-652	/base/bioventurist/organization
-653	/base/tallships/tall_ship
-654	/periodicals/newspaper_circulation_area
-655	/base/contractbridge/bridge_player
-656	/base/wrestling/solo_wrestler_or_team
-657	/base/wrestling/professional_wrestler
-658	/base/bio2rdf/sparql
-659	/broadcast/internet_stream
-660	/film/film_costumer_designer
-661	/wine/wine
-662	/base/collectives/collective_member
-663	/wine/vineyard
-664	/architecture/lighthouse_construction_material
-665	/amusement_parks/park
-666	/time/holiday
-667	/event/public_speaking_event
-668	/base/collectives/collective
-669	/base/puzzles/puzzle_constructor
-670	/fictional_universe/school_in_fiction
-671	/medicine/medical_trial_health_authority
-672	/astronomy/comet
-673	/base/scubadiving/coral_reef
-674	/business/asset
-675	/business/oil_field
-676	/fictional_universe/character_rank
-677	/base/americancomedy/movie
-678	/base/standardizedtesting/test_giving_organization
-679	/type/unit
-680	/measurement_unit/current_density_unit
-681	/medicine/drug_class
-682	/theater/theater
-683	/people/appointee
-684	/sports/defunct_sports_team
-685	/location/symbol_of_administrative_division
-686	/food/cheese
-687	/government/political_appointer
-688	/law/legal_subject
-689	/base/infrastructure/power_station
-690	/education/academic_post_title
-691	/award/ranked_list
-692	/opera/librettist
-693	/government/legislative_session
-694	/food/drinking_establishment
-695	/base/britishpubs/pub
-696	/government/government_office_category
-697	/location/ru_republic
-698	/automotive/platform
-699	/base/piercings/piercing_location
-700	/business/sponsor
-701	/ice_hockey/hockey_position
-702	/base/digitalcameras/lens_version
-703	/cricket/cricket_team
-704	/base/gender/transgender_person
-705	/location/id_regency
-706	/projects/project
-707	/base/tallships/historic_ship
-708	/olympics/olympic_venue
-709	/base/wrestling/championship_title
-710	/astronomy/galactic_interaction_status
-711	/base/eating/practicer_of_diet
-712	/visual_art/visual_art_genre
-713	/astronomy/star
-714	/base/pinball/pinball_machine_manufacturer
-715	/base/monster/monster
-716	/computer/software_genre
-717	/engineering/fuel_delivery_method
-718	/automotive/fuel_delivery_method
-719	/architecture/building_complex
-720	/base/politicalconventions/primary_candidate
-721	/food/beverage
-722	/base/infrastructure/lock
-723	/games/game_expansion
-724	/royalty/order_of_chivalry
-725	/medicine/medical_specialty
-726	/law/patent_assignee
-727	/measurement_unit/measuring_instrument
-728	/book/illustrator
-729	/law/constitution
-730	/book/periodical_subject
-731	/film/film_genre
-732	/broadcast/genre
-733	/opera/opera_company
-734	/measurement_unit/distance_unit
-735	/military/rank
-736	/base/coltrane/jazz_album
-737	/base/mystery/cryptid_classification
-738	/digicams/digital_camera
-739	/base/digitalcameras/digital_camera
-740	/computer/computer_peripheral
-741	/rail/diesel_locomotive_class
-742	/base/animemanga/manga_author
-743	/location/census_designated_place
-744	/meteorology/cyclone_affected_area
-745	/fictional_universe/fictional_job_title
-746	/base/fight/protest_type
-747	/film/film_format
-748	/film/film_distribution_medium
-749	/base/motorcycle/motorcycle_series
-750	/base/motorcycle/motorcycle_distinguishing_feature
-751	/base/motorcycle/motorcycle_part_number_manufacturer
-752	/event/presented_work
-753	/base/motorcycle/motorcycle_part_number_retailer
-754	/dataworld/incompatible_types
-755	/theater/theater_production
-756	/library/public_library
-757	/people/american_indian_group
-758	/base/damsbase/dam_destruction_method
-759	/base/architecture2/destruction_method2
-760	/cvg/musical_game
-761	/business/industry
-762	/automotive/company
-763	/base/plopquiz/plopquiz
-764	/law/patent_office
-765	/broadcast/tv_station_owner
-766	/astronomy/asteroid_spectral_type
-767	/base/crime/crime_victim
-768	/base/ballet/ballet_company
-769	/organization/organization_type
-770	/base/typefaces/typeface_creator
-771	/base/fight/crowd_event
-772	/base/database/database_topic
-773	/automotive/engine
-774	/computer/computing_platform
-775	/automotive/make
-776	/geography/mountain_listing
-777	/base/infection/computer_infection
-778	/base/crime/crime
-779	/food/tea
-780	/fictional_universe/fictional_substance
-781	/base/vancouver/location_in_neighborhood
-782	/education/dissertation
-783	/base/siswimsuitmodels/si_swimsuit_model
-784	/chemistry/chemical_classification
-785	/measurement_unit/dimension
-786	/location/de_rural_district
-787	/internet/top_level_domain_registry
-788	/location/ua_oblast
-789	/metropolitan_transit/transit_agency
-790	/religion/type_of_place_of_worship
-791	/architecture/building_function
-792	/base/disaster2/rail_accident
-793	/film/film_screening_venue
-794	/education/student_organization
-795	/location/pr_municipality
-796	/location/us_county
-797	/base/computerscience/data_structure
-798	/base/litcentral/focal_location
-799	/martial_arts/martial_arts_qualification
-800	/location/uk_non_metropolitan_district
-801	/location/uk_statistical_location
-802	/base/fight/riot
-803	/base/formula1/formula_1_team
-804	/education/fraternity_sorority_type
-805	/base/survivor/survivor_contestant
-806	/location/region
-807	/geography/island_group
-808	/base/sailors/ship_passenger
-809	/event/disaster_survivor
-810	/wine/grape_variety
-811	/astronomy/meteor_shower
-812	/base/nascar/nascar_racing_organization
-813	/computer/computer_emulator
-814	/geology/rock_type
-815	/cvg/computer_game_engine
-816	/government/election_campaign
-817	/base/disaster2/type_of_injury
-818	/sports/fight_song
-819	/exhibitions/exhibition_venue
-820	/exhibitions/exhibition_producer
-821	/opera/opera_house
-822	/base/academyawards/host_of_oscar_show
-823	/spaceflight/rocket_fuel
-824	/spaceflight/rocket_engine_fuel
-825	/location/in_city
-826	/base/crime/executed_person
-827	/rail/electric_locomotive_class
-828	/internet/api
-829	/cricket/cricket_league
-830	/medicine/biofluid
-831	/base/database/database
-832	/travel/travel_destination
-833	/organization/role
-834	/american_football/football_team
-835	/fictional_universe/fictional_universe
-836	/architecture/engineer
-837	/zoos/zoo_exhibit
-838	/sports/sports_team_owner
-839	/opera/opera_character
-840	/sports/mascot
-841	/boxing/boxing_match
-842	/astronomy/astronomical_observatory
-843	/architecture/museum_director
-844	/type/domain
-845	/book/magazine_issue
-846	/dataworld/mass_data_load
-847	/law/us_patent
-848	/book/isbn
-849	/type/namespace
-850	/medicine/drug_brand
-851	/business/product_category
-852	/religion/monastery
-853	/royalty/chivalric_order_founder
-854	/internet/blogger
-855	/film/film_series
-856	/organization/organization_sector
-857	/base/grecoromanmythology/greek_deity
-858	/community/discussion_thread
-859	/base/folklore/named_mythical_creature
-860	/spaceflight/rocket
-861	/olympics/olympic_games
-862	/base/grecoromanmythology/roman_hero
-863	/base/grecoromanmythology/roman_deity
-864	/book/newspaper_owner
-865	/boxing/boxing_sanctioning_body
-866	/location/place_with_neighborhoods
-867	/spaceflight/rocket_launch_site
-868	/location/nl_municipality
-869	/base/lewisandclark/places_eastward
-870	/base/infection/location_of_biosafety_facility
-871	/business/competitive_space
-872	/biology/hybrid
-873	/automotive/truck_trim_level
-874	/automotive/trim_level
-875	/media_common/netflix_genre
-876	/base/parody/parody
-877	/religion/belief
-878	/award/award_ceremony
-879	/conferences/conference
-880	/base/fires/fire_department
-881	/base/filmcameras/camera_series
-882	/base/filmcameras/camera
-883	/film/film_casting_director
-884	/visual_art/visual_art_medium
-885	/location/de_urban_district
-886	/media_common/cause_of_loss
-887	/education/educational_institution_campus
-888	/exhibitions/exhibit
-889	/base/thoroughbredracing/thoroughbred_racehorse_owner
-890	/music/concert
-891	/broadcast/radio_station_owner
-892	/business/trade_union
-893	/religion/religious_practice
-894	/book/poem_character
-895	/book/series_editor
-896	/base/thatguy/locally_famous_person
-897	/base/fairytales/fairy_tale
-898	/location/fr_department
-899	/visual_art/art_owner
-900	/architecture/light_characteristic
-901	/music/music_video
-902	/film/film_featured_song
-903	/type/usergroup
-904	/tv/tv_crewmember
-905	/medicine/manufactured_drug_form
-906	/medicine/artery
-907	/computer/operating_system
-908	/medicine/drug_formulation
-909	/medicine/drug_physiologic_effect
-910	/medicine/drug_mechanism_of_action
-911	/organization/organization_partnership
-912	/location/es_autonomous_community
-913	/base/ballet/choreographer
-914	/book/translation
-915	/base/animemanga/anime_title
-916	/biology/hybrid_parent_classification
-917	/exhibitions/exhibition
-918	/fictional_universe/character_powers
-919	/location/uk_council_area
-920	/government/primary_election
-921	/royalty/chivalric_title
-922	/theater/musical_soundtrack
-923	/book/periodical_editor
-924	/base/disaster2/injury_causing_event
-925	/book/book_edition_series
-926	/base/crime/crime_suspect
-927	/music/music_video_character
-928	/film/content_rating
-929	/cvg/computer_game_rating
-930	/biology/amino_acid
-931	/food/nutrient
-932	/music/conducted_ensemble
-933	/base/filmcameras/camera_lens
-934	/theater/theater_director
-935	/biology/organism_part
-936	/organization/organization_committee
-937	/base/firsts/achievement
-938	/music/music_video_choreographer
-939	/music/music_video_performer
-940	/computer/computer_processor
-941	/biology/animal_owner
-942	/measurement_unit/area_unit
-943	/base/folklore/mythical_creature_location
-944	/base/qualia/disabled_person
-945	/medicine/vector_of_disease
-946	/base/americancomedy/impersonated_celebrity
-947	/base/grecoromanmythology/greek_hero
-948	/book/translator
-949	/base/sanfrancisco/san_francisco_mayor_2
-950	/base/americancomedy/double_act_straight_man
-951	/fictional_universe/type_of_fictional_setting
-952	/business/company_type
-953	/location/uk_london_borough
-954	/base/endorsements/endorsing_newspaper
-955	/tv/tv_location
-956	/base/saints/feast_day
-957	/aviation/aircraft
-958	/base/saturdaynightlive/snl_movie_spin_off
-959	/base/skateboarding/skateboarding_movie
-960	/base/playboyplaymates/playmate
-961	/distilled_spirits/infused_spirit
-962	/fictional_universe/ethnicity_in_fiction
-963	/base/litcentral/extinct_taxon
-964	/atom/feed_item
-965	/base/iceandfire/noble_house
-966	/base/litcentral/previous_organism_classification
-967	/cvg/cvg_genre
-968	/automotive/manufacturing_plant
-969	/travel/accommodation_feature
-970	/time/time_zone
-971	/base/sameas/api_provider
-972	/soccer/fifa
-973	/base/saturdaynightlive/person_impersonated_on_snl
-974	/book/audio_book_reader
-975	/boats/nuclear_powerplant
-976	/finance/stock_exchange
-977	/baseball/baseball_coach
-978	/rail/locomotive
-979	/computer/computer_peripheral_class
-980	/base/landcover/geographical_feature_category
-981	/base/landcover/code_category
-982	/base/dinosaur/dinosaur
-983	/spaceflight/mission_destination
-984	/spaceflight/satellite_orbit_type
-985	/astronomy/telescope_platform
-986	/spaceflight/rocket_function
-987	/base/gossipgirl/actor
-988	/base/disaster2/human_stampede
-989	/base/motorcycle/vehicle_part
-990	/base/engineering/water_pumping_station
-991	/film/film_distributor
-992	/comic_books/comic_book_penciler
-993	/computer/internet_protocol
-994	/base/animemanga/ova_episode
-995	/base/column/column
-996	/music/opera_singer
-997	/music/orchestra
-998	/biology/breed_origin
-999	/base/dinosaur/dinosaur_location
-1000	/location/continent
-1001	/base/mystery/cryptid_area_of_occurrence
-1002	/base/charities/geographic_scope
-1003	/base/locations/continents
-1004	/event/public_speaker
-1005	/type/text_encoding
-1006	/engineering/channel_access_method
-1007	/opera/opera_genre
-1008	/location/uk_principal_area
-1009	/base/piercings/piercing
-1010	/base/crime/fugitive
-1011	/base/moregeography/volcano
-1012	/base/architecture2/structure2
-1013	/language/language_dialect
-1014	/media_common/lost_work
-1015	/location/us_cbsa
-1016	/base/breakfast/breakfast_cereal_brand
-1017	/base/convictsydney/resident
-1018	/base/icons/icon_genre
-1019	/food/bottled_water
-1020	/conferences/conference_sponsor
-1021	/base/database/database_website
-1022	/base/activism/organization
-1023	/food/diet_follower
-1024	/travel/hotel_brand
-1025	/education/university_system
-1026	/theater/theater_genre
-1027	/computer/programming_language_paradigm
-1028	/fictional_universe/fictional_universe_creator
-1029	/base/obamabase/cabinet_position
-1030	/people/appointed_role
-1031	/biology/plant_disease_cause
-1032	/media_common/quotation_addressee
-1033	/base/petbreeds/chicken_breed
-1034	/architecture/building_occupant
-1035	/base/pinball/pinball_machine_basis
-1036	/royalty/chivalric_order_officer
-1037	/base/mystery/paranormal_event
-1038	/radio/radio_subject
-1039	/book/newspaper_issue
-1040	/base/crime/police_department
-1041	/comic_books/comic_book_letterer
-1042	/travel/tour_operator
-1043	/base/crime/criminal_organisation
-1044	/spaceflight/satellite_manufacturer
-1045	/base/bigsky/region
-1046	/exhibitions/exhibition_curator
-1047	/base/phobias/phobia
-1048	/astronomy/supernova
-1049	/medicine/muscle
-1050	/astronomy/galactic_group
-1051	/geology/geological_formation
-1052	/amusement_parks/ride_theme
-1053	/religion/religious_order
-1054	/base/strangeebayitems/ebay_site
-1055	/base/cocktails/cocktail
-1056	/base/digitalcameras/slr_lens
-1057	/base/saturdaynightlive/snl_character
-1058	/base/disaster2/wrecked_ship
-1059	/base/marchmadness/ncaa_basketball_tournament_game
-1060	/base/inaugurations/inauguration
-1061	/transportation/highway_system
-1062	/base/audiobase/loudspeaker
-1063	/base/audiobase/audio_equipment
-1064	/base/marchmadness/ncaa_basketball_tournament_stage
-1065	/computer/programming_language_developer
-1066	/type/media_type
-1067	/architecture/landscape_project
-1068	/base/giftcards/gift_card
-1069	/base/electromagneticspectrum/frequency_band
-1070	/base/electromagneticspectrum/spectral_allocation
-1071	/base/barbie/barbie_doll
-1072	/interests/collectable_item
-1073	/base/lostbase/lost_episode
-1074	/medicine/medical_trial_design
-1075	/broadcast/tv_terrestrial_broadcast_facility
-1076	/base/bioventurist/biomolecule
-1077	/olympics/olympic_participating_country
-1078	/base/snowboard/snowboarder
-1079	/base/presidentialpets/first_family
-1080	/base/ancientegypt/tomb
-1081	/base/survivor/survivor_episode
-1082	/base/centreforeresearch/project
-1083	/base/centreforeresearch/client
-1084	/symbols/heraldic_tincture
-1085	/book/technical_report
-1086	/award/hall_of_fame_induction_category
-1087	/base/disaster2/shipwreck
-1088	/fashion/fashion_label
-1089	/base/conservationaction/lead_agency_or_organization
-1090	/base/conservationaction/coordinated_program
-1091	/base/conservationaction/participation_group
-1092	/olympics/olympic_event
-1093	/business/advertising_slogan
-1094	/location/id_city
-1095	/bicycles/bicycle_model
-1096	/base/virginiabroadband/stimulus_request
-1097	/base/centreforeresearch/fund_provider
-1098	/base/sanfranciscoscene/san_francisco_dj_collective
-1099	/tv/tv_theme_song
-1100	/engineering/material
-1101	/base/conservationaction/priority_level
-1102	/tv/multipart_tv_episode
-1103	/base/mapcentral/map_projection
-1104	/base/virology/biological_sample
-1105	/base/virology/coding_region_containing_nucleotide
-1106	/base/virology/biological_classification
-1107	/base/virology/influenza_sample
-1108	/base/virology/biological_parasite
-1109	/base/virology/genetic_sequence
-1110	/astronomy/asterism
-1111	/engineering/reaction_engine
-1112	/base/austin/farmers_market
-1113	/base/austin/farmers_market_attendee
-1114	/base/giftcards/gift_card_issuer
-1115	/ice_hockey/hockey_coach
-1116	/measurement_unit/volume_unit
-1117	/food/culinary_measure
-1118	/base/filmcameras/lens_hood
-1119	/base/charities/charity
-1120	/radio/radio_program
-1121	/base/inaugurations/inaugural_speech
-1122	/food/candy_bar
-1123	/fictional_universe/fictional_employer
-1124	/dataworld/software_tool
-1125	/base/musclecars/muscle_car
-1126	/wine/appellation
-1127	/book/cited_work
-1128	/computer/computer_manufacturer_brand
-1129	/base/animemanga/anime_manga_franchise
-1130	/sports/sport_country
-1131	/base/mapcentral/fgdc_keyword
-1132	/location/us_territory
-1133	/base/rugby/type_of_rugby
-1134	/book/school_or_movement
-1135	/base/fires/explosion_cause
-1136	/base/conservationaction/conservation_program
-1137	/base/nascar/nascar_venue
-1138	/music/musical_scale
-1139	/base/activism/activism_issue
-1140	/base/vancouver/city_street
-1141	/base/thoroughbredracing/thoroughbred_racehorse_breeder
-1142	/sports/golf_course_designer
-1143	/sports/golf_course
-1144	/base/gadgets/brand
-1145	/chemistry/isotope
-1146	/law/courthouse
-1147	/base/vermont/vermont_fresh_network
-1148	/royalty/order_of_chivalry_category
-1149	/food/type_of_dish
-1150	/type/permission
-1151	/wine/wine_sub_region
-1152	/astronomy/astronomical_survey_project_organization
-1153	/location/uk_metropolitan_borough
-1154	/tv/tv_episode_segment
-1155	/symbols/coat_of_arms_bearer
-1156	/broadcast/tv_signal_type
-1157	/base/satelites/orbit
-1158	/base/satelites/artificial_satellite
-1159	/base/disaster2/flood
-1160	/cvg/computer_game_distribution_system
-1161	/law/constitutional_amendment
-1162	/american_football/football_game
-1163	/american_football/nfl_game
-1164	/base/materials/alloy
-1165	/base/materials/solid_material
-1166	/base/saturdaynightlive/snl_episode
-1167	/computer/file_format_genre
-1168	/event/speech_topic
-1169	/award/award_discipline
-1170	/location/hud_section_8_area
-1171	/location/hud_mfa
-1172	/medicine/vein
-1173	/religion/adherents
-1174	/music/synthesizer
-1175	/base/scubadiving/regulator
-1176	/base/terrorism/terrorist_organization
-1177	/military/military_resource
-1178	/architecture/architectural_contractor
-1179	/comic_books/comic_book_inker
-1180	/base/researchlocations/research_topic
-1181	/location/uk_overseas_territory
-1182	/opera/opera_director
-1183	/base/icons/icon
-1184	/radio/radio_program_episode
-1185	/sports/tournament_event_competitor
-1186	/book/reviewed_work
-1187	/base/petbreeds/cat_breed
-1188	/base/badpeople/bad_people_who_ran_countries
-1189	/base/disaster2/dangerous_activity
-1190	/base/fight/labour_dispute_type
-1191	/medicine/contraindication
-1192	/travel/transport_operator
-1193	/government/us_vice_president
-1194	/computer/computer_designer
-1195	/film/film_theorist
-1196	/base/americancomedy/double_act_comic
-1197	/distilled_spirits/distilled_spirit_type
-1198	/base/cocktails/cocktail_ingredient
-1199	/interests/hobbyist
-1200	/location/uk_region
-1201	/base/killers/spree_killing
-1202	/base/scottishclans/scottish_clan
-1203	/automotive/automotive_class
-1204	/base/anglican/church
-1205	/theater/theater_choreographer
-1206	/base/movietheatres/movie_theatre
-1207	/base/ultimatefightingchampionship/ufc_event
-1208	/digicams/digital_camera_manufacturer
-1209	/projects/project_role
-1210	/basketball/basketball_conference
-1211	/internet/protocol
-1212	/medicine/infectious_disease
-1213	/base/disaster2/infectious_disease
-1214	/film/film_critic
-1215	/distilled_spirits/spirit_producing_region
-1216	/base/scubadiving/ecoregion
-1217	/chemistry/chemical_series
-1218	/base/aubreymaturin/historical_event
-1219	/medicine/drug_legal_status
-1220	/protected_sites/natural_or_cultural_preservation_agency
-1221	/base/infrastructure/power_plant_type
-1222	/comic_books/comic_book_publisher
-1223	/comic_books/comic_book_fictional_universe
-1224	/location/vn_provincial_city
-1225	/base/familyguy/family_guy_episode
-1226	/base/ancientegypt/tomb_owner
-1227	/computer/operating_system_developer
-1228	/meteorology/forecast_zone
-1229	/exhibitions/exhibition_sponsor
-1230	/american_football/football_position
-1231	/cvg/computer_game_compilation
-1232	/theater/theater_producer
-1233	/base/nascar/nascar_racing_organization_owner
-1234	/base/mtgbase/magic_set
-1235	/base/puzzles/puzzle_form
-1236	/location/ua_raion
-1237	/meteorology/cloud
-1238	/engineering/battery_cell_type
-1239	/base/ancientegypt/tomb_excavator
-1240	/sports/sports_league_draft
-1241	/base/crime/robbery
-1242	/base/mystery/hoax
-1243	/aviation/airport_operator
-1244	/distilled_spirits/distillery
-1245	/organization/australian_organization
-1246	/location/uk_non_metropolitan_county
-1247	/location/census_tract
-1248	/base/watches/watch_brand
-1249	/comic_books/comic_book_colorist
-1250	/media_common/dedicator
-1251	/common/media_rights_holder
-1252	/base/productplacement/product_placed_brand
-1253	/food/beer_country_region
-1254	/government/government
-1255	/base/animemanga/manga_title
-1256	/location/mx_state
-1257	/music/voice
-1258	/chemistry/element_discoverer
-1259	/broadcast/podcast_feed
-1260	/base/vancouver/podcast
-1261	/food/recipe_author
-1262	/fictional_universe/fictional_language
-1263	/book/editor_title
-1264	/business/board_member_title
-1265	/automotive/privately_owned_vehicle
-1266	/automotive/body_style
-1267	/cricket/cricket_batting_stroke
-1268	/digicams/camera_storage_type
-1269	/music/performance_venue
-1270	/astronomy/type_of_planetographic_feature
-1271	/base/gambling/lottery
-1272	/cricket/cricket_bowling_technique
-1273	/base/engineering/water_reservoir_use
-1274	/base/disneyana/disney_product_distribution_venue
-1275	/base/disneyana/disney_product_theme
-1276	/location/ru_autonomous_okrug
-1277	/medicine/hormone
-1278	/visual_art/art_series
-1279	/location/ru_krai
-1280	/location/uk_district
-1281	/base/computerscience/cryptographer
-1282	/automotive/designer
-1283	/location/ru_raion
-1284	/book/financial_support_provider
-1285	/biology/organism_classification_rank
-1286	/spaceflight/rocket_manufacturer
-1287	/base/edgarpoe/poes_family
-1288	/base/aubreymaturin/malady
-1289	/base/disaster2/tornado
-1290	/base/skateboarding/skateboarding_location
-1291	/base/sportbase/sport_club_player
-1292	/base/engineering/dam_structure_category
-1293	/base/infrastructure/nuclear_power_plant
-1294	/base/pinball/pinball_simulation
-1295	/people/appointer
-1296	/base/inaugurations/inauguration_speaker
-1297	/government/us_president
-1298	/base/exercises/exercise_type
-1299	/base/convictsydney/convict
-1300	/base/dance/dance_company
-1301	/royalty/system_of_nobility
-1302	/business/product_endorser
-1303	/music/musical_chord
-1304	/law/litigant
-1305	/base/nascar/nascar_sponsor
-1306	/base/animemanga/anime_studio
-1307	/base/dancingwiththestars/professional_performer
-1308	/base/infrastructure/pipeline
-1309	/amusement_parks/ride_type
-1310	/chemistry/chemical_element
-1311	/base/disaster2/pandemic
-1312	/computer/processor_manufacturer
-1313	/base/obamabase/possible_cabinet_member
-1314	/location/vn_province
-1315	/distilled_spirits/blended_spirit
-1316	/astronomy/meteorite
-1317	/base/tallships/sail_training_organization
-1318	/dataworld/attribution_template
-1319	/automotive/exterior_color
-1320	/sports/sports_award_type
-1321	/base/textiles/textile_weave
-1322	/fashion/weave
-1323	/base/typefaces/typeface_classification
-1324	/base/realitytv/reality_tv_contestant
-1325	/music/arrangement
-1326	/base/americancomedy/comedy_group
-1327	/base/breakfast/breakfast_cereal_ingredient
-1328	/base/mystery/cryptid_observer
-1329	/base/conservationaction/confidence_level
-1330	/location/id_subdistrict
-1331	/music/live_album
-1332	/medicine/drug_dosage_form
-1333	/business/product_ingredient
-1334	/base/nascar/nascar_race
-1335	/base/activism/political_party
-1336	/royalty/chivalric_rank
-1337	/rail/steam_locomotive_wheel_configuration
-1338	/base/exoplanetology/exoplanet
-1339	/aviation/icao_airline_designator
-1340	/medicine/condition_prevention_factors
-1341	/common/annotation_category
-1342	/location/cn_autonomous_prefecture
-1343	/base/engineering/tunnel
-1344	/medicine/nerve
-1345	/protected_sites/park_system
-1346	/base/marchmadness/ncaa_basketball_tournament
-1347	/theater/musical_director
-1348	/book/interviewer
-1349	/opera/opera_production
-1350	/education/school_magazine
-1351	/base/propositions/proposition
-1352	/base/anglican/diocese
-1353	/distilled_spirits/fermentation_base
-1354	/biology/plant_disease_host
-1355	/royalty/chivalric_office
-1356	/conferences/type_of_conference
-1357	/base/sanfranciscoscene/san_francisco_scene_event
-1358	/celebrities/supercouple
-1359	/fictional_universe/fictional_calendar_system
-1360	/film/content_rating_system
-1361	/olympics/olympic_host_city
-1362	/base/database/software_use
-1363	/chemistry/molecular_entity
-1364	/medicine/cranial_nerve
-1365	/location/in_division
-1366	/engineering/power_plug_standard_type
-1367	/base/iceandfire/house_founder
-1368	/location/ru_autonomous_oblast
-1369	/media_common/completer_of_unfinished_work
-1370	/base/crime/type_of_criminal_organization
-1371	/location/it_region
-1372	/computer/protocol_provider
-1373	/media_common/unfinished_work
-1374	/protected_sites/natural_or_cultural_site_designation
-1375	/interests/interest
-1376	/award/competition_type
-1377	/base/eating/diets
-1378	/spaceflight/space_program
-1379	/book/interview
-1380	/award/ranked_list_compiler
-1381	/base/sails/sailboat
-1382	/medicine/cancer_center_constituent
-1383	/base/abcbirds/partnership
-1384	/book/review
-1385	/fictional_universe/fictional_creature
-1386	/medicine/drug_administration_route
-1387	/base/disaster2/shipwreck_event
-1388	/digicams/camera_iso
-1389	/tv/tv_crew_role
-1390	/olympics/olympic_bidding_city
-1391	/architecture/type_of_museum
-1392	/broadcast/radio_format
-1393	/base/nutritioninfo/retail_data
-1394	/base/financialmeltdown/rogue_traders
-1395	/base/aubreymaturin/real_ship
-1396	/base/aubreymaturin/ship
-1397	/base/activism/activist_event
-1398	/food/beverage_type
-1399	/chemistry/periodic_table_block
-1400	/measurement_unit/molar_energy_unit
-1401	/base/aubreymaturin/species
-1402	/location/fr_region
-1403	/military/military_unit_size
-1404	/base/crime/criminal_defence
-1405	/location/es_comarca
-1406	/music/musical_instrument_company
-1407	/time/month
-1408	/location/cn_province
-1409	/base/ballet/ballet_character
-1410	/base/breakfast/breakfast_cereal_flavor
-1411	/base/playball/baseball_stadium
-1412	/military/military_unit_place_of_origin
-1413	/location/us_state
-1414	/base/locations/states_and_provences
-1415	/base/localfood/food_producing_region
-1416	/base/hybrids/hybrid_sport
-1417	/base/saturdaynightlive/snl_recurring_sketch
-1418	/base/hathayoga/yoga_posture
-1419	/base/presidentialpets/white_house_pet
-1420	/base/divinity/divinity
-1421	/astronomy/star_system
-1422	/base/casinos/casino_theme
-1423	/astronomy/star_system_body
-1424	/location/kp_special_city
-1425	/base/socialdance/dance_venue
-1426	/base/casinos/casino_owner
-1427	/film/film_song_performer
-1428	/base/saturdaynightlive/snl_fiver_timer
-1429	/interests/hobby
-1430	/sports/tournament_event
-1431	/base/thewire/the_wire_character
-1432	/fashion/fiber
-1433	/base/americancomedy/comedy_writer
-1434	/base/textiles/textile_fiber
-1435	/protected_sites/governing_body_of_protected_sites
-1436	/base/casinos/casino_show
-1437	/medicine/cancer_center
-1438	/pipeline/delete_task
-1439	/pipeline/task
-1440	/base/convictsydney/convict_transport
-1441	/base/americancomedy/tv_show
-1442	/biology/breed_group
-1443	/base/formula1/formula_1_season
-1444	/medicine/disease_stage
-1445	/base/petbreeds/dog_temperament
-1446	/internet/top_level_domain
-1447	/base/infrastructure/power_outage_cause
-1448	/base/satelites/orbit_synchronicity_classification
-1449	/base/digitalcameras/shutter_speed
-1450	/base/litcentral/current_organism_classification
-1451	/base/petbreeds/dog_coat_color
-1452	/people/measured_body_part
-1453	/aviation/iata_airline_designator
-1454	/base/aubreymaturin/real_place
-1455	/chess/chess_game
-1456	/distilled_spirits/distilled_spirit
-1457	/medicine/diagnostic_test
-1458	/location/de_state
-1459	/base/saturdaynightlive/snl_individual_sketch
-1460	/base/conservation/protected_species
-1461	/automotive/engine_type
-1462	/base/truereligion/wash
-1463	/base/truereligion/style
-1464	/base/truereligion/jeans
-1465	/broadcast/distributor
-1466	/base/truereligion/fabric
-1467	/base/tallships/sail_training_vessel
-1468	/base/centreforeresearch/person
-1469	/base/triathlon/triathlon_race
-1470	/biology/breed_registry
-1471	/base/petbreeds/cat_temperament
-1472	/book/magazine_genre
-1473	/location/cn_autonomous_county
-1474	/cvg/computer_game_content_descriptor
-1475	/base/braziliangovt/brazilian_political_party
-1476	/base/revisioncontrol/revision_control_software
-1477	/base/database/database_manager
-1478	/base/abcbirds/conservationist
-1479	/base/abcbirds/project_lead
-1480	/base/slamdunk/player
-1481	/base/iceandfire/house_seat
-1482	/base/abcbirds/conservation_project
-1483	/base/iceandfire/person
-1484	/base/iceandfire/house_lord
-1485	/base/abcbirds/bird_conservation_region
-1486	/base/convictsydney/free_settler
-1487	/medicine/medical_trial_sponsor
-1488	/base/infection/biosafety_facility
-1489	/base/sanfrancisco/hill
-1490	/architecture/architecture_firm_partners
-1491	/food/diet
-1492	/base/disaster2/injured_person
-1493	/base/billionaires/billionaire
-1494	/base/mapcentral/geographic_coordinate_system
-1495	/base/mapcentral/reference_ellipsoid
-1496	/base/mapcentral/datum
-1497	/base/qualia/disability_organization
-1498	/base/sanfranciscoscene/san_francisco_dj
-1499	/business/product_endorsee
-1500	/base/survivor/survivor_tribe
-1501	/base/cyclocross/bicycle_model_year
-1502	/base/cyclocross/bicycle_component_material
-1503	/base/piercings/piercing_jewelry
-1504	/base/ultimate/ultimate_player
-1505	/base/saturdaynightlive/snl_season
-1506	/base/bigsky/launch
-1507	/base/bigsky/site
-1508	/celebrities/reason_for_arrest
-1509	/base/skateboarding/skateboarding_brand
-1510	/base/pinball/pinball_machine_designer
-1511	/base/gobase/go_player
-1512	/broadcast/radio_network
-1513	/law/judicial_title
-1514	/theater/theater_production_staff_role
-1515	/base/cocktails/cocktail_garnish
-1516	/medicine/drug_dosage_flavor
-1517	/comic_books/comic_book_editor
-1518	/soccer/football_league_system
-1519	/biology/chromosome
-1520	/location/es_province
-1521	/soccer/football_position
-1522	/location/province
-1523	/astronomy/constellation
-1524	/symbols/heraldic_charge
-1525	/base/proofsareprograms/key_application
-1526	/base/filmcameras/camera_manufacturer
-1527	/location/jp_designated_city
-1528	/astronomy/astronomical_discovery_technique
-1529	/base/ballet/ballet_composer
-1530	/aviation/airport_type
-1531	/base/ikariam/ikariam_research_category
-1532	/base/abcbirds/conservation_project_lead
-1533	/base/animemanga/manga_illustrator
-1534	/government/political_ideology
-1535	/base/engineering/mined_material
-1536	/engineering/signal_modulation_mode
-1537	/astronomy/telescope_type
-1538	/skiing/ski_area_owner
-1539	/cricket/cricket_stadium
-1540	/conferences/conference_subject
-1541	/base/brickbase/lego_set
-1542	/base/infrastructure/power_outage
-1543	/basketball/basketball_division
-1544	/award/award_judge
-1545	/biology/domesticated_animal
-1546	/base/cdnpolitics/political_issue
-1547	/education/grade_level
-1548	/base/disaster2/underwater_archaeologist
-1549	/base/americancomedy/comedy_genre
-1550	/base/truereligion/thread_style
-1551	/dataworld/user_reversion_operation
-1552	/base/skateboarding/skateboarding_tricks
-1553	/base/socialdance/dance_style
-1554	/base/tiddlywiki/ingredient
-1555	/medicine/medical_trial
-1556	/base/anglican/archdiocese
-1557	/base/theosbornboysaregrowing/osborn_family_member
-1558	/cricket/cricket_administrative_body
-1559	/base/motorcycle/motorcycle_make
-1560	/astronomy/orbit_type
-1561	/base/satelites/orbit_eccentricity_classification
-1562	/location/it_province
-1563	/skiing/ski_run
-1564	/base/dancingwiththestars/episode
-1565	/protected_sites/site_listing_category
-1566	/exhibitions/type_of_exhibition
-1567	/base/aubreymaturin/sailor
-1568	/astronomy/asteroid_family
-1569	/base/computerscience/complexity
-1570	/measurement_unit/common_dimension
-1571	/spaceflight/rocket_engine_cycle
-1572	/base/computerscience/computational_problem
-1573	/base/surfing/surf_film
-1574	/base/classiccorvettes/corvette_logos
-1575	/food/candy_bar_manufacturer
-1576	/base/ultimate/ultimate_classification
-1577	/base/ultimate/ultimate_team
-1578	/location/kp_city
-1579	/film/film_company_role_or_service
-1580	/event/disaster_type
-1581	/base/database/database_host
-1582	/base/engineering/engineering_firm
-1583	/base/breakfast/breakfast_cereal_manufacturer
-1584	/location/id_province
-1585	/food/culinary_technique
-1586	/location/tw_district
-1587	/base/horsefacts/equine_anatomy
-1588	/soccer/football_world_cup
-1589	/location/uk_unitary_authority
-1590	/food/recipe_collection
-1591	/food/recipe
-1592	/royalty/noble_rank
-1593	/base/watches/watch_feature
-1594	/cvg/computer_game_engine_developer
-1595	/government/legislative_committee_title
-1596	/base/bioventurist/bv_research_group
-1597	/base/abcbirds/conservation_activity
-1598	/base/yalebase/music_group
-1599	/cvg/computer_game_rating_system
-1600	/astronomy/celestial_object_category
-1601	/metropolitan_transit/transit_vehicle
-1602	/base/carebears/care_bears_villain
-1603	/base/motorcycle/motorcycle_product_review
-1604	/base/monster/monster_species
-1605	/sports/golf_club_access
-1606	/base/gadgets/gadget_connector
-1607	/base/ikariam/ikariam_buildings
-1608	/base/natlang/abbreviated_topic
-1609	/base/gadgets/gadget
-1610	/base/breakfast/breakfast_cereal_theme
-1611	/astronomy/near_earth_object_classification
-1612	/base/words/meaning_of_notable_word
-1613	/travel/transportation_mode
-1614	/tv/tv_song
-1615	/business/customer
-1616	/biology/informal_biological_grouping
-1617	/base/dance/dance_form
-1618	/spaceflight/space_agency
-1619	/time/day_of_week
-1620	/base/computerscience/complexity_class
-1621	/astronomy/meteoric_composition
-1622	/business/shopping_center_owner
-1623	/base/monetarydebase/governments_that_debase
-1624	/medicine/vaccine
-1625	/astronomy/telescope
-1626	/base/exercises/body_part
-1627	/base/wrestling/professional_wrestling_manager
-1628	/theater/theatrical_orchestrator
-1629	/base/politicalconventions/political_convention
-1630	/base/birdinfo/type_of_diet
-1631	/base/killers/spree_killer
-1632	/base/stimulustracking/feed
-1633	/symbols/heraldic_ordinaire
-1634	/base/standardizedtesting/standardized_test
-1635	/base/crime/crime_accuser
-1636	/base/electromagneticspectrum/service_class
-1637	/base/csafarms/csa_product
-1638	/rail/steam_locomotive_class
-1639	/base/csafarms/farm
-1640	/travel/guidebook
-1641	/base/vanhomeless/single_room_occupancy_hotel
-1642	/architecture/engineering_firm
-1643	/base/sanfrancisco/san_francisco_neighborhoods
-1644	/base/horsefacts/coat_locus_effect
-1645	/location/ru_oblast
-1646	/location/uk_metropolitan_county
-1647	/base/stimulustracking/government_agencies_affected
-1648	/base/propositions/proposition_issue
-1649	/music/music_video_genre
-1650	/base/firsts/first
-1651	/base/politicalconventions/convention_venue
-1652	/fictional_universe/fictional_organization_founder
-1653	/base/typefaces/typeface_foundry
-1654	/religion/religious_leadership_role
-1655	/base/americancomedy/double_act
-1656	/american_football/super_bowl
-1657	/base/skateboarding/distribution_company
-1658	/location/ca_indian_reserve
-1659	/base/movietheatres/movie_theatre_chain
-1660	/base/ontologies/ontology
-1661	/cricket/dismissal_type
-1662	/engineering/engine_category
-1663	/aviation/aircraft_engine_type
-1664	/visual_art/art_acquisition_method
-1665	/law/legal_party_role
-1666	/base/column/column_genre
-1667	/measurement_unit/mass_unit
-1668	/base/surfing/asp_world_tour
-1669	/base/socialdance/dancer
-1670	/base/vancouver/forward_sortation_area
-1671	/base/iraqimusicbase/iraqi_person
-1672	/common/license
-1673	/computer/content_license
-1674	/base/bigsky/landing_zone
-1675	/food/beer_container
-1676	/measurement_unit/energy_unit
-1677	/base/danceporn/choreographer
-1678	/base/scubadiving/province
-1679	/base/motorcycle/motorcycle_paint_color
-1680	/base/watches/watch_band_material
-1681	/book/book_binding
-1682	/base/engineering/harbour
-1683	/people/chinese_ethnic_group
-1684	/location/hk_district
-1685	/base/politicalconventions/convention_leader
-1686	/base/politicalconventions/convention_speaker
-1687	/base/tallships/museum_ships
-1688	/visual_art/visual_art_form
-1689	/base/crime/hostage_situation
-1690	/boats/boat_fate
-1691	/cvg/computer_game_engine_family
-1692	/martial_arts/martial_art_category
-1693	/base/thoroughbredracing/thoroughbred_racehorse_sex
-1694	/location/nl_province
-1695	/location/vn_centrally_controlled_municipality
-1696	/location/offical_symbol_variety
-1697	/tv/tv_song_performer
-1698	/law/us_patent_category
-1699	/engineering/engine_energy_source
-1700	/organization/organization_committee_title
-1701	/measurement_unit/potential_unit
-1702	/location/ar_commune
-1703	/astronomy/asteroid_group
-1704	/base/horsefacts/tack
-1705	/cvg/computer_game_mod
-1706	Unmatched Geekdo item
-1707	/base/motorcycle/internet_forum_topic
-1708	/fictional_universe/fictional_object_destroyer
-1709	/digicams/camera_color_filter_array_type
-1710	/base/hybrids/hybrid_animal
-1711	/base/symbols/symbolized_concept
-1712	/base/mystery/cryptozoologist
-1713	/chemistry/radioactive_decay_mode
-1714	/base/obamabase/cabinet_member
-1715	/boats/means_of_propulsion
-1716	/base/disaster2/shipwreck_cause
-1717	/base/yalebase/secret_society
-1718	/base/fashionmodels/eye_color
-1719	/base/tallships/tall_ship_rig
-1720	/base/politicalconventions/presidential_nominee
-1721	/business/issue_type
-1722	/base/roguelike/roguelike_game
-1723	/base/piers/pier
-1724	/measurement_unit/data_size_unit
-1725	/cricket/cricket_match_type
-1726	/base/watches/watch_model
-1727	/base/infrastructure/radioactive_waste_dump
-1728	/cricket/cricket_delivery_type
-1729	/venture_capital/investment_round
-1730	/protected_sites/iucn_category
-1731	/food/cheese_texture
-1732	/book/report_issuing_institution
-1733	/government/parliamentary_election
-1734	/bicycles/bicycle_manufacturer
-1735	/base/qualia/recreational_drug_user
-1736	/geography/mountain_type
-1737	/measurement_unit/time_unit
-1738	/base/birdinfo/data_collection_method
-1739	/aviation/aircraft_line
-1740	/organization/club
-1741	/book/serial_installment
-1742	/automotive/transmission
-1743	/base/disaster2/type_of_injury_causing_event
-1744	/base/argumentmaps/innovative_work
-1745	/rail/railway_operator
-1746	/base/triathlon/triathlete
-1747	/broadcast/advisory
-1748	/food/culinary_tool
-1749	/base/yalebase/nobel_prize_winner
-1750	/base/birdinfo/nest_shape
-1751	/business/company_termination_type
-1752	/bicycles/bicycle_type
-1753	/film/film_song
-1754	/base/fight/subject_of_protest
-1755	/base/convictsydney/crime
-1756	/computer/computer_product_line
-1757	/base/austin/computer_user_group_focus
-1758	/medicine/ligament
-1759	/base/crime/fbi_top_10_most_wanted_fugitive
-1760	/measurement_unit/pressure_unit
-1761	/business/product_theme
-1762	/medicine/fda_otc_monograph_part
-1763	/tv/tv_soundtrack
-1764	/travel/hotel_operator
-1765	/boats/hull_material
-1766	/symbols/heraldry_granting_body
-1767	/base/conservation/conservation_status_designation
-1768	/cricket/cricket_tournament_event
-1769	/location/de_regierungsbezirk
-1770	/music/music_video_subject
-1771	/base/argumentmaps/abstract_moral_dispute
-1772	/tv/special_tv_performance_type
-1773	/film/special_film_performance_type
-1774	/base/vocabulary/ontology
-1775	/base/animalnames/gender_or_age_specific_animal_name
-1776	/skiing/ski_lift_manufacturer
-1777	/business/endorsed_product
-1778	/location/tw_direct_controlled_municipality
-1779	/base/badpeople/bad_people_who_ran_companies
-1780	/base/braziliangovt/issue
-1781	/celebrities/abused_substance
-1782	/location/jp_special_ward
-1783	/base/juiced/banned_substance
-1784	/base/motorcycle/motorcycle_model_number
-1785	/music/special_music_video_performance_type
-1786	/travel/hotel_grading_authority
-1787	/location/in_state
-1788	/base/horsefacts/coat_pattern
-1789	/base/dancingwiththestars/dwts_host
-1790	/base/truereligion/fit
-1791	/location/jp_subprefecture
-1792	/architecture/civil_engineer
-1793	/base/yalebase/college_master
-1794	/base/motorcycle/motorcycle_internet_forum_thread
-1795	/base/scubadiving/scuba_manufacturer
-1796	/american_football/football_coach_position
-1797	/base/motorcycle/motorcycle_gear_product
-1798	/fictional_universe/fictional_object_destruction_method
-1799	/base/conservationaction/program_coordinator
-1800	/medicine/drug_pregnancy_category
-1801	/base/oysters/oyster
-1802	/book/serialized_work
-1803	/base/cyclocross/bicycle_component
-1804	/spaceflight/space_program_sponsor
-1805	/base/powergeneration/photovoltaic_power_station
-1806	/location/uk_crown_dependency
-1807	/meteorology/meteorological_service
-1808	/base/sa2base/sa2_textual
-1809	/base/strangeebayitems/ebay_category
-1810	/base/digitalcameras/lens_mount
-1811	/base/mosaic/included_broadcaster
-1812	/military/military_theater
-1813	/biology/plant_disease
-1814	/base/dancegroups/dance_group_member
-1815	/base/fashionmodels/hair_color
-1816	/base/vermont/vermont_fresh_network_partner_type
-1817	/base/digitalcameras/lens_family
-1818	/base/x7thingsmeme/x7_things_participant
-1819	/common/licensed_object
-1820	/metropolitan_transit/transit_service_type
-1821	/base/database/data_contributor
-1822	/geography/lake_type
-1823	/base/disneyana/disney_product_edition
-1824	Roofing service type
-1825	/base/crime/lawyer_type
-1826	/event/type_of_public_presentation
-1827	/olympics/olympic_demonstration_competition
-1828	/internet/top_level_domain_status
-1829	/religion/religious_jurisdiction_class
-1830	/base/sportbase/sport_sport_club
-1831	/base/ffsquare/final_fantasy_character_class
-1832	/base/computerscience/formal_language
-1833	/base/harvard/house
-1834	/fictional_universe/fictional_plant
-1835	/baseball/baseball_division
-1836	/ice_hockey/hockey_division
-1837	/base/survivor/survivor_location
-1838	/location/br_state
-1839	/base/braziliangovt/state
-1840	/event/promoted_event
-1841	/event/produced_event
-1842	/amusement_parks/amusement_park_area
-1843	/base/eating/subject_of_diet
-1844	/digicams/camera_sensor_manufacturer
-1845	/medicine/bone
-1846	/base/infection/computer_crime_victim
-1847	/film/film_festival_focus
-1848	/language/language_creator
-1849	/astronomy/galaxy_classification_code
-1850	/base/sportbase/sport
-1851	/broadcast/fm_terrestrial_broadcast_facility
-1852	/base/horsefacts/coat_locus
-1853	/base/wastrology/zodiacsign
-1854	/base/questionable/qc_character
-1855	/base/firsts/first_achievement_category
-1856	/medicine/vaccine_developer
-1857	/finance/market_index
-1858	/base/gadgets/wifi_device
-1859	/base/bluetooth/bluetooth_device
-1860	/symbols/heraldic_crest
-1861	/law/us_patent_type
-1862	/government/us_vice_presidential_campaign
-1863	/base/mapcentral/fgdc_source_media
-1864	/government/indirect_election
-1865	/law/court_jurisdiction_area
-1866	/medicine/transmission_route
-1867	/base/contractbridge/bridge_league
-1868	/spaceflight/satellite_type
-1869	/base/petbreeds/dog_breed_group
-1870	/base/inference/relation
-1871	/base/motorcycle/privately_owned_motorcycle
-1872	/base/myevents/project_meeting
-1873	/music/album_release_type
-1874	/base/mladraft/institution
-1875	/event/disaster_affected_structure
-1876	/biology/fossil_specimen
-1877	/astronomy/galactic_filament
-1878	/base/conservationaction/ornithology
-1879	/location/tw_provincial_city
-1880	/base/fires/firefighter
-1881	/fictional_universe/calendar_system_directionality
-1882	/measurement_unit/unit_of_frequency
-1883	/base/usbdevices/usb_device
-1884	/base/disneyana/disney_product
-1885	/base/ancientegypt/dynasty
-1886	/theater/theater_production_staff
-1887	/government/electoral_college
-1888	/base/disaster2/oil_spill
-1889	/base/conservationaction/priority_source
-1890	/base/birdinfo/bird_band_size
-1891	/boats/hull_configuration
-1892	/base/truereligion/pocket_style
-1893	/book/excerpt
-1894	/base/column/column_syndicate
-1895	/base/tiddlywiki/recipe
-1896	/aviation/accident_type
-1897	/base/computerscience/data_structure_operation
-1898	/digicams/camera_image_ratio
-1899	/base/computerscience/hash_function
-1900	/base/motorcycle/motorcycle_section
-1901	/pipeline/pipeline
-1902	/base/engineering/dock
-1903	/base/tallships/film_with_tall_ships
-1904	/base/thewire/the_wire_beat
-1905	/base/austin/computer_user_group
-1906	/base/rlshs/real_life_superhero
-1907	/base/aubreymaturin/real_person
-1908	/physics/particle
-1909	/measurement_unit/measurement_system
-1910	/engineering/location_with_mains_power
-1911	/base/productplacement/product_placing_media
-1912	/base/webcomic/webcomic
-1913	/measurement_unit/force_moment_unit
-1914	/base/cgcollection/computer_game_platform_model
-1915	/base/giftcards/gift_card_category
-1916	/food/drinking_establishment_type
-1917	/base/aubreymaturin/treatment
-1918	/base/jewelry/jewelry_type
-1919	/base/mystery/cryptid_observation_location
-1920	/meteorology/cloud_classification
-1921	/rail/locomotive_owner
-1922	/rail/locomotive_builder
-1923	/type/text
-1924	/skiing/ski_lift
-1925	/dataworld/attribution_namespace
-1926	/location/es_place_of_sovereignty
-1927	/medicine/type_of_infectious_agent
-1928	/base/danceporn/dance_movie_genre
-1929	/martial_arts/martial_arts_organization
-1930	/time/holiday_category
-1931	/military/casualties_type
-1932	/geography/glacier_status
-1933	/american_football/football_conference
-1934	/base/computerscience/abstract_data_structure
-1935	/law/constitutional_convention_delegate
-1936	/base/motorcycle/motorcycle_part_retailer
-1937	/base/motorcycle/motorcycle_part_manufacturer
-1938	/type/user
-1939	/base/engineering/aqueduct
-1940	/base/vanhomeless/media_coverage
-1941	/base/tiddlywiki/tiddler
-1942	/base/filmcameras/camera_film_format
-1943	/digicams/camera_format
-1944	/base/filmcameras/lens_mount
-1945	/computer/web_browser_extension
-1946	/base/tallships/tall_ship_event
-1947	/base/survivor/survivor_winner
-1948	/base/brickbase/lego_theme
-1949	/dataworld/data_tool
-1950	/location/cn_special_administrative_region
-1951	/base/californiahistory/landmark
-1952	/location/irish_province
-1953	/comic_books/comic_book_genre
-1954	/symbols/heraldic_brisure
-1955	/location/in_union_territory
-1956	/base/iceandfire/book
-1957	/location/jp_prefecture
-1958	/travel/hotel_brand_owner
-1959	/distilled_spirits/blended_spirit_style
-1960	/base/crime/police_officer
-1961	/base/noisepop/venue
-1962	/base/landcover/category_quality
-1963	/tv/sequence_of_tv_episode_segments
-1964	/type/lang
-1965	/base/computerscience/computer_architecture
-1966	/astronomy/spectral_type
-1967	/astronomy/galactic_cluster
-1968	/digicams/image_stabilization_type
-1969	/conferences/conference_proceedings
-1970	/base/whamoworld/games_based_on_wham_o_products
-1971	/base/braziliangovt/brazilian_governmental_proposal
-1972	/base/fight/sentence
-1973	/fashion/fashion_week
-1974	/dataworld/gardening_hint
-1975	/base/iceandfire/notable_object
-1976	/base/iceandfire/notable_weapon
-1977	/base/iceandfire/reference
-1978	/base/activism/recurring_event
-1979	/base/bridges/bridge_disaster
-1980	/base/architecture2/structure_destroying_event
-1981	/base/truereligion/collection_line
-1982	/base/mystery/ufo_observer
-1983	/education/athletics_brand
-1984	/base/cgcollection/computer_game_platform_release
-1985	/base/abcbirds/conservation_plan
-1986	/base/sportbase/sport_club_coach
-1987	/base/endorsements/endorsing_person
-1988	/dataworld/data_project_type
-1989	/base/infrastructure/water_tower
-1990	/comic_strips/comic_strip_syndicate
-1991	/base/thoroughbredracing/thoroughbred_racehorse_origin
-1992	/base/locations/counties_parishes_and_boroughs
-1993	/cvg/computer_game_region
-1994	/engineering/engine_designer
-1995	/base/engineering/tunnelling_method
-1996	/boxing/boxing_decision
-1997	/measurement_unit/molar_volume_unit
-1998	/base/fires/explosive_substance
-1999	/base/breakfast/breakfast_cereal_style
-2000	/base/proofsareprograms/key_contributor
-2001	/ice_hockey/hockey_conference
-2002	/fashion/fashion_category
-2003	/automotive/transmission_type
-2004	/music/media_format
-2005	/meteorology/beaufort_wind_force
-2006	/cvg/gameplay_mode
-2007	/distilled_spirits/spirit_bottler
-2008	/type/content_import
-2009	/american_football/football_scoring_event
-2010	/engineering/battery_shape_format
-2011	/astronomy/galactic_shape
-2012	/base/ultimate/ultimate_division
-2013	/base/jamesbond007/bond_movie_villain
-2014	/base/cyclocross/bicycle_wheel
-2015	/location/vn_urban_district
-2016	/base/yalebase/comedy_group
-2017	/base/inference/variable
-2018	/location/my_district
-2019	/base/sanfranciscoscene/san_francisco_promoter
-2020	/base/battlestargalactica/pilot
-2021	/base/atitdatlas/point_of_interest
-2022	/government/us_presidential_campaign
-2023	/rail/rail_network
-2024	/base/iceandfire/westeros_region
-2025	/olympics/olympic_mascot
-2026	/base/bigsky/site_type
-2027	/base/locations/countries
-2028	/tv/tv_producer_type
-2029	/automotive/option_package
-2030	/location/ar_province
-2031	/celebrities/romantic_relationship_type
-2032	/base/yalebase/college_dean
-2033	/music/music_video_crewmember
-2034	/base/animemanga/anime_ova
-2035	/book/interviewee
-2036	/location/de_borough
-2037	/base/mystery/type_of_paranormal_ability
-2038	/symbols/heraldic_supporter
-2039	/base/americancomedy/celebrity_impressionist
-2040	/location/kp_province
-2041	/geography/glacier_type
-2042	/spaceflight/rocket_status
-2043	/base/americancomedy/comedy_venue
-2044	/base/mapcentral/map_projection_system
-2045	/base/americancomedy/comedy_group_founder
-2046	/location/my_state
-2047	/aviation/airport_runway_surface
-2048	/base/locations/planets
-2049	/base/satelites/natural_satellite
-2050	/base/wastrology/astrologicalplanet
-2051	/astronomy/planet
-2052	/astronomy/celestial_object_with_coordinate_system
-2053	/engineering/piston_configuration
-2054	/cricket/cricket_tournament
-2055	/location/hud_nmfa
-2056	/location/ru_federal_city
-2057	/base/contractbridge/bridge_tournament
-2058	/law/constitutional_convention
-2059	/sports/boxing_weight_division
-2060	/tv/tv_rating
-2061	/digicams/camera_sensor_type
-2062	/baseball/baseball_position
-2063	/base/database/database_financial_supporter
-2064	/base/celebrations/celebration_subject
-2065	/base/proofsareprograms/key_concept
-2066	/base/mystery/hoax_location
-2067	/base/survivor/survivor_season
-2068	/base/movietheatres/type_of_movie_theatre_cinema
-2069	/meteorology/tropical_cyclone_category
-2070	/base/prison/prison_type
-2071	/base/animemanga/anime_manga_genre
-2072	/baseball/baseball_coaching_position
-2073	/base/mapcentral/map_projection_property
-2074	/base/greencars/car_with_electricity_only_capability
-2075	/measurement_unit/solid_angle_unit
-2076	/base/rugby/rugby_position
-2077	/language/language_regulator
-2078	/base/fires/type_of_fire
-2079	/base/adventures/computer_game_perspective
-2080	/physics/hadron
-2081	/base/engineering/tunnel_use
-2082	/physics/particle_family
-2083	/cvg/input_method
-2084	/location/cn_autonomous_region
-2085	/base/mystery/cryptid_reporter
-2086	/base/disaster2/type_of_tornado
-2087	/soccer/football_pitch
-2088	/base/engineering/canal_lock
-2089	/base/atitdatlas/region
-2090	/rail/railway_type
-2091	/base/barbie/barbie_theme
-2092	/book/periodical_format
-2093	/base/strangeebayitems/ebay_item
-2094	/biology/genome
-2095	/base/conservation/legislation
-2096	/base/conservation/conservation_list
-2097	/base/centreforeresearch/staff
-2098	/basketball/basketball_position
-2099	/base/disaster2/underwater_exploration
-2100	/base/architecture2/destroyed_structure
-2101	/base/engineering/covering_material
-2102	/base/qualia/type_of_disability
-2103	/education/honorary_degree_recipient
-2104	/sports/handedness
-2105	/theater/theater_designer_role
-2106	/comic_strips/comic_strip_creator_role
-2107	/biology/gene_group_membership_evidence
-2108	/biology/gene_ontology_group_membership_evidence_type
-2109	/base/crime/criminal_defence_attorney
-2110	/physics/subatomic_particle_generation
-2111	/base/convictsydney/building
-2112	/base/convictsydney/location
-2113	/amusement_parks/disney_ride_ticket
-2114	/base/motorcycle/motorcycle_magazine
-2115	/measurement_unit/permeability_unit
-2116	/base/mystery/hoaxter
-2117	/chess/chess_game_outcome
-2118	/base/database/spatial_database
-2119	/base/iraqimusicbase/band_member
-2120	/cricket/cricket_series
-2121	/base/monetarydebase/debased_currency
-2122	/computer/html_layout_engine
-2123	/astronomy/satellite_galaxy
-2124	/base/horsefacts/coat_color
-2125	/base/infrastructure/lock_system
-2126	/base/scubadiving/realm
-2127	/base/animemanga/manga_publisher
-2128	/event/event_producer
-2129	/digicams/camera_uncompressed_format
-2130	/base/scubadiving/x2nd_stage_regulator
-2131	/base/satelites/satellite_communication_band
-2132	/base/vgames/video_game
-2133	/base/aubreymaturin/written_work
-2134	/base/mapcentral/map_projection_type
-2135	/base/yalebase/residential_college
-2136	/interests/collection_activity
-2137	/measurement_unit/unit_of_conductivity
-2138	/base/grecoromanmythology/mythological_entity
-2139	/base/snowboard/type_of_snowboarding
-2140	/american_football/scoreboard_quarter
-2141	/book/excerpted_work
-2142	/base/politicalconventions/vice_presidential_nominee
-2143	/base/exoplanetology/telescope
-2144	/organization/non_profit_designation
-2145	/symbols/heraldic_compartment
-2146	/location/my_division
-2147	/base/danceporn/video
-2148	/soccer/football_disciplinary_punishment
-2149	/tv/video_host
-2150	/base/conservationaction/collaborator
-2151	/internet/website_status
-2152	/dataworld/data_task_category
-2153	/atom/feed_category
-2154	/common/foreign_key_property
-2155	/engineering/piston_engine
-2156	/measurement_unit/unit_of_data_transmission_rate
-2157	/base/sanfranciscoscene/san_francisco_nightclub
-2158	/medicine/medical_trial_phase
-2159	/language/language_writing_type
-2160	/medicine/cancer_center_type
-2161	/engineering/valvetrain_configuration
-2162	/location/australian_state
-2163	/architecture/destruction_method
-2164	/measurement_unit/unit_of_volumetric_flow_rate
-2165	/astronomy/trans_neptunian_region
-2166	/transportation/road_orientation
-2167	/base/whamoworld/songs_referencing_wham_o_products
-2168	/music/tour_manager
-2169	/base/mystery/type_of_paranormal_event
-2170	/base/cdnpolitics/legislative_assembly
-2171	/base/engineering/chartering_institution
-2172	/measurement_unit/power_unit
-2173	/measurement_unit/luminance_unit
-2174	/comic_books/comic_book_story_arc
-2175	/astronomy/telescope_principle_type
-2176	/base/charities/charity_evaluator
-2177	/base/worldwonders/wonder_of_the_medieval_world
-2178	/biology/source_organism
-2179	/food/dietary_restriction
-2180	/astronomy/plutoid
-2181	/astronomy/dwarf_planet
-2182	/base/animemanga/anime_manga_creator
-2183	/base/watches/watch_type
-2184	/location/ru_federal_district
-2185	/base/animemanga/anime_ova_soundtrack
-2186	/base/mtgbase/magic_block
-2187	/base/argumentmaps/type_of_argument
-2188	/base/barbie/barbie_label_or_edition
-2189	/film/film_cut_type
-2190	/travel/guidebook_series
-2191	/measurement_unit/speed_unit
-2192	/amusement_parks/roller_coaster_material
-2193	/amusement_parks/roller_coaster_train_configuration
-2194	/architecture/tower_shape
-2195	/base/dndbase/ruleset
-2196	/base/sanfranciscoscene/san_francisco_draq_queen
-2197	/measurement_unit/wavenumber_unit
-2198	/measurement_unit/radiant_intensity_unit
-2199	/wine/fruit_source
-2200	/film/personal_film_appearance_type
-2201	/automotive/driveline
-2202	/opera/libretto
-2203	/cricket/cricket_match
-2204	/base/irmusictypes/track_type
-2205	/base/inaugurations/inauguration_quotation
-2206	/film/film_collection
-2207	/base/yalebase/publication
-2208	/architecture/landscape_architect
-2209	/location/australian_territory
-2210	/dataworld/type_projects
-2211	/base/computerscience/formal_grammar
-2212	/base/exoplanetology/exoplanet_catalogue
-2213	/celebrities/rehab_facility
-2214	/food/cheese_certification
-2215	/digicams/camera_compressed_format
-2216	/distilled_spirits/infused_spirit_style
-2217	/engineering/battery_size
-2218	/base/natlang/semantic_relation
-2219	/base/inference/rule
-2220	/royalty/coronation
-2221	/base/puzzles/puzzle_event_type
-2222	/base/mapcentral/fgdc_spatial_reference
-2223	/base/mapcentral/fgdc_metadata_reference
-2224	/location/my_federal_territory
-2225	/tennis/tennis_match_type
-2226	/spaceflight/rocket_engine_oxidizer
-2227	/base/bioventurist/patent
-2228	/base/gratefuldead/iconic_grateful_dead_art
-2229	/astronomy/astronomical_discovery_status
-2230	/chemistry/chemical_bond
-2231	/skiing/run_rating_symbol
-2232	/base/litcentral/extinct_taxon_time_period
-2233	/architecture/unrealized_design
-2234	/opera/opera_designer
-2235	/measurement_unit/fuel_economy_unit
-2236	/opera/opera_recording
-2237	/measurement_unit/temperature_unit
-2238	/broadcast/am_terrestrial_broadcast_facility
-2239	/physics/quark
-2240	/base/oysters/natural_location
-2241	/base/danceporn/dancer
-2242	/base/breakfast/breakfast_cereal_box_feature
-2243	/base/marchmadness/tournament_round
-2244	/measurement_unit/substance_unit
-2245	/people/marriage_union_type
-2246	/base/centreforeresearch/software_technology
-2247	/book/short_non_fiction_variety
-2248	/location/kp_metropolitan_city
-2249	/travel/accommodation_type
-2250	/base/gambling/lottery_game
-2251	/base/aceattorney/ace_attorney_game
-2252	/dataworld/data_task_status
-2253	/base/satelites/satellite_sensor
-2254	/base/myevents/meeting
-2255	/location/australian_external_territory
-2256	/time/holiday_period
-2257	/radio/radio_episode_segment
-2258	/distilled_spirits/spirit_blender
-2259	/tennis/tennis_grip_style
-2260	/base/watches/watch_case_material
-2261	/biology/plant_disease_conditions
-2262	/location/tw_province
-2263	/astronomy/galactic_super_cluster
-2264	/broadcast/broadcast_station_class
-2265	/music/music_video_job
-2266	/language/conlang_purpose
-2267	/book/newspaper_edition_type
-2268	/architecture/structural_engineer
-2269	/religion/congregation
-2270	/base/aubreymaturin/dish
-2271	/base/horsefacts/coat_allele
-2272	/base/infrastructure/type_of_lock
-2273	/measurement_unit/unit_of_force
-2274	/base/bridges/bridgedisaster_cause
-2275	/base/digitalcameras/lens_series
-2276	/medicine/medical_device
-2277	/award/hall_of_fame_discipline
-2278	/location/us_metropolitan_division
-2279	/measurement_unit/acceleration_unit
-2280	/measurement_unit/magnetic_flux_density_unit
-2281	/cricket/cricket_bowling_pace
-2282	/cvg/computer_game_performance_type
-2283	/wine/wine_color
-2284	/base/disaster2/pipeline_explosion
-2285	/measurement_unit/specific_energy_unit
-2286	/american_football/football_division
-2287	/base/birdinfo/sampling_design
-2288	/automotive/fuel
-2289	/biology/plant_disease_documentation
-2290	/chemistry/particle_spin
-2291	/rail/electric_system
-2292	/base/engineering/mining_extraction_method
-2293	/base/smokers/fuel_source
-2294	/base/iraqimusicbase/album
-2295	/medicine/drug_form_shape
-2296	/location/mx_federal_district
-2297	/measurement_unit/absorbed_dose_unit
-2298	/food/cheese_milk_source
-2299	/astronomy/galactic_interaction_type
-2300	/symbols/heraldic_variation_of_the_field
-2301	/base/theyrulebc/point_of_diversion
-2302	/location/uk_constituent_country
-2303	/base/sa2base/sa2_tactics
-2304	/medicine/diagnostic_sign
-2305	/base/infrastructure/animal_slaughtering_and_processing_facility
-2306	/base/tallships/tall_ship_in_film
-2307	/base/breakfast/breakfast_cereal_box
-2308	/base/celebrations/celebration
-2309	/base/mapcentral/projected_coordinate_system
-2310	/event/event_promoter
-2311	/measurement_unit/unit_of_molar_mass
-2312	/location/cn_prefecture
-2313	/base/whoami/question
-2314	/measurement_unit/radiance_unit
-2315	/cricket/cricket_roster
-2316	/digicams/camera_viewfinder_type
-2317	/base/aubreymaturin/book
-2318	/food/tea_type
-2319	/base/satelites/orbit_inclination_classification
-2320	/spaceflight/rocket_engine_status
-2321	/wine/wine_type
-2322	/base/badpeople/bad_people_who_make_music
-2323	/location/tw_township
-2324	/location/cn_city_district
-2325	/people/gender
-2326	/fictional_universe/character_gender
-2327	/food/licensee
-2328	/base/fight/labour_dispute_cause
-2329	/tv/video_type
-2330	/measurement_unit/irradiance_unit
-2331	Astronomical units of length
-2332	/tv/tv_rating_system
-2333	/location/ca_territory
-2334	/olympics/olympic_medal
-2335	/olympics/olympic_medal_demonstration
-2336	/sports/sport_medal
-2337	/physics/fundamental_interaction
-2338	/games/playing_card_deck_type
-2339	/base/crime/testifying_person
-2340	/base/animalnames/animal
-2341	/base/vanhomeless/government_program
-2342	/base/ikariam/ikariam_resources
-2343	/base/sportbase/club_owner
-2344	/location/tr_region
-2345	/medicine/medical_trial_type
-2346	/law/constitutional_amendment_proposer
-2347	/pipeline/simple_merge_task
-2348	/base/whamoworld/wham_o_toy_imitations
-2349	/astronomy/meteorite_source
-2350	/base/satelites/orbited_body
-2351	/location/cn_municipality
-2352	/base/ultimate/ultimate_region
-2353	/base/fantasyfootball/fantasy_football_game
-2354	/medicine/hospital_ownership_status
-2355	/sports/tournament_team
-2356	/base/engineering/project_phase
-2357	/base/infection/method_of_infectious_software_transmission
-2358	/measurement_unit/conductance_unit
-2359	/medicine/drug_formulation_category
-2360	/base/greatfilms/ranked_list
-2361	/symbols/heraldic_helm
-2362	/astronomy/planetographic_coordinate_system
-2363	/chemistry/phase_of_matter
-2364	/location/vn_township
-2365	/time/commemorative_event
-2366	/measurement_unit/angle_unit
-2367	/common/uri_template
-2368	/common/annotation_index
-2369	/cricket/cricket_series_event
-2370	/measurement_unit/unit_of_symbol_rate
-2371	/measurement_unit/magnetic_field_strength_unit
-2372	/base/sailors/ship_crew_role
-2373	/chemistry/solubility
-2374	/measurement_unit/catalytic_concentration_unit
-2375	/measurement_unit/absorbed_dose_rate_unit
-2376	/measurement_unit/heat_capacity_unit
-2377	/measurement_unit/exposure_unit
-2378	/pipeline/task_status
-2379	/measurement_unit/unit_of_density
-2380	/base/conservationaction/participant
-2381	/base/centreforeresearch/service
-2382	/base/animemanga/seiyu_performer
-2383	/base/jamesbond007/james_bond_villain
-2384	/measurement_unit/luminous_flux_unit
-2385	/music/concert_performance_role
-2386	/astronomy/comet_group
-2387	/base/animemanga/media_format
-2388	/aviation/airline_alliance
-2389	/measurement_unit/charge_unit
-2390	/base/convictsydney/governor
-2391	/business/product_with_ingredients
-2392	/location/mx_federal_district_borough
-2393	/opera/opera_producer
-2394	/biology/taxonomic_authority
-2395	/biology/genome_curator
-2396	/location/us_federal_district
-2397	/measurement_unit/molar_heat_capacity_unit
-2398	/skiing/run_rating
-2399	/skiing/ski_lodge
-2400	/internet/top_level_domain_type
-2401	/biology/genome_build
-2402	/aviation/waypoint_type
-2403	/base/smokers/smoker
-2404	/base/electromagneticspectrum/regulatory_authority
-2405	/media_common/finished_work
-2406	/engineering/engine_cooling_method
-2407	/rail/steam_locomotive_fuel_type
-2408	/base/thoroughbredracing/thoroughbred_racehorse_color
-2409	/measurement_unit/viscosity_unit
-2410	/base/contractbridge/world_bridge_federation_zone
-2411	/base/graffiti/graffiti_crew
-2412	/engineering/electric_current_type
-2413	/base/disaster2/train_accident_cause
-2414	/base/mystery/vall_e_event_type
-2415	/engineering/battery
-2416	Fictional universe
-2417	/base/crime/criminal_investigation_status
-2418	/location/mx_municipality
-2419	/games/playing_card_game_play_direction
-2420	/measurement_unit/catalytic_activity_unit
-2421	/measurement_unit/dose_equivalence_unit
-2422	/boxing/boxing_title
-2423	/measurement_unit/surface_tension_unit
-2424	/location/kp_county
-2425	/measurement_unit/unit_of_specific_fuel_consumption
-2426	/travel/accommodation_price_range
-2427	State Character
-2428	/base/cgcollection/computer_game_release
-2429	TWA Flight 128
-2430	/base/tallships/replica
-2431	/base/tallships/tall_ship_on_tv
-2432	/measurement_unit/illuminance_unit
-2433	/measurement_unit/unit_of_resistivity
-2434	/people/wedding_venue
-2435	Protein
-2436	/measurement_unit/inverse_temperature_unit
-2437	/celebrities/sexual_orientation
-2438	/base/qualia/recreational_drug
-2439	/geography/waterfall_type
-2440	/measurement_unit/electric_charge_density_unit
-2441	/measurement_unit/amount_concentration_unit
-2442	/sports/boxing_stance
-2443	/measurement_unit/radioactivity_unit
-2444	/location/es_autonomous_city
-2445	/biology/genomic_locus
-2446	/symbols/heraldic_coronet
-2447	/measurement_unit/angular_acceleration_unit
-2448	/base/words/french_word
-2449	/base/birdinfo/bird_band_type
-2450	/astronomy/scattered_disc_object
-2451	/chess/chess_color
-2452	/base/scottishclans/tartan
-2453	/measurement_unit/specific_heat_capacity_unit
-2454	/rail/rail_gauge
-2455	/geography/glacier_terminus
-2456	/measurement_unit/unit_of_brake_specific_fuel_consumption
-2457	/base/atitdatlas/university
-2458	/cricket/cricket_umpire_panel
-2459	/aviation/aviation_waypoint
-2460	/amusement_parks/roller_coaster_propulsion_system
-2461	/base/animemanga/sound_drama_title
-2462	anarchy
-2463	User Language Preference
-2464	User Search Language Preference
-2465	/astronomy/trans_neptunian_object
-2466	/measurement_unit/volumetric_heat_capacity_unit
-2467	/measurement_unit/electric_field_strength_unit
-2468	"><img src=1 onerror=alert(2)>
-2469	/measurement_unit/inductance_unit
-2470	/location/br_federal_district
-2471	/measurement_unit/current_unit
-2472	/measurement_unit/unit_of_surface_density
-2473	/measurement_unit/capacitance_unit
-2474	/boats/engine_fuel
-2475	/base/litcentral/cited_quotation_source
-2476	/measurement_unit/unit_of_cargo_capacity
-2477	/dataworld/type_project
-2478	/engineering/power_plug_standard
-2479	/law/international_patent_category
-2480	/dataworld/gardening_task
-2481	/measurement_unit/angular_velocity_unit
-2482	/measurement_unit/electric_flux_density_unit
-2483	/opera/opera_designer_role
-2484	/measurement_unit/specific_volume_unit
-2485	/measurement_unit/luminous_intensity_unit
-2486	/dataworld/protected_namespace
-2487	/dataworld/public_type_schema_change
-2488	/biology/hybrid_parent_gender
-2489	/type/attribution
-2490	/dataworld/provenance
-2491	/dataworld/data_provider
-2492	/measurement_unit/thermal_conductivity_unit
-2493	/measurement_unit/energy_density_unit
-2494	/location/ua_autonomous_republic
-2495	/base/politicalpromises/political_promise
-2496	/base/virology/biological_parasite_host_group
-2497	/measurement_unit/magnetic_flux_unit
-2498	/measurement_unit/permittivity_unit
-2499	/measurement_unit/resistance_unit
+0	/projects/project_focus	75578
+1	/architecture/structure	91145
+2	/location/location	1335342
+3	/location/dated_location	383774
+4	/location/citytown	413914
+5	/location/statistical_region	366346
+6	/government/political_party	9623
+7	/organization/organization	543447
+8	/book/written_work	2467240
+9	/fictional_universe/work_of_fiction	22477
+10	/book/book	2434985
+11	/broadcast/radio_station	15775
+12	/broadcast/broadcast	22143
+13	/business/brand	2466
+14	/protected_sites/protected_site	6785
+15	/religion/religious_organization	874
+16	/people/person	1714207
+17	/military/military_person	25215
+18	/royalty/chivalric_order_member	9240
+19	/people/deceased_person	332862
+20	/time/event	76898
+21	/military/military_conflict	9514
+22	/metropolitan_transit/transit_system	469
+23	/architecture/building	55522
+24	/architecture/museum	7053
+25	/travel/tourist_attraction	1472
+26	/biology/organism_classification	158931
+27	/sports/pro_athlete	177197
+28	/tv/tv_series_episode	738496
+29	/cvg/computer_videogame	19453
+30	/base/sails/sailing_ship	0
+31	/boats/ship	19912
+32	/royalty/noble_person	10249
+33	/government/u_s_congressperson	12197
+34	/government/politician	72322
+35	/military/military_unit	7863
+36	/olympics/olympic_athlete	52667
+37	/soccer/football_player	55007
+38	/location/uk_civil_parish	7572
+39	/location/administrative_division	24560
+40	/opera/opera	1779
+41	/music/composition	58858
+42	/business/shopping_center	3094
+43	/law/legal_case	0
+44	/geography/geographical_feature	56134
+45	/geography/body_of_water	36516
+46	/geography/river	24313
+47	/time/recurring_event	8676
+48	/book/literary_series	6711
+49	/architecture/venue	0
+50	/sports/sports_facility	4764
+51	/medicine/disease	9101
+52	/tv/tv_program	35761
+53	/book/periodical	16763
+54	/book/newspaper	3756
+55	/location/in_district	646
+56	/sports/sports_team	24819
+57	/baseball/baseball_team	968
+58	/visual_art/visual_artist	19156
+59	/business/employer	234787
+60	/book/book_subject	30339
+61	/music/composer	16267
+62	/music/artist	398945
+63	/music/group_member	62287
+64	/chess/chess_player	1591
+65	/education/educational_institution	158586
+66	/book/journal	3960
+67	/tv/tv_personality	7385
+68	/fictional_universe/fictional_character	146791
+69	/geography/island	7364
+70	/computer/computer	542
+71	/soccer/football_league	429
+72	/sports/sports_league	2987
+73	/business/consumer_product	10204
+74	/sports/multi_event_tournament	856
+75	/metropolitan_transit/transit_stop	25740
+76	/people/measured_person	19683
+77	/american_football/football_player	16576
+78	/business/business_operation	304508
+79	/music/record_label	5725
+80	/education/school	122476
+81	/medicine/medical_treatment	3724
+82	/medicine/drug	3916
+83	/people/ethnicity	5364
+84	/boats/ship_type	427
+85	/fictional_universe/character_species	1181
+86	/book/author	557157
+87	/award/award_nominee	29268
+88	/film/actor	82105
+89	/award/award_winning_work	18220
+90	/award/award_nominated_work	26982
+91	/music/guitarist	4426
+92	/base/yalebase/building	0
+93	/base/yalebase/library	0
+94	/people/family_name	5922
+95	/base/typefaces/typeface	0
+96	/biology/deceased_organism	872
+97	/biology/organism	2851
+98	/baseball/baseball_player	18868
+99	/baseball/baseball_manager	435
+100	/travel/accommodation	1216
+101	/travel/hotel	0
+102	/venture_capital/venture_funded_company	2593
+103	/law/invention	616
+104	/sports/sports_championship_event	1468
+105	/soccer/football_match	692
+106	/base/ballet/ballet_school	0
+107	/food/ingredient	1613
+108	/organization/organization_founder	6936
+109	/tv/tv_actor	36826
+110	/sports/sports_league_season	9055
+111	/influence/influence_node	49240
+112	/base/crime/lawyer	0
+113	/film/film_character	47145
+114	/tv/tv_character	78195
+115	/medicine/anatomical_structure	2909
+116	/medicine/brain	205
+117	/visual_art/art_period_movement	201
+118	/geography/mountain	8986
+119	/education/university	26085
+120	/award/award_winner	27927
+121	/comic_books/comic_book_character	4156
+122	/transportation/road	18732
+123	/base/rugby/rugby_player	0
+124	/library/public_library_system	9403
+125	/people/family_member	5843
+126	/film/cinematographer	7071
+127	/education/academic	25493
+128	/law/judge	0
+129	/geography/waterfall	628
+130	/film/film	143748
+131	/media_common/netflix_title	67562
+132	/music/musical_group	104380
+133	/aviation/airport	10818
+134	/internet/website	5623
+135	/location/australian_local_government_area	695
+136	/film/director	27439
+137	/film/writer	22683
+138	/basketball/basketball_player	8482
+139	/fashion/textile	127
+140	/base/textiles/textile	0
+141	/location/ar_department	336
+142	/book/short_non_fiction	433
+143	/book/published_work	7579
+144	/soccer/football_team	12750
+145	/architecture/architectural_structure_owner	1042
+146	/base/usnris/nris_listing	0
+147	/protected_sites/listed_site	41638
+148	/music/concert_tour	1206
+149	/music/album	526065
+150	/cvg/cvg_developer	4444
+151	/education/school_district	19803
+152	/base/givennames/given_name	0
+153	/book/magazine	5996
+154	/film/person_or_entity_appearing_in_film	7490
+155	/government/government_agency	3744
+156	/computer/software_license	115
+157	/american_football/football_coach	2464
+158	/government/political_district	7999
+159	/music/conductor	2159
+160	/award/award_category	7489
+161	/games/game	2262
+162	/medicine/notable_person_with_medical_condition	1020
+163	/film/film_story_contributor	4389
+164	/base/americancomedy/borscht_belt_comedian	0
+165	/base/americancomedy/comedian	0
+166	/government/general_election	1952
+167	/base/argumentmaps/morally_disputed_activity	0
+168	/base/engineering/engineering_person	0
+169	/projects/project_participant	1923
+170	/government/election	12503
+171	/business/board_member	49084
+172	/sports/golfer	1543
+173	/theater/play	4489
+174	/military/armed_force	1704
+175	/event/disaster	2576
+176	/tv/tv_program_creator	2244
+177	/base/yalebase/person	0
+178	/sports/australian_rules_footballer	2487
+179	/law/inventor	2030
+180	/basketball/basketball_coach	2196
+181	/language/human_language	10857
+182	/architecture/architect	5432
+183	/ice_hockey/hockey_player	6513
+184	/travel/transport_terminus	369
+185	/comic_books/comic_book_series	1803
+186	/aviation/aircraft_owner	3882
+187	/aviation/airline	3581
+188	/government/governmental_body	1520
+189	/base/hybrids/hybrid_fruit	0
+190	/amusement_parks/ride	0
+191	/amusement_parks/disney_ride	0
+192	/amusement_parks/roller_coaster	0
+193	/astronomy/extraterrestrial_location	2354
+194	/religion/place_of_worship	3519
+195	/royalty/monarch	2698
+196	/sports/boxer	4342
+197	/transportation/bridge	5319
+198	/book/short_story	3978
+199	/internet/social_network_user	32780
+200	/religion/religious_leader	837
+201	/automotive/model	4709
+202	/film/film_job	5742
+203	/business/issuer	43979
+204	/base/bioventurist/bv_venture_investor	0
+205	/venture_capital/venture_investor	2591
+206	/organization/non_profit_organization	3528
+207	/film/film_crewmember	35150
+208	/people/family	1298
+209	/theater/theater_actor	4032
+210	/award/ranked_item	15335
+211	/broadcast/producer	576
+212	/award/competitor	2339
+213	/boats/ship_builder	163
+214	/boats/ship_designer	108
+215	/chemistry/chemical_compound	9248
+216	/base/crime/convicted_criminal	0
+217	/broadcast/artist	13789
+218	/cricket/cricket_player	10572
+219	/geography/mountain_pass	844
+220	/olympics/olympic_event_competition	4988
+221	/people/profession	2812
+222	/astronomy/asteroid	10340
+223	/astronomy/astronomical_discovery	13797
+224	/astronomy/near_earth_object	223
+225	/astronomy/orbital_relationship	17081
+226	/astronomy/celestial_object	19441
+227	/base/petbreeds/dog_breed	0
+228	/biology/animal_breed	1327
+229	/medicine/hospital	5023
+230	/music/producer	5397
+231	/skiing/ski_area	0
+232	/film/producer	22360
+233	/sports/sports_official	1774
+234	/media_common/adaptation	8282
+235	/tv/tv_writer	4633
+236	/base/terrorism/terrorist_attack	0
+237	/organization/organization_scope	428
+238	/boats/ship_class	2574
+239	/base/juiced/user_of_banned_substances	0
+240	/award/award	3771
+241	/base/americancomedy/comedy_group_member	0
+242	/film/music_contributor	7266
+243	/architecture/architectural_style	265
+244	/location/neighborhood	5632
+245	/meteorology/tropical_cyclone	1147
+246	/business/defunct_company	3471
+247	/language/language_writing_system	398
+248	/geography/lake	8724
+249	/business/job_title	14597
+250	/symbols/name_source	0
+251	/film/editor	6996
+252	/people/place_of_interment	2690
+253	/location/cemetery	1890
+254	/broadcast/content	4682
+255	/computer/programming_language	1212
+256	/computer/file_format	3563
+257	/base/saints/saint	0
+258	/base/adultentertainment/adult_entertainer	0
+259	/music/festival	723
+260	/zoos/zoo	0
+261	/food/dish	2499
+262	/base/activism/activist	0
+263	/book/poem	1710
+264	/base/fashionmodels/fashion_model	0
+265	/religion/religious_leadership_jurisdiction	4483
+266	/medicine/symptom	1128
+267	/base/natlang/grouped_topic	0
+268	/base/animalnames/animal_group_name	0
+269	/geography/glacier	642
+270	/royalty/noble_title	5003
+271	/cvg/cvg_platform	364
+272	/location/hud_county_place	29103
+273	/location/hud_foreclosure_area	98378
+274	/music/performance_role	1438
+275	/music/instrument	1614
+276	/skiing/lift_type	0
+277	/location/cn_county	1265
+278	/organization/membership_organization	793
+279	/education/educational_degree	540
+280	/location/postal_code	59557
+281	/base/greatfilms/ranked_item	0
+282	/base/wfilmbase/film	0
+283	/base/thoroughbredracing/thoroughbred_racehorse_trainer	0
+284	/award/hall_of_fame_inductee	2459
+285	/architecture/skyscraper	3643
+286	/location/australian_suburb	3226
+287	/sports/tournament_event_competition	1895
+288	/base/casinos/casino	0
+289	/base/yalebase/secret_society_member	0
+290	/time/calendar	79
+291	/aviation/airliner_accident	660
+292	/award/hall_of_fame	409
+293	/sports/cyclist	3594
+294	/aviation/aircraft_model	5569
+295	/food/brewery_brand_of_beer	1576
+296	/basketball/basketball_team	1675
+297	/wine/wine_producer	1206
+298	/base/bioventurist/product	0
+299	/base/bioventurist/bv_therapeutic	0
+300	/base/folklore/mythical_creature	0
+301	/base/engineering/canal	0
+302	/biology/pedigreed_animal	10
+303	/biology/owned_animal	14
+304	/base/thoroughbredracing/thoroughbred_racehorse	0
+305	/rail/railway_terminus	128
+306	/visual_art/artwork	15680
+307	/media_common/adapted_work	5012
+308	/base/computerscience/block_cipher	0
+309	/organization/endowed_organization	146
+310	/religion/religion	585
+311	Topic	0
+312	/government/legislative_committee	655
+313	/symbols/flag	0
+314	/military/military_post	656
+315	/dining/restaurant	6950
+316	/business/business_location	76235
+317	/tv/tv_producer	3530
+318	/geography/geographical_feature_category	397
+319	/book/book_edition	3408538
+320	/media_common/creative_work	545386
+321	/wine/wine_region	117
+322	/type/content	0
+323	/visual_art/color	374
+324	/computer/software	7823
+325	/atom/feed	86
+326	/atom/feed_person	55
+327	/comic_books/comic_book_story	245
+328	/cvg/game_version	36753
+329	/fictional_universe/fictional_setting	2223
+330	/comic_books/comic_book_issue	455
+331	/computer/computer_scientist	870
+332	/business/company_advisor	1340
+333	/time/day_of_year	704
+334	/base/formula1/formula_1_driver	0
+335	/tv/tv_series_season	36185
+336	/music/release	562944
+337	/music/release_component	57640
+338	/organization/organization_member	3292
+339	/geography/mountain_range	2289
+340	/base/disaster2/death_causing_event	0
+341	/music/lyricist	4292
+342	/music/songwriter	3469
+343	/base/computerscience/automaton	0
+344	/location/jp_district	559
+345	/transportation/bridge_type	74
+346	/spaceflight/spacecraft	745
+347	/spaceflight/satellite	195
+348	/people/cause_of_death	615
+349	/fictional_universe/medical_condition_in_fiction	123
+350	/medicine/risk_factor	1040
+351	/base/bioventurist/bv_medical_condition	0
+352	/cvg/cvg_designer	1824
+353	/internet/website_owner	574
+354	/symbols/coat_of_arms	1133
+355	/location/jp_city_town	842
+356	/visual_art/art_subject	1309
+357	/fictional_universe/character_occupation	811
+358	/games/playing_card_game	478
+359	/base/bioventurist/technology_class	0
+360	/medicine/disease_cause	658
+361	/religion/founding_figure	98
+362	/cvg/game_series	440
+363	/sports/professional_sports_team	1004
+364	/tv/tv_program_guest	749
+365	/architecture/lighthouse	0
+366	/book/book_character	2721
+367	/government/government_office_or_title	3507
+368	/internet/top_level_domain_sponsor	222
+369	/fashion/garment	208
+370	/business/asset_owner	145
+371	/base/saturdaynightlive/snl_host	0
+372	/theater/theatrical_lyricist	145
+373	/theater/theatrical_composer	142
+374	/base/saturdaynightlive/snl_musical_guest	0
+375	/film/film_subject	2023
+376	/location/us_indian_reservation	136
+377	/book/translated_work	419
+378	/royalty/royal_line	312
+379	/royalty/kingdom	164
+380	/comic_books/comic_book_creator	244
+381	/base/prison/prison	0
+382	/interests/collection_category	141
+383	/base/cocktails/cocktail_drinkware	0
+384	/fictional_universe/fictional_character_creator	1766
+385	/base/famouspets/pet_owner	0
+386	/celebrities/celebrity	1934
+387	/sports/sports_award_winner	855
+388	/base/prison/prisoner	0
+389	/theater/theater_character	899
+390	/film/film_location	1609
+391	/sports/sports_team_location	937
+392	/education/field_of_study	1829
+393	/dining/cuisine	217
+394	/film/film_festival	935
+395	/government/form_of_government	54
+396	/cvg/game_character	1510
+397	/religion/religious_leadership_title	485
+398	/internet/website_category	383
+399	/music/track	3946612
+400	/language/language_family	857
+401	/music/genre	1987
+402	/internet/blog	745
+403	/food/beer_style	150
+404	/food/beer_style_category	27
+405	/food/beer	3173
+406	/base/beerbase/beer2	0
+407	/media_common/media_genre	1101
+408	/comic_strips/comic_strip_genre	43
+409	/aviation/aircraft_type	660
+410	/aviation/aircraft_designer	245
+411	/dataworld/data_task	31
+412	/spaceflight/astronaut	605
+413	/base/mystery/ufo_sighting_location	0
+414	/base/pirates/pirate	0
+415	/boats/ship_owner	357
+416	/base/landcover/classification_code	0
+417	/base/landcover/saf_forest_cover_type	0
+418	/games/game_genre	95
+419	/media_common/quotation	33812
+420	/biology/protein	4563
+421	/medicine/physician	2210
+422	/dataworld/mass_data_operation	9719
+423	/language/conlang	63
+424	/biology/cytogenetic_band	862
+425	/computer/software_developer	1076
+426	/biology/gene_group	22668
+427	/biology/gene_ontology_group	22669
+428	/base/formula1/race_track	0
+429	/biology/gene	38820
+430	/aviation/aircraft_manufacturer	561
+431	/automotive/model_year	6460
+432	/cvg/game_voice_actor	343
+433	/base/tallships/tall_ship_event_instance	0
+434	/spaceflight/space_mission	450
+435	/fashion/fashion_designer	256
+436	/music/music_video_director	0
+437	/symbols/namesake	0
+438	/location/de_city	581
+439	/base/fight/riot_control_techniques	0
+440	/fictional_universe/fictional_object	605
+441	/automotive/generation	239
+442	/base/argumentmaps/argument	0
+443	/base/argumentmaps/idea	0
+444	/book/poetic_verse_form	75
+445	/book/poetic_meter	19
+446	/comic_strips/comic_strip_character	236
+447	/book/literary_genre	372
+448	/theater/theater_designer	75
+449	/tv/the_colbert_report_episode	286
+450	/base/breakfast/breakfast_cereal_mascot	0
+451	/religion/deity	1105
+452	/media_common/dedicatee	445
+453	/business/consumer_company	45
+454	/fictional_universe/fictional_organization	1298
+455	/base/pinball/pinball_machine	0
+456	/base/noisepop/artist	0
+457	/location/country	443
+458	/symbols/flag_referent	0
+459	/cricket/cricket_bowler	1605
+460	/religion/religious_text	282
+461	/base/formula1/formula_1_grand_prix	0
+462	/sports/drafted_athlete	2085
+463	/base/killers/serial_killer	0
+464	/music/guitar	376
+465	/tv/tv_director	3223
+466	/base/surfing/surfer	0
+467	/music/bassist	366
+468	/sports/golf_facility	1286
+469	/base/grecoromanmythology/source	0
+470	/martial_arts/martial_artist	1255
+471	/base/classiccars/classic_car	0
+472	/base/fires/fires	0
+473	/base/engineering/dam	0
+474	/award/recurring_competition	371
+475	/base/animemanga/anime_manga_character	0
+476	/base/crime/law_firm	0
+477	/games/game_designer	451
+478	/broadcast/tv_station	2299
+479	/base/vancouver/podcaster	0
+480	/tennis/tennis_player	2733
+481	/tennis/tennis_tournament_champion	852
+482	/law/court	0
+483	/base/crime/appellate_court	0
+484	/cvg/computer_game_expansion	127
+485	/geography/mountaineer	462
+486	/music/concert_film	135
+487	/base/fires/explosion	0
+488	/cricket/cricket_umpire	293
+489	/food/food	1103
+490	/architecture/architecture_firm	535
+491	/tv/tv_network	1775
+492	/medicine/drug_ingredient	0
+493	/conferences/conference_series	778
+494	/base/realitytv/reality_tv_season	0
+495	/base/dancingwiththestars/season	0
+496	/astronomy/nebula	108
+497	/engineering/engine	715
+498	/music/soundtrack	4413
+499	/tennis/tennis_tournament	104
+500	/education/fraternity_sorority	504
+501	/base/engineering/mine	0
+502	/award/competition	1978
+503	/architecture/tower	186
+504	/astronomy/galaxy	516
+505	/education/department	756
+506	/broadcast/tv_channel	168
+507	/film/film_festival_event	1245
+508	/metropolitan_transit/transit_line	3033
+509	/interests/collector	310
+510	/meteorology/tropical_cyclone_season	315
+511	/education/school_newspaper	574
+512	/film/film_company	457
+513	/government/national_anthem	307
+514	/base/adultentertainment/adult_media	0
+515	/cvg/cvg_publisher	1954
+516	/amusement_parks/ride_designer	0
+517	/amusement_parks/ride_manufacturer	0
+518	/base/livemusic/concert_venue	0
+519	/base/classiccars/vintage_car	0
+520	/base/nascar/nascar_driver	0
+521	/base/horseracing/horse_race	0
+522	/organization/club_interest	31
+523	/business/shareholder	2390
+524	/soccer/football_league_season	2161
+525	/base/animemanga/anime_director	0
+526	/architecture/house	2466
+527	/education/school_type	130
+528	/people/professional_field	58
+529	/comic_strips/comic_strip_creator	400
+530	/comic_books/comic_book_writer	72
+531	/comic_strips/comic_strip	915
+532	/base/tabletennis/athlete	0
+533	/rail/locomotive_class	881
+534	/base/ontologies/ontology_class	0
+535	/astronomy/astronomer	823
+536	/fictional_universe/person_in_fiction	1047
+537	/base/jamesbond007/bond_girl	0
+538	/education/academic_institution	301
+539	/astronomy/moon	167
+540	/base/birdwatching/checklist_bird	0
+541	/base/litcentral/focal_taxa	0
+542	/music/single	17507
+543	/base/parody/parodied_subject	0
+544	/base/ancientegypt/pyramid_owner	0
+545	/base/ancientegypt/pharaoh	0
+546	/film/production_company	2962
+547	/tv/tv_genre	233
+548	/tv/tv_subject	104
+549	/base/ikariam/ikariam_research	0
+550	/base/fight/crime_type	0
+551	/media_common/quotation_subject	1689
+552	/base/crime/acquitted_person	0
+553	/soccer/football_referee	127
+554	/base/mystery/ufo_sighting	0
+555	/cvg/musical_game_song	1638
+556	/conferences/conference_venue	186
+557	/games/game_publisher	210
+558	/finance/currency	721
+559	/business/issue	69092
+560	/base/column/column_author	0
+561	/book/periodical_publisher	528
+562	/media_common/quotation_source	884
+563	/military/military_combatant	413
+564	/government/governmental_jurisdiction	997
+565	/cvg/computer_game_subject	128
+566	/sports/sports_equipment	118
+567	/base/whamoworld/wham_o_toys	0
+568	/education/school_mascot	425
+569	/computer/programming_language_designer	150
+570	/base/scubadiving/marine_creature	0
+571	/soccer/football_team_manager	415
+572	/people/canadian_aboriginal_group	258
+573	/theater/theater_company	650
+574	/business/product_line	337
+575	/tv/non_character_role	22
+576	/base/skateboarding/skateboarder	0
+577	/business/sponsored_recipient	1314
+578	/media_common/dedicated_work	503
+579	/ice_hockey/hockey_team	928
+580	/spaceflight/rocket_engine_manufacturer	10
+581	/spaceflight/rocket_engine_designer	11
+582	/dataworld/information_source	64
+583	/spaceflight/bipropellant_rocket_engine	140
+584	/spaceflight/rocket_engine	150
+585	/time/geologic_time_period	468
+586	/military/military_commander	969
+587	/fictional_universe/fictional_organization_type	101
+588	/rail/railway	1306
+589	/baseball/baseball_league	236
+590	/base/nascar/nascar_race_instance	0
+591	/event/disaster_victim	411
+592	/medicine/icd_9_cm_classification	10153
+593	/base/dancingwiththestars/contestant	0
+594	/location/ca_census_division	290
+595	/base/braziliangovt/politician	0
+596	/base/saturdaynightlive/snl_actor	0
+597	/base/saturdaynightlive/snl_cast_member	0
+598	/soccer/football_award	91
+599	/music/drummer	265
+600	/dining/chef	800
+601	/music/engineer	409
+602	/base/localfood/produce	0
+603	/medicine/drug_manufacturer	0
+604	/religion/prayer	41
+605	/computer/web_browser	51
+606	/base/mystery/alien_abduction	0
+607	/exhibitions/exhibition_subject	0
+608	/base/lewisandclark/places_westward	0
+609	/base/worldwonders/ancient_wonder	0
+610	/base/ancientegypt/pyramid	0
+611	/medicine/surgeon	358
+612	/location/it_comune	117
+613	/zoos/zoo_animal	0
+614	/base/mystery/cryptid_alternative	0
+615	/biology/animal	235
+616	/fictional_universe/event_in_fiction	330
+617	/music/multipart_release	24563
+618	/martial_arts/martial_art	374
+619	/sports/sport	427
+620	/olympics/olympic_sport	117
+621	/cricket/cricket_coach	121
+622	/base/underwater/underwater_thing	0
+623	/base/underwater/sunken_city	0
+624	/sports/sports_championship	169
+625	/base/symbols/symbol	0
+626	/film/film_festival_sponsor	93
+627	/base/tallships/maritime_museum	0
+628	/education/student_radio_station	559
+629	/base/fight/protest	0
+630	/film/film_set_designer	1451
+631	/book/publishing_company	10817
+632	/food/wine_style	114
+633	/location/cn_county_level_city	264
+634	/base/fight/labour_dispute	0
+635	/location/cn_prefecture_level_city	301
+636	/film/film_art_director	2534
+637	/film/film_production_designer	2553
+638	/biology/fossil_site	207
+639	/award/award_presenting_organization	639
+640	/base/jsbach/bach_composition	0
+641	/base/mystery/person_with_alleged_paranormal_powers	0
+642	/music/compositional_form	142
+643	/base/ballet/ballet	0
+644	/base/undergroundhumanthings/underground_object	0
+645	/base/marchmadness/ncaa_basketball_team	0
+646	/sports/school_sports_team	427
+647	/location/it_frazione	109
+648	/book/publication	1212
+649	/book/journal_article	482
+650	/book/scholarly_work	14762
+651	/base/bioventurist/science_or_technology_company	0
+652	/base/bioventurist/organization	0
+653	/base/tallships/tall_ship	0
+654	/periodicals/newspaper_circulation_area	211
+655	/base/contractbridge/bridge_player	0
+656	/base/wrestling/solo_wrestler_or_team	0
+657	/base/wrestling/professional_wrestler	0
+658	/base/bio2rdf/sparql	0
+659	/broadcast/internet_stream	1542
+660	/film/film_costumer_designer	2160
+661	/wine/wine	5666
+662	/base/collectives/collective_member	0
+663	/wine/vineyard	722
+664	/architecture/lighthouse_construction_material	0
+665	/amusement_parks/park	0
+666	/time/holiday	531
+667	/event/public_speaking_event	312
+668	/base/collectives/collective	0
+669	/base/puzzles/puzzle_constructor	0
+670	/fictional_universe/school_in_fiction	131
+671	/medicine/medical_trial_health_authority	7
+672	/astronomy/comet	184
+673	/base/scubadiving/coral_reef	0
+674	/business/asset	320
+675	/business/oil_field	121
+676	/fictional_universe/character_rank	244
+677	/base/americancomedy/movie	0
+678	/base/standardizedtesting/test_giving_organization	0
+679	/type/unit	0
+680	/measurement_unit/current_density_unit	2
+681	/medicine/drug_class	110
+682	/theater/theater	1217
+683	/people/appointee	326
+684	/sports/defunct_sports_team	364
+685	/location/symbol_of_administrative_division	223
+686	/food/cheese	490
+687	/government/political_appointer	193
+688	/law/legal_subject	0
+689	/base/infrastructure/power_station	0
+690	/education/academic_post_title	425
+691	/award/ranked_list	153
+692	/opera/librettist	477
+693	/government/legislative_session	1010
+694	/food/drinking_establishment	901
+695	/base/britishpubs/pub	0
+696	/government/government_office_category	0
+697	/location/ru_republic	19
+698	/automotive/platform	83
+699	/base/piercings/piercing_location	0
+700	/business/sponsor	1521
+701	/ice_hockey/hockey_position	7
+702	/base/digitalcameras/lens_version	0
+703	/cricket/cricket_team	189
+704	/base/gender/transgender_person	0
+705	/location/id_regency	213
+706	/projects/project	2437
+707	/base/tallships/historic_ship	0
+708	/olympics/olympic_venue	234
+709	/base/wrestling/championship_title	0
+710	/astronomy/galactic_interaction_status	5
+711	/base/eating/practicer_of_diet	0
+712	/visual_art/visual_art_genre	128
+713	/astronomy/star	2288
+714	/base/pinball/pinball_machine_manufacturer	0
+715	/base/monster/monster	0
+716	/computer/software_genre	330
+717	/engineering/fuel_delivery_method	8
+718	/automotive/fuel_delivery_method	9
+719	/architecture/building_complex	113
+720	/base/politicalconventions/primary_candidate	0
+721	/food/beverage	81
+722	/base/infrastructure/lock	0
+723	/games/game_expansion	574
+724	/royalty/order_of_chivalry	198
+725	/medicine/medical_specialty	105
+726	/law/patent_assignee	10
+727	/measurement_unit/measuring_instrument	86
+728	/book/illustrator	751
+729	/law/constitution	164
+730	/book/periodical_subject	187
+731	/film/film_genre	460
+732	/broadcast/genre	349
+733	/opera/opera_company	237
+734	/measurement_unit/distance_unit	68
+735	/military/rank	245
+736	/base/coltrane/jazz_album	0
+737	/base/mystery/cryptid_classification	0
+738	/digicams/digital_camera	1261
+739	/base/digitalcameras/digital_camera	0
+740	/computer/computer_peripheral	68
+741	/rail/diesel_locomotive_class	0
+742	/base/animemanga/manga_author	0
+743	/location/census_designated_place	5682
+744	/meteorology/cyclone_affected_area	132
+745	/fictional_universe/fictional_job_title	235
+746	/base/fight/protest_type	0
+747	/film/film_format	53
+748	/film/film_distribution_medium	11
+749	/base/motorcycle/motorcycle_series	0
+750	/base/motorcycle/motorcycle_distinguishing_feature	0
+751	/base/motorcycle/motorcycle_part_number_manufacturer	0
+752	/event/presented_work	146
+753	/base/motorcycle/motorcycle_part_number_retailer	0
+754	/dataworld/incompatible_types	118
+755	/theater/theater_production	602
+756	/library/public_library	10067
+757	/people/american_indian_group	210
+758	/base/damsbase/dam_destruction_method	0
+759	/base/architecture2/destruction_method2	0
+760	/cvg/musical_game	231
+761	/business/industry	4559
+762	/automotive/company	175
+763	/base/plopquiz/plopquiz	0
+764	/law/patent_office	30
+765	/broadcast/tv_station_owner	241
+766	/astronomy/asteroid_spectral_type	20
+767	/base/crime/crime_victim	0
+768	/base/ballet/ballet_company	0
+769	/organization/organization_type	126
+770	/base/typefaces/typeface_creator	0
+771	/base/fight/crowd_event	0
+772	/base/database/database_topic	0
+773	/automotive/engine	1728
+774	/computer/computing_platform	187
+775	/automotive/make	274
+776	/geography/mountain_listing	24
+777	/base/infection/computer_infection	0
+778	/base/crime/crime	0
+779	/food/tea	84
+780	/fictional_universe/fictional_substance	55
+781	/base/vancouver/location_in_neighborhood	0
+782	/education/dissertation	14288
+783	/base/siswimsuitmodels/si_swimsuit_model	0
+784	/chemistry/chemical_classification	365
+785	/measurement_unit/dimension	101
+786	/location/de_rural_district	319
+787	/internet/top_level_domain_registry	216
+788	/location/ua_oblast	25
+789	/metropolitan_transit/transit_agency	167
+790	/religion/type_of_place_of_worship	35
+791	/architecture/building_function	189
+792	/base/disaster2/rail_accident	0
+793	/film/film_screening_venue	31
+794	/education/student_organization	153
+795	/location/pr_municipality	79
+796	/location/us_county	3225
+797	/base/computerscience/data_structure	0
+798	/base/litcentral/focal_location	0
+799	/martial_arts/martial_arts_qualification	30
+800	/location/uk_non_metropolitan_district	250
+801	/location/uk_statistical_location	0
+802	/base/fight/riot	0
+803	/base/formula1/formula_1_team	0
+804	/education/fraternity_sorority_type	5
+805	/base/survivor/survivor_contestant	0
+806	/location/region	336
+807	/geography/island_group	392
+808	/base/sailors/ship_passenger	0
+809	/event/disaster_survivor	205
+810	/wine/grape_variety	527
+811	/astronomy/meteor_shower	75
+812	/base/nascar/nascar_racing_organization	0
+813	/computer/computer_emulator	223
+814	/geology/rock_type	170
+815	/cvg/computer_game_engine	189
+816	/government/election_campaign	837
+817	/base/disaster2/type_of_injury	0
+818	/sports/fight_song	0
+819	/exhibitions/exhibition_venue	0
+820	/exhibitions/exhibition_producer	0
+821	/opera/opera_house	127
+822	/base/academyawards/host_of_oscar_show	0
+823	/spaceflight/rocket_fuel	26
+824	/spaceflight/rocket_engine_fuel	15
+825	/location/in_city	44
+826	/base/crime/executed_person	0
+827	/rail/electric_locomotive_class	3
+828	/internet/api	69
+829	/cricket/cricket_league	11
+830	/medicine/biofluid	34
+831	/base/database/database	0
+832	/travel/travel_destination	274
+833	/organization/role	59
+834	/american_football/football_team	257
+835	/fictional_universe/fictional_universe	625
+836	/architecture/engineer	171
+837	/zoos/zoo_exhibit	0
+838	/sports/sports_team_owner	161
+839	/opera/opera_character	928
+840	/sports/mascot	367
+841	/boxing/boxing_match	0
+842	/astronomy/astronomical_observatory	401
+843	/architecture/museum_director	25
+844	/type/domain	0
+845	/book/magazine_issue	484
+846	/dataworld/mass_data_load	8
+847	/law/us_patent	70
+848	/book/isbn	2665015
+849	/type/namespace	0
+850	/medicine/drug_brand	83
+851	/business/product_category	0
+852	/religion/monastery	356
+853	/royalty/chivalric_order_founder	33
+854	/internet/blogger	501
+855	/film/film_series	246
+856	/organization/organization_sector	340
+857	/base/grecoromanmythology/greek_deity	0
+858	/community/discussion_thread	13677
+859	/base/folklore/named_mythical_creature	0
+860	/spaceflight/rocket	106
+861	/olympics/olympic_games	63
+862	/base/grecoromanmythology/roman_hero	0
+863	/base/grecoromanmythology/roman_deity	0
+864	/book/newspaper_owner	260
+865	/boxing/boxing_sanctioning_body	0
+866	/location/place_with_neighborhoods	237
+867	/spaceflight/rocket_launch_site	23
+868	/location/nl_municipality	444
+869	/base/lewisandclark/places_eastward	0
+870	/base/infection/location_of_biosafety_facility	0
+871	/business/competitive_space	530
+872	/biology/hybrid	11
+873	/automotive/truck_trim_level	5744
+874	/automotive/trim_level	17705
+875	/media_common/netflix_genre	502
+876	/base/parody/parody	0
+877	/religion/belief	111
+878	/award/award_ceremony	97
+879	/conferences/conference	332
+880	/base/fires/fire_department	0
+881	/base/filmcameras/camera_series	0
+882	/base/filmcameras/camera	0
+883	/film/film_casting_director	1073
+884	/visual_art/visual_art_medium	914
+885	/location/de_urban_district	113
+886	/media_common/cause_of_loss	8
+887	/education/educational_institution_campus	1628
+888	/exhibitions/exhibit	0
+889	/base/thoroughbredracing/thoroughbred_racehorse_owner	0
+890	/music/concert	70
+891	/broadcast/radio_station_owner	182
+892	/business/trade_union	228
+893	/religion/religious_practice	166
+894	/book/poem_character	28
+895	/book/series_editor	16
+896	/base/thatguy/locally_famous_person	0
+897	/base/fairytales/fairy_tale	0
+898	/location/fr_department	102
+899	/visual_art/art_owner	563
+900	/architecture/light_characteristic	0
+901	/music/music_video	0
+902	/film/film_featured_song	482
+903	/type/usergroup	0
+904	/tv/tv_crewmember	59
+905	/medicine/manufactured_drug_form	0
+906	/medicine/artery	238
+907	/computer/operating_system	492
+908	/medicine/drug_formulation	0
+909	/medicine/drug_physiologic_effect	0
+910	/medicine/drug_mechanism_of_action	0
+911	/organization/organization_partnership	33
+912	/location/es_autonomous_community	18
+913	/base/ballet/choreographer	0
+914	/book/translation	639
+915	/base/animemanga/anime_title	0
+916	/biology/hybrid_parent_classification	16
+917	/exhibitions/exhibition	0
+918	/fictional_universe/character_powers	411
+919	/location/uk_council_area	33
+920	/government/primary_election	378
+921	/royalty/chivalric_title	66
+922	/theater/musical_soundtrack	19
+923	/book/periodical_editor	204
+924	/base/disaster2/injury_causing_event	0
+925	/book/book_edition_series	58
+926	/base/crime/crime_suspect	0
+927	/music/music_video_character	0
+928	/film/content_rating	110
+929	/cvg/computer_game_rating	19
+930	/biology/amino_acid	22
+931	/food/nutrient	142
+932	/music/conducted_ensemble	107
+933	/base/filmcameras/camera_lens	0
+934	/theater/theater_director	100
+935	/biology/organism_part	0
+936	/organization/organization_committee	172
+937	/base/firsts/achievement	0
+938	/music/music_video_choreographer	0
+939	/music/music_video_performer	0
+940	/computer/computer_processor	260
+941	/biology/animal_owner	8
+942	/measurement_unit/area_unit	11
+943	/base/folklore/mythical_creature_location	0
+944	/base/qualia/disabled_person	0
+945	/medicine/vector_of_disease	8
+946	/base/americancomedy/impersonated_celebrity	0
+947	/base/grecoromanmythology/greek_hero	0
+948	/book/translator	486
+949	/base/sanfrancisco/san_francisco_mayor_2	0
+950	/base/americancomedy/double_act_straight_man	0
+951	/fictional_universe/type_of_fictional_setting	89
+952	/business/company_type	24
+953	/location/uk_london_borough	33
+954	/base/endorsements/endorsing_newspaper	0
+955	/tv/tv_location	0
+956	/base/saints/feast_day	0
+957	/aviation/aircraft	98
+958	/base/saturdaynightlive/snl_movie_spin_off	0
+959	/base/skateboarding/skateboarding_movie	0
+960	/base/playboyplaymates/playmate	0
+961	/distilled_spirits/infused_spirit	72
+962	/fictional_universe/ethnicity_in_fiction	135
+963	/base/litcentral/extinct_taxon	0
+964	/atom/feed_item	308
+965	/base/iceandfire/noble_house	0
+966	/base/litcentral/previous_organism_classification	0
+967	/cvg/cvg_genre	240
+968	/automotive/manufacturing_plant	59
+969	/travel/accommodation_feature	65
+970	/time/time_zone	158
+971	/base/sameas/api_provider	0
+972	/soccer/fifa	78
+973	/base/saturdaynightlive/person_impersonated_on_snl	0
+974	/book/audio_book_reader	19
+975	/boats/nuclear_powerplant	4
+976	/finance/stock_exchange	496
+977	/baseball/baseball_coach	347
+978	/rail/locomotive	173
+979	/computer/computer_peripheral_class	33
+980	/base/landcover/geographical_feature_category	0
+981	/base/landcover/code_category	0
+982	/base/dinosaur/dinosaur	0
+983	/spaceflight/mission_destination	5
+984	/spaceflight/satellite_orbit_type	18
+985	/astronomy/telescope_platform	15
+986	/spaceflight/rocket_function	18
+987	/base/gossipgirl/actor	0
+988	/base/disaster2/human_stampede	0
+989	/base/motorcycle/vehicle_part	0
+990	/base/engineering/water_pumping_station	0
+991	/film/film_distributor	314
+992	/comic_books/comic_book_penciler	113
+993	/computer/internet_protocol	337
+994	/base/animemanga/ova_episode	0
+995	/base/column/column	0
+996	/music/opera_singer	368
+997	/music/orchestra	455
+998	/biology/breed_origin	88
+999	/base/dinosaur/dinosaur_location	0
+1000	/location/continent	8
+1001	/base/mystery/cryptid_area_of_occurrence	0
+1002	/base/charities/geographic_scope	0
+1003	/base/locations/continents	0
+1004	/event/public_speaker	170
+1005	/type/text_encoding	0
+1006	/engineering/channel_access_method	37
+1007	/opera/opera_genre	62
+1008	/location/uk_principal_area	23
+1009	/base/piercings/piercing	0
+1010	/base/crime/fugitive	0
+1011	/base/moregeography/volcano	0
+1012	/base/architecture2/structure2	0
+1013	/language/language_dialect	240
+1014	/media_common/lost_work	81
+1015	/location/us_cbsa	954
+1016	/base/breakfast/breakfast_cereal_brand	0
+1017	/base/convictsydney/resident	0
+1018	/base/icons/icon_genre	0
+1019	/food/bottled_water	21
+1020	/conferences/conference_sponsor	19
+1021	/base/database/database_website	0
+1022	/base/activism/organization	0
+1023	/food/diet_follower	146
+1024	/travel/hotel_brand	0
+1025	/education/university_system	52
+1026	/theater/theater_genre	49
+1027	/computer/programming_language_paradigm	51
+1028	/fictional_universe/fictional_universe_creator	126
+1029	/base/obamabase/cabinet_position	0
+1030	/people/appointed_role	319
+1031	/biology/plant_disease_cause	0
+1032	/media_common/quotation_addressee	84
+1033	/base/petbreeds/chicken_breed	0
+1034	/architecture/building_occupant	16
+1035	/base/pinball/pinball_machine_basis	0
+1036	/royalty/chivalric_order_officer	31
+1037	/base/mystery/paranormal_event	0
+1038	/radio/radio_subject	157
+1039	/book/newspaper_issue	52
+1040	/base/crime/police_department	0
+1041	/comic_books/comic_book_letterer	46
+1042	/travel/tour_operator	27
+1043	/base/crime/criminal_organisation	0
+1044	/spaceflight/satellite_manufacturer	29
+1045	/base/bigsky/region	0
+1046	/exhibitions/exhibition_curator	0
+1047	/base/phobias/phobia	0
+1048	/astronomy/supernova	64
+1049	/medicine/muscle	253
+1050	/astronomy/galactic_group	8
+1051	/geology/geological_formation	74
+1052	/amusement_parks/ride_theme	0
+1053	/religion/religious_order	349
+1054	/base/strangeebayitems/ebay_site	0
+1055	/base/cocktails/cocktail	0
+1056	/base/digitalcameras/slr_lens	0
+1057	/base/saturdaynightlive/snl_character	0
+1058	/base/disaster2/wrecked_ship	0
+1059	/base/marchmadness/ncaa_basketball_tournament_game	0
+1060	/base/inaugurations/inauguration	0
+1061	/transportation/highway_system	31
+1062	/base/audiobase/loudspeaker	0
+1063	/base/audiobase/audio_equipment	0
+1064	/base/marchmadness/ncaa_basketball_tournament_stage	0
+1065	/computer/programming_language_developer	37
+1066	/type/media_type	0
+1067	/architecture/landscape_project	37
+1068	/base/giftcards/gift_card	0
+1069	/base/electromagneticspectrum/frequency_band	0
+1070	/base/electromagneticspectrum/spectral_allocation	0
+1071	/base/barbie/barbie_doll	0
+1072	/interests/collectable_item	1323
+1073	/base/lostbase/lost_episode	0
+1074	/medicine/medical_trial_design	18
+1075	/broadcast/tv_terrestrial_broadcast_facility	0
+1076	/base/bioventurist/biomolecule	0
+1077	/olympics/olympic_participating_country	216
+1078	/base/snowboard/snowboarder	0
+1079	/base/presidentialpets/first_family	0
+1080	/base/ancientegypt/tomb	0
+1081	/base/survivor/survivor_episode	0
+1082	/base/centreforeresearch/project	0
+1083	/base/centreforeresearch/client	0
+1084	/symbols/heraldic_tincture	23
+1085	/book/technical_report	66
+1086	/award/hall_of_fame_induction_category	26
+1087	/base/disaster2/shipwreck	0
+1088	/fashion/fashion_label	229
+1089	/base/conservationaction/lead_agency_or_organization	0
+1090	/base/conservationaction/coordinated_program	0
+1091	/base/conservationaction/participation_group	0
+1092	/olympics/olympic_event	770
+1093	/business/advertising_slogan	61
+1094	/location/id_city	92
+1095	/bicycles/bicycle_model	125
+1096	/base/virginiabroadband/stimulus_request	0
+1097	/base/centreforeresearch/fund_provider	0
+1098	/base/sanfranciscoscene/san_francisco_dj_collective	0
+1099	/tv/tv_theme_song	185
+1100	/engineering/material	222
+1101	/base/conservationaction/priority_level	0
+1102	/tv/multipart_tv_episode	52
+1103	/base/mapcentral/map_projection	0
+1104	/base/virology/biological_sample	0
+1105	/base/virology/coding_region_containing_nucleotide	0
+1106	/base/virology/biological_classification	0
+1107	/base/virology/influenza_sample	0
+1108	/base/virology/biological_parasite	0
+1109	/base/virology/genetic_sequence	0
+1110	/astronomy/asterism	17
+1111	/engineering/reaction_engine	200
+1112	/base/austin/farmers_market	0
+1113	/base/austin/farmers_market_attendee	0
+1114	/base/giftcards/gift_card_issuer	0
+1115	/ice_hockey/hockey_coach	223
+1116	/measurement_unit/volume_unit	48
+1117	/food/culinary_measure	40
+1118	/base/filmcameras/lens_hood	0
+1119	/base/charities/charity	0
+1120	/radio/radio_program	364
+1121	/base/inaugurations/inaugural_speech	0
+1122	/food/candy_bar	138
+1123	/fictional_universe/fictional_employer	318
+1124	/dataworld/software_tool	0
+1125	/base/musclecars/muscle_car	0
+1126	/wine/appellation	423
+1127	/book/cited_work	42
+1128	/computer/computer_manufacturer_brand	87
+1129	/base/animemanga/anime_manga_franchise	0
+1130	/sports/sport_country	81
+1131	/base/mapcentral/fgdc_keyword	0
+1132	/location/us_territory	17
+1133	/base/rugby/type_of_rugby	0
+1134	/book/school_or_movement	192
+1135	/base/fires/explosion_cause	0
+1136	/base/conservationaction/conservation_program	0
+1137	/base/nascar/nascar_venue	0
+1138	/music/musical_scale	43
+1139	/base/activism/activism_issue	0
+1140	/base/vancouver/city_street	0
+1141	/base/thoroughbredracing/thoroughbred_racehorse_breeder	0
+1142	/sports/golf_course_designer	358
+1143	/sports/golf_course	1168
+1144	/base/gadgets/brand	0
+1145	/chemistry/isotope	3178
+1146	/law/courthouse	0
+1147	/base/vermont/vermont_fresh_network	0
+1148	/royalty/order_of_chivalry_category	10
+1149	/food/type_of_dish	47
+1150	/type/permission	0
+1151	/wine/wine_sub_region	54
+1152	/astronomy/astronomical_survey_project_organization	29
+1153	/location/uk_metropolitan_borough	38
+1154	/tv/tv_episode_segment	118
+1155	/symbols/coat_of_arms_bearer	230
+1156	/broadcast/tv_signal_type	3
+1157	/base/satelites/orbit	0
+1158	/base/satelites/artificial_satellite	0
+1159	/base/disaster2/flood	0
+1160	/cvg/computer_game_distribution_system	17
+1161	/law/constitutional_amendment	31
+1162	/american_football/football_game	539
+1163	/american_football/nfl_game	535
+1164	/base/materials/alloy	0
+1165	/base/materials/solid_material	0
+1166	/base/saturdaynightlive/snl_episode	0
+1167	/computer/file_format_genre	61
+1168	/event/speech_topic	79
+1169	/award/award_discipline	286
+1170	/location/hud_section_8_area	2576
+1171	/location/hud_mfa	148
+1172	/medicine/vein	134
+1173	/religion/adherents	23
+1174	/music/synthesizer	139
+1175	/base/scubadiving/regulator	0
+1176	/base/terrorism/terrorist_organization	0
+1177	/military/military_resource	18
+1178	/architecture/architectural_contractor	198
+1179	/comic_books/comic_book_inker	110
+1180	/base/researchlocations/research_topic	0
+1181	/location/uk_overseas_territory	15
+1182	/opera/opera_director	71
+1183	/base/icons/icon	0
+1184	/radio/radio_program_episode	102
+1185	/sports/tournament_event_competitor	425
+1186	/book/reviewed_work	75
+1187	/base/petbreeds/cat_breed	0
+1188	/base/badpeople/bad_people_who_ran_countries	0
+1189	/base/disaster2/dangerous_activity	0
+1190	/base/fight/labour_dispute_type	0
+1191	/medicine/contraindication	14
+1192	/travel/transport_operator	152
+1193	/government/us_vice_president	48
+1194	/computer/computer_designer	44
+1195	/film/film_theorist	29
+1196	/base/americancomedy/double_act_comic	0
+1197	/distilled_spirits/distilled_spirit_type	27
+1198	/base/cocktails/cocktail_ingredient	0
+1199	/interests/hobbyist	89
+1200	/location/uk_region	10
+1201	/base/killers/spree_killing	0
+1202	/base/scottishclans/scottish_clan	0
+1203	/automotive/automotive_class	51
+1204	/base/anglican/church	0
+1205	/theater/theater_choreographer	21
+1206	/base/movietheatres/movie_theatre	0
+1207	/base/ultimatefightingchampionship/ufc_event	0
+1208	/digicams/digital_camera_manufacturer	34
+1209	/projects/project_role	113
+1210	/basketball/basketball_conference	41
+1211	/internet/protocol	185
+1212	/medicine/infectious_disease	258
+1213	/base/disaster2/infectious_disease	0
+1214	/film/film_critic	152
+1215	/distilled_spirits/spirit_producing_region	18
+1216	/base/scubadiving/ecoregion	0
+1217	/chemistry/chemical_series	35
+1218	/base/aubreymaturin/historical_event	0
+1219	/medicine/drug_legal_status	35
+1220	/protected_sites/natural_or_cultural_preservation_agency	17
+1221	/base/infrastructure/power_plant_type	0
+1222	/comic_books/comic_book_publisher	70
+1223	/comic_books/comic_book_fictional_universe	31
+1224	/location/vn_provincial_city	22
+1225	/base/familyguy/family_guy_episode	0
+1226	/base/ancientegypt/tomb_owner	0
+1227	/computer/operating_system_developer	66
+1228	/meteorology/forecast_zone	19
+1229	/exhibitions/exhibition_sponsor	0
+1230	/american_football/football_position	66
+1231	/cvg/computer_game_compilation	38
+1232	/theater/theater_producer	40
+1233	/base/nascar/nascar_racing_organization_owner	0
+1234	/base/mtgbase/magic_set	0
+1235	/base/puzzles/puzzle_form	0
+1236	/location/ua_raion	509
+1237	/meteorology/cloud	49
+1238	/engineering/battery_cell_type	59
+1239	/base/ancientegypt/tomb_excavator	0
+1240	/sports/sports_league_draft	290
+1241	/base/crime/robbery	0
+1242	/base/mystery/hoax	0
+1243	/aviation/airport_operator	70
+1244	/distilled_spirits/distillery	71
+1245	/organization/australian_organization	0
+1246	/location/uk_non_metropolitan_county	36
+1247	/location/census_tract	66164
+1248	/base/watches/watch_brand	0
+1249	/comic_books/comic_book_colorist	57
+1250	/media_common/dedicator	165
+1251	/common/media_rights_holder	188
+1252	/base/productplacement/product_placed_brand	0
+1253	/food/beer_country_region	92
+1254	/government/government	253
+1255	/base/animemanga/manga_title	0
+1256	/location/mx_state	32
+1257	/music/voice	16
+1258	/chemistry/element_discoverer	53
+1259	/broadcast/podcast_feed	2586
+1260	/base/vancouver/podcast	0
+1261	/food/recipe_author	8
+1262	/fictional_universe/fictional_language	98
+1263	/book/editor_title	28
+1264	/business/board_member_title	385
+1265	/automotive/privately_owned_vehicle	15
+1266	/automotive/body_style	907
+1267	/cricket/cricket_batting_stroke	12
+1268	/digicams/camera_storage_type	20
+1269	/music/performance_venue	56
+1270	/astronomy/type_of_planetographic_feature	26
+1271	/base/gambling/lottery	0
+1272	/cricket/cricket_bowling_technique	16
+1273	/base/engineering/water_reservoir_use	0
+1274	/base/disneyana/disney_product_distribution_venue	0
+1275	/base/disneyana/disney_product_theme	0
+1276	/location/ru_autonomous_okrug	7
+1277	/medicine/hormone	64
+1278	/visual_art/art_series	118
+1279	/location/ru_krai	9
+1280	/location/uk_district	35
+1281	/base/computerscience/cryptographer	0
+1282	/automotive/designer	60
+1283	/location/ru_raion	2
+1284	/book/financial_support_provider	26
+1285	/biology/organism_classification_rank	41
+1286	/spaceflight/rocket_manufacturer	34
+1287	/base/edgarpoe/poes_family	0
+1288	/base/aubreymaturin/malady	0
+1289	/base/disaster2/tornado	0
+1290	/base/skateboarding/skateboarding_location	0
+1291	/base/sportbase/sport_club_player	0
+1292	/base/engineering/dam_structure_category	0
+1293	/base/infrastructure/nuclear_power_plant	0
+1294	/base/pinball/pinball_simulation	0
+1295	/people/appointer	13
+1296	/base/inaugurations/inauguration_speaker	0
+1297	/government/us_president	44
+1298	/base/exercises/exercise_type	0
+1299	/base/convictsydney/convict	0
+1300	/base/dance/dance_company	0
+1301	/royalty/system_of_nobility	142
+1302	/business/product_endorser	58
+1303	/music/musical_chord	23
+1304	/law/litigant	0
+1305	/base/nascar/nascar_sponsor	0
+1306	/base/animemanga/anime_studio	0
+1307	/base/dancingwiththestars/professional_performer	0
+1308	/base/infrastructure/pipeline	0
+1309	/amusement_parks/ride_type	0
+1310	/chemistry/chemical_element	135
+1311	/base/disaster2/pandemic	0
+1312	/computer/processor_manufacturer	49
+1313	/base/obamabase/possible_cabinet_member	0
+1314	/location/vn_province	58
+1315	/distilled_spirits/blended_spirit	25
+1316	/astronomy/meteorite	54
+1317	/base/tallships/sail_training_organization	0
+1318	/dataworld/attribution_template	22
+1319	/automotive/exterior_color	1251
+1320	/sports/sports_award_type	237
+1321	/base/textiles/textile_weave	0
+1322	/fashion/weave	25
+1323	/base/typefaces/typeface_classification	0
+1324	/base/realitytv/reality_tv_contestant	0
+1325	/music/arrangement	10
+1326	/base/americancomedy/comedy_group	0
+1327	/base/breakfast/breakfast_cereal_ingredient	0
+1328	/base/mystery/cryptid_observer	0
+1329	/base/conservationaction/confidence_level	0
+1330	/location/id_subdistrict	46
+1331	/music/live_album	9
+1332	/medicine/drug_dosage_form	0
+1333	/business/product_ingredient	19
+1334	/base/nascar/nascar_race	0
+1335	/base/activism/political_party	0
+1336	/royalty/chivalric_rank	34
+1337	/rail/steam_locomotive_wheel_configuration	82
+1338	/base/exoplanetology/exoplanet	0
+1339	/aviation/icao_airline_designator	27
+1340	/medicine/condition_prevention_factors	54
+1341	/common/annotation_category	14
+1342	/location/cn_autonomous_prefecture	31
+1343	/base/engineering/tunnel	0
+1344	/medicine/nerve	206
+1345	/protected_sites/park_system	22
+1346	/base/marchmadness/ncaa_basketball_tournament	0
+1347	/theater/musical_director	13
+1348	/book/interviewer	45
+1349	/opera/opera_production	91
+1350	/education/school_magazine	74
+1351	/base/propositions/proposition	0
+1352	/base/anglican/diocese	0
+1353	/distilled_spirits/fermentation_base	18
+1354	/biology/plant_disease_host	0
+1355	/royalty/chivalric_office	26
+1356	/conferences/type_of_conference	15
+1357	/base/sanfranciscoscene/san_francisco_scene_event	0
+1358	/celebrities/supercouple	17
+1359	/fictional_universe/fictional_calendar_system	13
+1360	/film/content_rating_system	47
+1361	/olympics/olympic_host_city	41
+1362	/base/database/software_use	0
+1363	/chemistry/molecular_entity	0
+1364	/medicine/cranial_nerve	84
+1365	/location/in_division	55
+1366	/engineering/power_plug_standard_type	15
+1367	/base/iceandfire/house_founder	0
+1368	/location/ru_autonomous_oblast	2
+1369	/media_common/completer_of_unfinished_work	32
+1370	/base/crime/type_of_criminal_organization	0
+1371	/location/it_region	21
+1372	/computer/protocol_provider	45
+1373	/media_common/unfinished_work	106
+1374	/protected_sites/natural_or_cultural_site_designation	27
+1375	/interests/interest	98
+1376	/award/competition_type	12
+1377	/base/eating/diets	0
+1378	/spaceflight/space_program	38
+1379	/book/interview	28
+1380	/award/ranked_list_compiler	44
+1381	/base/sails/sailboat	0
+1382	/medicine/cancer_center_constituent	148
+1383	/base/abcbirds/partnership	0
+1384	/book/review	130
+1385	/fictional_universe/fictional_creature	46
+1386	/medicine/drug_administration_route	24
+1387	/base/disaster2/shipwreck_event	0
+1388	/digicams/camera_iso	21
+1389	/tv/tv_crew_role	36
+1390	/olympics/olympic_bidding_city	28
+1391	/architecture/type_of_museum	71
+1392	/broadcast/radio_format	60
+1393	/base/nutritioninfo/retail_data	0
+1394	/base/financialmeltdown/rogue_traders	0
+1395	/base/aubreymaturin/real_ship	0
+1396	/base/aubreymaturin/ship	0
+1397	/base/activism/activist_event	0
+1398	/food/beverage_type	10
+1399	/chemistry/periodic_table_block	5
+1400	/measurement_unit/molar_energy_unit	3
+1401	/base/aubreymaturin/species	0
+1402	/location/fr_region	27
+1403	/military/military_unit_size	20
+1404	/base/crime/criminal_defence	0
+1405	/location/es_comarca	69
+1406	/music/musical_instrument_company	135
+1407	/time/month	39
+1408	/location/cn_province	24
+1409	/base/ballet/ballet_character	0
+1410	/base/breakfast/breakfast_cereal_flavor	0
+1411	/base/playball/baseball_stadium	0
+1412	/military/military_unit_place_of_origin	9
+1413	/location/us_state	51
+1414	/base/locations/states_and_provences	0
+1415	/base/localfood/food_producing_region	0
+1416	/base/hybrids/hybrid_sport	0
+1417	/base/saturdaynightlive/snl_recurring_sketch	0
+1418	/base/hathayoga/yoga_posture	0
+1419	/base/presidentialpets/white_house_pet	0
+1420	/base/divinity/divinity	0
+1421	/astronomy/star_system	102
+1422	/base/casinos/casino_theme	0
+1423	/astronomy/star_system_body	14
+1424	/location/kp_special_city	2
+1425	/base/socialdance/dance_venue	0
+1426	/base/casinos/casino_owner	0
+1427	/film/film_song_performer	0
+1428	/base/saturdaynightlive/snl_fiver_timer	0
+1429	/interests/hobby	112
+1430	/sports/tournament_event	113
+1431	/base/thewire/the_wire_character	0
+1432	/fashion/fiber	23
+1433	/base/americancomedy/comedy_writer	0
+1434	/base/textiles/textile_fiber	0
+1435	/protected_sites/governing_body_of_protected_sites	33
+1436	/base/casinos/casino_show	0
+1437	/medicine/cancer_center	65
+1438	/pipeline/delete_task	47623
+1439	/pipeline/task	65243
+1440	/base/convictsydney/convict_transport	0
+1441	/base/americancomedy/tv_show	0
+1442	/biology/breed_group	12
+1443	/base/formula1/formula_1_season	0
+1444	/medicine/disease_stage	187
+1445	/base/petbreeds/dog_temperament	0
+1446	/internet/top_level_domain	305
+1447	/base/infrastructure/power_outage_cause	0
+1448	/base/satelites/orbit_synchronicity_classification	0
+1449	/base/digitalcameras/shutter_speed	0
+1450	/base/litcentral/current_organism_classification	0
+1451	/base/petbreeds/dog_coat_color	0
+1452	/people/measured_body_part	14
+1453	/aviation/iata_airline_designator	25
+1454	/base/aubreymaturin/real_place	0
+1455	/chess/chess_game	19
+1456	/distilled_spirits/distilled_spirit	53
+1457	/medicine/diagnostic_test	5
+1458	/location/de_state	17
+1459	/base/saturdaynightlive/snl_individual_sketch	0
+1460	/base/conservation/protected_species	0
+1461	/automotive/engine_type	84
+1462	/base/truereligion/wash	0
+1463	/base/truereligion/style	0
+1464	/base/truereligion/jeans	0
+1465	/broadcast/distributor	50
+1466	/base/truereligion/fabric	0
+1467	/base/tallships/sail_training_vessel	0
+1468	/base/centreforeresearch/person	0
+1469	/base/triathlon/triathlon_race	0
+1470	/biology/breed_registry	6
+1471	/base/petbreeds/cat_temperament	0
+1472	/book/magazine_genre	60
+1473	/location/cn_autonomous_county	120
+1474	/cvg/computer_game_content_descriptor	48
+1475	/base/braziliangovt/brazilian_political_party	0
+1476	/base/revisioncontrol/revision_control_software	0
+1477	/base/database/database_manager	0
+1478	/base/abcbirds/conservationist	0
+1479	/base/abcbirds/project_lead	0
+1480	/base/slamdunk/player	0
+1481	/base/iceandfire/house_seat	0
+1482	/base/abcbirds/conservation_project	0
+1483	/base/iceandfire/person	0
+1484	/base/iceandfire/house_lord	0
+1485	/base/abcbirds/bird_conservation_region	0
+1486	/base/convictsydney/free_settler	0
+1487	/medicine/medical_trial_sponsor	23
+1488	/base/infection/biosafety_facility	0
+1489	/base/sanfrancisco/hill	0
+1490	/architecture/architecture_firm_partners	54
+1491	/food/diet	13
+1492	/base/disaster2/injured_person	0
+1493	/base/billionaires/billionaire	0
+1494	/base/mapcentral/geographic_coordinate_system	0
+1495	/base/mapcentral/reference_ellipsoid	0
+1496	/base/mapcentral/datum	0
+1497	/base/qualia/disability_organization	0
+1498	/base/sanfranciscoscene/san_francisco_dj	0
+1499	/business/product_endorsee	47
+1500	/base/survivor/survivor_tribe	0
+1501	/base/cyclocross/bicycle_model_year	0
+1502	/base/cyclocross/bicycle_component_material	0
+1503	/base/piercings/piercing_jewelry	0
+1504	/base/ultimate/ultimate_player	0
+1505	/base/saturdaynightlive/snl_season	0
+1506	/base/bigsky/launch	0
+1507	/base/bigsky/site	0
+1508	/celebrities/reason_for_arrest	39
+1509	/base/skateboarding/skateboarding_brand	0
+1510	/base/pinball/pinball_machine_designer	0
+1511	/base/gobase/go_player	0
+1512	/broadcast/radio_network	39
+1513	/law/judicial_title	0
+1514	/theater/theater_production_staff_role	19
+1515	/base/cocktails/cocktail_garnish	0
+1516	/medicine/drug_dosage_flavor	0
+1517	/comic_books/comic_book_editor	41
+1518	/soccer/football_league_system	43
+1519	/biology/chromosome	26
+1520	/location/es_province	52
+1521	/soccer/football_position	21
+1522	/location/province	11
+1523	/astronomy/constellation	89
+1524	/symbols/heraldic_charge	27
+1525	/base/proofsareprograms/key_application	0
+1526	/base/filmcameras/camera_manufacturer	0
+1527	/location/jp_designated_city	18
+1528	/astronomy/astronomical_discovery_technique	13
+1529	/base/ballet/ballet_composer	0
+1530	/aviation/airport_type	10
+1531	/base/ikariam/ikariam_research_category	0
+1532	/base/abcbirds/conservation_project_lead	0
+1533	/base/animemanga/manga_illustrator	0
+1534	/government/political_ideology	59
+1535	/base/engineering/mined_material	0
+1536	/engineering/signal_modulation_mode	34
+1537	/astronomy/telescope_type	14
+1538	/skiing/ski_area_owner	0
+1539	/cricket/cricket_stadium	71
+1540	/conferences/conference_subject	81
+1541	/base/brickbase/lego_set	0
+1542	/base/infrastructure/power_outage	0
+1543	/basketball/basketball_division	11
+1544	/award/award_judge	60
+1545	/biology/domesticated_animal	24
+1546	/base/cdnpolitics/political_issue	0
+1547	/education/grade_level	120
+1548	/base/disaster2/underwater_archaeologist	0
+1549	/base/americancomedy/comedy_genre	0
+1550	/base/truereligion/thread_style	0
+1551	/dataworld/user_reversion_operation	130
+1552	/base/skateboarding/skateboarding_tricks	0
+1553	/base/socialdance/dance_style	0
+1554	/base/tiddlywiki/ingredient	0
+1555	/medicine/medical_trial	40
+1556	/base/anglican/archdiocese	0
+1557	/base/theosbornboysaregrowing/osborn_family_member	0
+1558	/cricket/cricket_administrative_body	118
+1559	/base/motorcycle/motorcycle_make	0
+1560	/astronomy/orbit_type	12
+1561	/base/satelites/orbit_eccentricity_classification	0
+1562	/location/it_province	110
+1563	/skiing/ski_run	0
+1564	/base/dancingwiththestars/episode	0
+1565	/protected_sites/site_listing_category	51
+1566	/exhibitions/type_of_exhibition	0
+1567	/base/aubreymaturin/sailor	0
+1568	/astronomy/asteroid_family	33
+1569	/base/computerscience/complexity	0
+1570	/measurement_unit/common_dimension	47
+1571	/spaceflight/rocket_engine_cycle	7
+1572	/base/computerscience/computational_problem	0
+1573	/base/surfing/surf_film	0
+1574	/base/classiccorvettes/corvette_logos	0
+1575	/food/candy_bar_manufacturer	28
+1576	/base/ultimate/ultimate_classification	0
+1577	/base/ultimate/ultimate_team	0
+1578	/location/kp_city	76
+1579	/film/film_company_role_or_service	17
+1580	/event/disaster_type	46
+1581	/base/database/database_host	0
+1582	/base/engineering/engineering_firm	0
+1583	/base/breakfast/breakfast_cereal_manufacturer	0
+1584	/location/id_province	34
+1585	/food/culinary_technique	12
+1586	/location/tw_district	28
+1587	/base/horsefacts/equine_anatomy	0
+1588	/soccer/football_world_cup	30
+1589	/location/uk_unitary_authority	61
+1590	/food/recipe_collection	4
+1591	/food/recipe	35
+1592	/royalty/noble_rank	81
+1593	/base/watches/watch_feature	0
+1594	/cvg/computer_game_engine_developer	25
+1595	/government/legislative_committee_title	17
+1596	/base/bioventurist/bv_research_group	0
+1597	/base/abcbirds/conservation_activity	0
+1598	/base/yalebase/music_group	0
+1599	/cvg/computer_game_rating_system	6
+1600	/astronomy/celestial_object_category	69
+1601	/metropolitan_transit/transit_vehicle	18
+1602	/base/carebears/care_bears_villain	0
+1603	/base/motorcycle/motorcycle_product_review	0
+1604	/base/monster/monster_species	0
+1605	/sports/golf_club_access	3
+1606	/base/gadgets/gadget_connector	0
+1607	/base/ikariam/ikariam_buildings	0
+1608	/base/natlang/abbreviated_topic	0
+1609	/base/gadgets/gadget	0
+1610	/base/breakfast/breakfast_cereal_theme	0
+1611	/astronomy/near_earth_object_classification	4
+1612	/base/words/meaning_of_notable_word	0
+1613	/travel/transportation_mode	20
+1614	/tv/tv_song	0
+1615	/business/customer	47
+1616	/biology/informal_biological_grouping	9
+1617	/base/dance/dance_form	0
+1618	/spaceflight/space_agency	12
+1619	/time/day_of_week	9
+1620	/base/computerscience/complexity_class	0
+1621	/astronomy/meteoric_composition	25
+1622	/business/shopping_center_owner	52
+1623	/base/monetarydebase/governments_that_debase	0
+1624	/medicine/vaccine	20
+1625	/astronomy/telescope	103
+1626	/base/exercises/body_part	0
+1627	/base/wrestling/professional_wrestling_manager	0
+1628	/theater/theatrical_orchestrator	10
+1629	/base/politicalconventions/political_convention	0
+1630	/base/birdinfo/type_of_diet	0
+1631	/base/killers/spree_killer	0
+1632	/base/stimulustracking/feed	0
+1633	/symbols/heraldic_ordinaire	11
+1634	/base/standardizedtesting/standardized_test	0
+1635	/base/crime/crime_accuser	0
+1636	/base/electromagneticspectrum/service_class	0
+1637	/base/csafarms/csa_product	0
+1638	/rail/steam_locomotive_class	25
+1639	/base/csafarms/farm	0
+1640	/travel/guidebook	32
+1641	/base/vanhomeless/single_room_occupancy_hotel	0
+1642	/architecture/engineering_firm	100
+1643	/base/sanfrancisco/san_francisco_neighborhoods	0
+1644	/base/horsefacts/coat_locus_effect	0
+1645	/location/ru_oblast	18
+1646	/location/uk_metropolitan_county	7
+1647	/base/stimulustracking/government_agencies_affected	0
+1648	/base/propositions/proposition_issue	0
+1649	/music/music_video_genre	0
+1650	/base/firsts/first	0
+1651	/base/politicalconventions/convention_venue	0
+1652	/fictional_universe/fictional_organization_founder	71
+1653	/base/typefaces/typeface_foundry	0
+1654	/religion/religious_leadership_role	76
+1655	/base/americancomedy/double_act	0
+1656	/american_football/super_bowl	47
+1657	/base/skateboarding/distribution_company	0
+1658	/location/ca_indian_reserve	27
+1659	/base/movietheatres/movie_theatre_chain	0
+1660	/base/ontologies/ontology	0
+1661	/cricket/dismissal_type	12
+1662	/engineering/engine_category	49
+1663	/aviation/aircraft_engine_type	26
+1664	/visual_art/art_acquisition_method	8
+1665	/law/legal_party_role	0
+1666	/base/column/column_genre	0
+1667	/measurement_unit/mass_unit	37
+1668	/base/surfing/asp_world_tour	0
+1669	/base/socialdance/dancer	0
+1670	/base/vancouver/forward_sortation_area	0
+1671	/base/iraqimusicbase/iraqi_person	0
+1672	/common/license	15
+1673	/computer/content_license	25
+1674	/base/bigsky/landing_zone	0
+1675	/food/beer_container	9
+1676	/measurement_unit/energy_unit	19
+1677	/base/danceporn/choreographer	0
+1678	/base/scubadiving/province	0
+1679	/base/motorcycle/motorcycle_paint_color	0
+1680	/base/watches/watch_band_material	0
+1681	/book/book_binding	41
+1682	/base/engineering/harbour	0
+1683	/people/chinese_ethnic_group	46
+1684	/location/hk_district	19
+1685	/base/politicalconventions/convention_leader	0
+1686	/base/politicalconventions/convention_speaker	0
+1687	/base/tallships/museum_ships	0
+1688	/visual_art/visual_art_form	32
+1689	/base/crime/hostage_situation	0
+1690	/boats/boat_fate	6
+1691	/cvg/computer_game_engine_family	5
+1692	/martial_arts/martial_art_category	17
+1693	/base/thoroughbredracing/thoroughbred_racehorse_sex	0
+1694	/location/nl_province	13
+1695	/location/vn_centrally_controlled_municipality	6
+1696	/location/offical_symbol_variety	46
+1697	/tv/tv_song_performer	0
+1698	/law/us_patent_category	9
+1699	/engineering/engine_energy_source	6
+1700	/organization/organization_committee_title	19
+1701	/measurement_unit/potential_unit	2
+1702	/location/ar_commune	16
+1703	/astronomy/asteroid_group	26
+1704	/base/horsefacts/tack	0
+1705	/cvg/computer_game_mod	27
+1706	Unmatched Geekdo item	0
+1707	/base/motorcycle/internet_forum_topic	0
+1708	/fictional_universe/fictional_object_destroyer	20
+1709	/digicams/camera_color_filter_array_type	4
+1710	/base/hybrids/hybrid_animal	0
+1711	/base/symbols/symbolized_concept	0
+1712	/base/mystery/cryptozoologist	0
+1713	/chemistry/radioactive_decay_mode	16
+1714	/base/obamabase/cabinet_member	0
+1715	/boats/means_of_propulsion	19
+1716	/base/disaster2/shipwreck_cause	0
+1717	/base/yalebase/secret_society	0
+1718	/base/fashionmodels/eye_color	0
+1719	/base/tallships/tall_ship_rig	0
+1720	/base/politicalconventions/presidential_nominee	0
+1721	/business/issue_type	5
+1722	/base/roguelike/roguelike_game	0
+1723	/base/piers/pier	0
+1724	/measurement_unit/data_size_unit	42
+1725	/cricket/cricket_match_type	5
+1726	/base/watches/watch_model	0
+1727	/base/infrastructure/radioactive_waste_dump	0
+1728	/cricket/cricket_delivery_type	27
+1729	/venture_capital/investment_round	17
+1730	/protected_sites/iucn_category	8
+1731	/food/cheese_texture	13
+1732	/book/report_issuing_institution	49
+1733	/government/parliamentary_election	170
+1734	/bicycles/bicycle_manufacturer	65
+1735	/base/qualia/recreational_drug_user	0
+1736	/geography/mountain_type	55
+1737	/measurement_unit/time_unit	40
+1738	/base/birdinfo/data_collection_method	0
+1739	/aviation/aircraft_line	12
+1740	/organization/club	47
+1741	/book/serial_installment	25
+1742	/automotive/transmission	22
+1743	/base/disaster2/type_of_injury_causing_event	0
+1744	/base/argumentmaps/innovative_work	0
+1745	/rail/railway_operator	21
+1746	/base/triathlon/triathlete	0
+1747	/broadcast/advisory	5
+1748	/food/culinary_tool	115
+1749	/base/yalebase/nobel_prize_winner	0
+1750	/base/birdinfo/nest_shape	0
+1751	/business/company_termination_type	10
+1752	/bicycles/bicycle_type	14
+1753	/film/film_song	0
+1754	/base/fight/subject_of_protest	0
+1755	/base/convictsydney/crime	0
+1756	/computer/computer_product_line	6
+1757	/base/austin/computer_user_group_focus	0
+1758	/medicine/ligament	56
+1759	/base/crime/fbi_top_10_most_wanted_fugitive	0
+1760	/measurement_unit/pressure_unit	19
+1761	/business/product_theme	25
+1762	/medicine/fda_otc_monograph_part	0
+1763	/tv/tv_soundtrack	0
+1764	/travel/hotel_operator	0
+1765	/boats/hull_material	9
+1766	/symbols/heraldry_granting_body	7
+1767	/base/conservation/conservation_status_designation	0
+1768	/cricket/cricket_tournament_event	15
+1769	/location/de_regierungsbezirk	31
+1770	/music/music_video_subject	0
+1771	/base/argumentmaps/abstract_moral_dispute	0
+1772	/tv/special_tv_performance_type	10
+1773	/film/special_film_performance_type	13
+1774	/base/vocabulary/ontology	0
+1775	/base/animalnames/gender_or_age_specific_animal_name	0
+1776	/skiing/ski_lift_manufacturer	0
+1777	/business/endorsed_product	45
+1778	/location/tw_direct_controlled_municipality	3
+1779	/base/badpeople/bad_people_who_ran_companies	0
+1780	/base/braziliangovt/issue	0
+1781	/celebrities/abused_substance	32
+1782	/location/jp_special_ward	24
+1783	/base/juiced/banned_substance	0
+1784	/base/motorcycle/motorcycle_model_number	0
+1785	/music/special_music_video_performance_type	0
+1786	/travel/hotel_grading_authority	0
+1787	/location/in_state	29
+1788	/base/horsefacts/coat_pattern	0
+1789	/base/dancingwiththestars/dwts_host	0
+1790	/base/truereligion/fit	0
+1791	/location/jp_subprefecture	10
+1792	/architecture/civil_engineer	2
+1793	/base/yalebase/college_master	0
+1794	/base/motorcycle/motorcycle_internet_forum_thread	0
+1795	/base/scubadiving/scuba_manufacturer	0
+1796	/american_football/football_coach_position	15
+1797	/base/motorcycle/motorcycle_gear_product	0
+1798	/fictional_universe/fictional_object_destruction_method	20
+1799	/base/conservationaction/program_coordinator	0
+1800	/medicine/drug_pregnancy_category	12
+1801	/base/oysters/oyster	0
+1802	/book/serialized_work	16
+1803	/base/cyclocross/bicycle_component	0
+1804	/spaceflight/space_program_sponsor	13
+1805	/base/powergeneration/photovoltaic_power_station	0
+1806	/location/uk_crown_dependency	4
+1807	/meteorology/meteorological_service	29
+1808	/base/sa2base/sa2_textual	0
+1809	/base/strangeebayitems/ebay_category	0
+1810	/base/digitalcameras/lens_mount	0
+1811	/base/mosaic/included_broadcaster	0
+1812	/military/military_theater	8
+1813	/biology/plant_disease	0
+1814	/base/dancegroups/dance_group_member	0
+1815	/base/fashionmodels/hair_color	0
+1816	/base/vermont/vermont_fresh_network_partner_type	0
+1817	/base/digitalcameras/lens_family	0
+1818	/base/x7thingsmeme/x7_things_participant	0
+1819	/common/licensed_object	4
+1820	/metropolitan_transit/transit_service_type	22
+1821	/base/database/data_contributor	0
+1822	/geography/lake_type	22
+1823	/base/disneyana/disney_product_edition	0
+1824	Roofing service type	0
+1825	/base/crime/lawyer_type	0
+1826	/event/type_of_public_presentation	21
+1827	/olympics/olympic_demonstration_competition	15
+1828	/internet/top_level_domain_status	21
+1829	/religion/religious_jurisdiction_class	8
+1830	/base/sportbase/sport_sport_club	0
+1831	/base/ffsquare/final_fantasy_character_class	0
+1832	/base/computerscience/formal_language	0
+1833	/base/harvard/house	0
+1834	/fictional_universe/fictional_plant	13
+1835	/baseball/baseball_division	13
+1836	/ice_hockey/hockey_division	19
+1837	/base/survivor/survivor_location	0
+1838	/location/br_state	28
+1839	/base/braziliangovt/state	0
+1840	/event/promoted_event	2
+1841	/event/produced_event	5
+1842	/amusement_parks/amusement_park_area	0
+1843	/base/eating/subject_of_diet	0
+1844	/digicams/camera_sensor_manufacturer	7
+1845	/medicine/bone	57
+1846	/base/infection/computer_crime_victim	0
+1847	/film/film_festival_focus	20
+1848	/language/language_creator	26
+1849	/astronomy/galaxy_classification_code	7
+1850	/base/sportbase/sport	0
+1851	/broadcast/fm_terrestrial_broadcast_facility	0
+1852	/base/horsefacts/coat_locus	0
+1853	/base/wastrology/zodiacsign	0
+1854	/base/questionable/qc_character	0
+1855	/base/firsts/first_achievement_category	0
+1856	/medicine/vaccine_developer	6
+1857	/finance/market_index	32
+1858	/base/gadgets/wifi_device	0
+1859	/base/bluetooth/bluetooth_device	0
+1860	/symbols/heraldic_crest	7
+1861	/law/us_patent_type	4
+1862	/government/us_vice_presidential_campaign	13
+1863	/base/mapcentral/fgdc_source_media	0
+1864	/government/indirect_election	12
+1865	/law/court_jurisdiction_area	0
+1866	/medicine/transmission_route	9
+1867	/base/contractbridge/bridge_league	0
+1868	/spaceflight/satellite_type	6
+1869	/base/petbreeds/dog_breed_group	0
+1870	/base/inference/relation	0
+1871	/base/motorcycle/privately_owned_motorcycle	0
+1872	/base/myevents/project_meeting	0
+1873	/music/album_release_type	6
+1874	/base/mladraft/institution	0
+1875	/event/disaster_affected_structure	42
+1876	/biology/fossil_specimen	50
+1877	/astronomy/galactic_filament	4
+1878	/base/conservationaction/ornithology	0
+1879	/location/tw_provincial_city	6
+1880	/base/fires/firefighter	0
+1881	/fictional_universe/calendar_system_directionality	3
+1882	/measurement_unit/unit_of_frequency	26
+1883	/base/usbdevices/usb_device	0
+1884	/base/disneyana/disney_product	0
+1885	/base/ancientegypt/dynasty	0
+1886	/theater/theater_production_staff	34
+1887	/government/electoral_college	10
+1888	/base/disaster2/oil_spill	0
+1889	/base/conservationaction/priority_source	0
+1890	/base/birdinfo/bird_band_size	0
+1891	/boats/hull_configuration	4
+1892	/base/truereligion/pocket_style	0
+1893	/book/excerpt	7
+1894	/base/column/column_syndicate	0
+1895	/base/tiddlywiki/recipe	0
+1896	/aviation/accident_type	24
+1897	/base/computerscience/data_structure_operation	0
+1898	/digicams/camera_image_ratio	10
+1899	/base/computerscience/hash_function	0
+1900	/base/motorcycle/motorcycle_section	0
+1901	/pipeline/pipeline	6
+1902	/base/engineering/dock	0
+1903	/base/tallships/film_with_tall_ships	0
+1904	/base/thewire/the_wire_beat	0
+1905	/base/austin/computer_user_group	0
+1906	/base/rlshs/real_life_superhero	0
+1907	/base/aubreymaturin/real_person	0
+1908	/physics/particle	33
+1909	/measurement_unit/measurement_system	40
+1910	/engineering/location_with_mains_power	4
+1911	/base/productplacement/product_placing_media	0
+1912	/base/webcomic/webcomic	0
+1913	/measurement_unit/force_moment_unit	4
+1914	/base/cgcollection/computer_game_platform_model	0
+1915	/base/giftcards/gift_card_category	0
+1916	/food/drinking_establishment_type	13
+1917	/base/aubreymaturin/treatment	0
+1918	/base/jewelry/jewelry_type	0
+1919	/base/mystery/cryptid_observation_location	0
+1920	/meteorology/cloud_classification	5
+1921	/rail/locomotive_owner	3
+1922	/rail/locomotive_builder	9
+1923	/type/text	0
+1924	/skiing/ski_lift	0
+1925	/dataworld/attribution_namespace	23
+1926	/location/es_place_of_sovereignty	6
+1927	/medicine/type_of_infectious_agent	6
+1928	/base/danceporn/dance_movie_genre	0
+1929	/martial_arts/martial_arts_organization	42
+1930	/time/holiday_category	28
+1931	/military/casualties_type	8
+1932	/geography/glacier_status	4
+1933	/american_football/football_conference	4
+1934	/base/computerscience/abstract_data_structure	0
+1935	/law/constitutional_convention_delegate	3
+1936	/base/motorcycle/motorcycle_part_retailer	0
+1937	/base/motorcycle/motorcycle_part_manufacturer	0
+1938	/type/user	0
+1939	/base/engineering/aqueduct	0
+1940	/base/vanhomeless/media_coverage	0
+1941	/base/tiddlywiki/tiddler	0
+1942	/base/filmcameras/camera_film_format	0
+1943	/digicams/camera_format	13
+1944	/base/filmcameras/lens_mount	0
+1945	/computer/web_browser_extension	19
+1946	/base/tallships/tall_ship_event	0
+1947	/base/survivor/survivor_winner	0
+1948	/base/brickbase/lego_theme	0
+1949	/dataworld/data_tool	4
+1950	/location/cn_special_administrative_region	3
+1951	/base/californiahistory/landmark	0
+1952	/location/irish_province	0
+1953	/comic_books/comic_book_genre	25
+1954	/symbols/heraldic_brisure	10
+1955	/location/in_union_territory	8
+1956	/base/iceandfire/book	0
+1957	/location/jp_prefecture	48
+1958	/travel/hotel_brand_owner	0
+1959	/distilled_spirits/blended_spirit_style	10
+1960	/base/crime/police_officer	0
+1961	/base/noisepop/venue	0
+1962	/base/landcover/category_quality	0
+1963	/tv/sequence_of_tv_episode_segments	2
+1964	/type/lang	0
+1965	/base/computerscience/computer_architecture	0
+1966	/astronomy/spectral_type	7
+1967	/astronomy/galactic_cluster	8
+1968	/digicams/image_stabilization_type	4
+1969	/conferences/conference_proceedings	5
+1970	/base/whamoworld/games_based_on_wham_o_products	0
+1971	/base/braziliangovt/brazilian_governmental_proposal	0
+1972	/base/fight/sentence	0
+1973	/fashion/fashion_week	12
+1974	/dataworld/gardening_hint	0
+1975	/base/iceandfire/notable_object	0
+1976	/base/iceandfire/notable_weapon	0
+1977	/base/iceandfire/reference	0
+1978	/base/activism/recurring_event	0
+1979	/base/bridges/bridge_disaster	0
+1980	/base/architecture2/structure_destroying_event	0
+1981	/base/truereligion/collection_line	0
+1982	/base/mystery/ufo_observer	0
+1983	/education/athletics_brand	0
+1984	/base/cgcollection/computer_game_platform_release	0
+1985	/base/abcbirds/conservation_plan	0
+1986	/base/sportbase/sport_club_coach	0
+1987	/base/endorsements/endorsing_person	0
+1988	/dataworld/data_project_type	4
+1989	/base/infrastructure/water_tower	0
+1990	/comic_strips/comic_strip_syndicate	29
+1991	/base/thoroughbredracing/thoroughbred_racehorse_origin	0
+1992	/base/locations/counties_parishes_and_boroughs	0
+1993	/cvg/computer_game_region	19
+1994	/engineering/engine_designer	5
+1995	/base/engineering/tunnelling_method	0
+1996	/boxing/boxing_decision	0
+1997	/measurement_unit/molar_volume_unit	2
+1998	/base/fires/explosive_substance	0
+1999	/base/breakfast/breakfast_cereal_style	0
+2000	/base/proofsareprograms/key_contributor	0
+2001	/ice_hockey/hockey_conference	15
+2002	/fashion/fashion_category	6
+2003	/automotive/transmission_type	3
+2004	/music/media_format	10
+2005	/meteorology/beaufort_wind_force	16
+2006	/cvg/gameplay_mode	8
+2007	/distilled_spirits/spirit_bottler	27
+2008	/type/content_import	0
+2009	/american_football/football_scoring_event	4
+2010	/engineering/battery_shape_format	8
+2011	/astronomy/galactic_shape	3
+2012	/base/ultimate/ultimate_division	0
+2013	/base/jamesbond007/bond_movie_villain	0
+2014	/base/cyclocross/bicycle_wheel	0
+2015	/location/vn_urban_district	19
+2016	/base/yalebase/comedy_group	0
+2017	/base/inference/variable	0
+2018	/location/my_district	0
+2019	/base/sanfranciscoscene/san_francisco_promoter	0
+2020	/base/battlestargalactica/pilot	0
+2021	/base/atitdatlas/point_of_interest	0
+2022	/government/us_presidential_campaign	14
+2023	/rail/rail_network	7
+2024	/base/iceandfire/westeros_region	0
+2025	/olympics/olympic_mascot	14
+2026	/base/bigsky/site_type	0
+2027	/base/locations/countries	0
+2028	/tv/tv_producer_type	7
+2029	/automotive/option_package	2
+2030	/location/ar_province	24
+2031	/celebrities/romantic_relationship_type	6
+2032	/base/yalebase/college_dean	0
+2033	/music/music_video_crewmember	0
+2034	/base/animemanga/anime_ova	0
+2035	/book/interviewee	11
+2036	/location/de_borough	20
+2037	/base/mystery/type_of_paranormal_ability	0
+2038	/symbols/heraldic_supporter	11
+2039	/base/americancomedy/celebrity_impressionist	0
+2040	/location/kp_province	10
+2041	/geography/glacier_type	8
+2042	/spaceflight/rocket_status	5
+2043	/base/americancomedy/comedy_venue	0
+2044	/base/mapcentral/map_projection_system	0
+2045	/base/americancomedy/comedy_group_founder	0
+2046	/location/my_state	14
+2047	/aviation/airport_runway_surface	6
+2048	/base/locations/planets	0
+2049	/base/satelites/natural_satellite	0
+2050	/base/wastrology/astrologicalplanet	0
+2051	/astronomy/planet	9
+2052	/astronomy/celestial_object_with_coordinate_system	8
+2053	/engineering/piston_configuration	36
+2054	/cricket/cricket_tournament	12
+2055	/location/hud_nmfa	10
+2056	/location/ru_federal_city	4
+2057	/base/contractbridge/bridge_tournament	0
+2058	/law/constitutional_convention	5
+2059	/sports/boxing_weight_division	18
+2060	/tv/tv_rating	8
+2061	/digicams/camera_sensor_type	3
+2062	/baseball/baseball_position	19
+2063	/base/database/database_financial_supporter	0
+2064	/base/celebrations/celebration_subject	0
+2065	/base/proofsareprograms/key_concept	0
+2066	/base/mystery/hoax_location	0
+2067	/base/survivor/survivor_season	0
+2068	/base/movietheatres/type_of_movie_theatre_cinema	0
+2069	/meteorology/tropical_cyclone_category	40
+2070	/base/prison/prison_type	0
+2071	/base/animemanga/anime_manga_genre	0
+2072	/baseball/baseball_coaching_position	17
+2073	/base/mapcentral/map_projection_property	0
+2074	/base/greencars/car_with_electricity_only_capability	0
+2075	/measurement_unit/solid_angle_unit	3
+2076	/base/rugby/rugby_position	0
+2077	/language/language_regulator	6
+2078	/base/fires/type_of_fire	0
+2079	/base/adventures/computer_game_perspective	0
+2080	/physics/hadron	13
+2081	/base/engineering/tunnel_use	0
+2082	/physics/particle_family	10
+2083	/cvg/input_method	15
+2084	/location/cn_autonomous_region	6
+2085	/base/mystery/cryptid_reporter	0
+2086	/base/disaster2/type_of_tornado	0
+2087	/soccer/football_pitch	27
+2088	/base/engineering/canal_lock	0
+2089	/base/atitdatlas/region	0
+2090	/rail/railway_type	7
+2091	/base/barbie/barbie_theme	0
+2092	/book/periodical_format	12
+2093	/base/strangeebayitems/ebay_item	0
+2094	/biology/genome	3
+2095	/base/conservation/legislation	0
+2096	/base/conservation/conservation_list	0
+2097	/base/centreforeresearch/staff	0
+2098	/basketball/basketball_position	12
+2099	/base/disaster2/underwater_exploration	0
+2100	/base/architecture2/destroyed_structure	0
+2101	/base/engineering/covering_material	0
+2102	/base/qualia/type_of_disability	0
+2103	/education/honorary_degree_recipient	26
+2104	/sports/handedness	4
+2105	/theater/theater_designer_role	28
+2106	/comic_strips/comic_strip_creator_role	4
+2107	/biology/gene_group_membership_evidence	112742
+2108	/biology/gene_ontology_group_membership_evidence_type	14
+2109	/base/crime/criminal_defence_attorney	0
+2110	/physics/subatomic_particle_generation	4
+2111	/base/convictsydney/building	0
+2112	/base/convictsydney/location	0
+2113	/amusement_parks/disney_ride_ticket	0
+2114	/base/motorcycle/motorcycle_magazine	0
+2115	/measurement_unit/permeability_unit	2
+2116	/base/mystery/hoaxter	0
+2117	/chess/chess_game_outcome	4
+2118	/base/database/spatial_database	0
+2119	/base/iraqimusicbase/band_member	0
+2120	/cricket/cricket_series	11
+2121	/base/monetarydebase/debased_currency	0
+2122	/computer/html_layout_engine	8
+2123	/astronomy/satellite_galaxy	3
+2124	/base/horsefacts/coat_color	0
+2125	/base/infrastructure/lock_system	0
+2126	/base/scubadiving/realm	0
+2127	/base/animemanga/manga_publisher	0
+2128	/event/event_producer	6
+2129	/digicams/camera_uncompressed_format	9
+2130	/base/scubadiving/x2nd_stage_regulator	0
+2131	/base/satelites/satellite_communication_band	0
+2132	/base/vgames/video_game	0
+2133	/base/aubreymaturin/written_work	0
+2134	/base/mapcentral/map_projection_type	0
+2135	/base/yalebase/residential_college	0
+2136	/interests/collection_activity	4
+2137	/measurement_unit/unit_of_conductivity	0
+2138	/base/grecoromanmythology/mythological_entity	0
+2139	/base/snowboard/type_of_snowboarding	0
+2140	/american_football/scoreboard_quarter	7
+2141	/book/excerpted_work	3
+2142	/base/politicalconventions/vice_presidential_nominee	0
+2143	/base/exoplanetology/telescope	0
+2144	/organization/non_profit_designation	31
+2145	/symbols/heraldic_compartment	4
+2146	/location/my_division	17
+2147	/base/danceporn/video	0
+2148	/soccer/football_disciplinary_punishment	3
+2149	/tv/video_host	9
+2150	/base/conservationaction/collaborator	0
+2151	/internet/website_status	6
+2152	/dataworld/data_task_category	13
+2153	/atom/feed_category	184
+2154	/common/foreign_key_property	82
+2155	/engineering/piston_engine	10
+2156	/measurement_unit/unit_of_data_transmission_rate	14
+2157	/base/sanfranciscoscene/san_francisco_nightclub	0
+2158	/medicine/medical_trial_phase	5
+2159	/language/language_writing_type	8
+2160	/medicine/cancer_center_type	3
+2161	/engineering/valvetrain_configuration	9
+2162	/location/australian_state	7
+2163	/architecture/destruction_method	12
+2164	/measurement_unit/unit_of_volumetric_flow_rate	3
+2165	/astronomy/trans_neptunian_region	4
+2166	/transportation/road_orientation	4
+2167	/base/whamoworld/songs_referencing_wham_o_products	0
+2168	/music/tour_manager	4
+2169	/base/mystery/type_of_paranormal_event	0
+2170	/base/cdnpolitics/legislative_assembly	0
+2171	/base/engineering/chartering_institution	0
+2172	/measurement_unit/power_unit	11
+2173	/measurement_unit/luminance_unit	5
+2174	/comic_books/comic_book_story_arc	34
+2175	/astronomy/telescope_principle_type	5
+2176	/base/charities/charity_evaluator	0
+2177	/base/worldwonders/wonder_of_the_medieval_world	0
+2178	/biology/source_organism	0
+2179	/food/dietary_restriction	4
+2180	/astronomy/plutoid	4
+2181	/astronomy/dwarf_planet	6
+2182	/base/animemanga/anime_manga_creator	0
+2183	/base/watches/watch_type	0
+2184	/location/ru_federal_district	7
+2185	/base/animemanga/anime_ova_soundtrack	0
+2186	/base/mtgbase/magic_block	0
+2187	/base/argumentmaps/type_of_argument	0
+2188	/base/barbie/barbie_label_or_edition	0
+2189	/film/film_cut_type	10
+2190	/travel/guidebook_series	4
+2191	/measurement_unit/speed_unit	7
+2192	/amusement_parks/roller_coaster_material	0
+2193	/amusement_parks/roller_coaster_train_configuration	0
+2194	/architecture/tower_shape	0
+2195	/base/dndbase/ruleset	0
+2196	/base/sanfranciscoscene/san_francisco_draq_queen	0
+2197	/measurement_unit/wavenumber_unit	2
+2198	/measurement_unit/radiant_intensity_unit	2
+2199	/wine/fruit_source	4
+2200	/film/personal_film_appearance_type	10
+2201	/automotive/driveline	5
+2202	/opera/libretto	10
+2203	/cricket/cricket_match	5
+2204	/base/irmusictypes/track_type	0
+2205	/base/inaugurations/inauguration_quotation	0
+2206	/film/film_collection	2
+2207	/base/yalebase/publication	0
+2208	/architecture/landscape_architect	13
+2209	/location/australian_territory	4
+2210	/dataworld/type_projects	3
+2211	/base/computerscience/formal_grammar	0
+2212	/base/exoplanetology/exoplanet_catalogue	0
+2213	/celebrities/rehab_facility	13
+2214	/food/cheese_certification	5
+2215	/digicams/camera_compressed_format	6
+2216	/distilled_spirits/infused_spirit_style	6
+2217	/engineering/battery_size	12
+2218	/base/natlang/semantic_relation	0
+2219	/base/inference/rule	0
+2220	/royalty/coronation	4
+2221	/base/puzzles/puzzle_event_type	0
+2222	/base/mapcentral/fgdc_spatial_reference	0
+2223	/base/mapcentral/fgdc_metadata_reference	0
+2224	/location/my_federal_territory	4
+2225	/tennis/tennis_match_type	6
+2226	/spaceflight/rocket_engine_oxidizer	8
+2227	/base/bioventurist/patent	0
+2228	/base/gratefuldead/iconic_grateful_dead_art	0
+2229	/astronomy/astronomical_discovery_status	6
+2230	/chemistry/chemical_bond	18
+2231	/skiing/run_rating_symbol	0
+2232	/base/litcentral/extinct_taxon_time_period	0
+2233	/architecture/unrealized_design	12
+2234	/opera/opera_designer	5
+2235	/measurement_unit/fuel_economy_unit	5
+2236	/opera/opera_recording	11
+2237	/measurement_unit/temperature_unit	5
+2238	/broadcast/am_terrestrial_broadcast_facility	0
+2239	/physics/quark	13
+2240	/base/oysters/natural_location	0
+2241	/base/danceporn/dancer	0
+2242	/base/breakfast/breakfast_cereal_box_feature	0
+2243	/base/marchmadness/tournament_round	0
+2244	/measurement_unit/substance_unit	6
+2245	/people/marriage_union_type	8
+2246	/base/centreforeresearch/software_technology	0
+2247	/book/short_non_fiction_variety	9
+2248	/location/kp_metropolitan_city	7
+2249	/travel/accommodation_type	27
+2250	/base/gambling/lottery_game	0
+2251	/base/aceattorney/ace_attorney_game	0
+2252	/dataworld/data_task_status	6
+2253	/base/satelites/satellite_sensor	0
+2254	/base/myevents/meeting	0
+2255	/location/australian_external_territory	8
+2256	/time/holiday_period	8
+2257	/radio/radio_episode_segment	7
+2258	/distilled_spirits/spirit_blender	19
+2259	/tennis/tennis_grip_style	4
+2260	/base/watches/watch_case_material	0
+2261	/biology/plant_disease_conditions	0
+2262	/location/tw_province	3
+2263	/astronomy/galactic_super_cluster	9
+2264	/broadcast/broadcast_station_class	3
+2265	/music/music_video_job	0
+2266	/language/conlang_purpose	7
+2267	/book/newspaper_edition_type	7
+2268	/architecture/structural_engineer	5
+2269	/religion/congregation	3
+2270	/base/aubreymaturin/dish	0
+2271	/base/horsefacts/coat_allele	0
+2272	/base/infrastructure/type_of_lock	0
+2273	/measurement_unit/unit_of_force	7
+2274	/base/bridges/bridgedisaster_cause	0
+2275	/base/digitalcameras/lens_series	0
+2276	/medicine/medical_device	9
+2277	/award/hall_of_fame_discipline	12
+2278	/location/us_metropolitan_division	30
+2279	/measurement_unit/acceleration_unit	4
+2280	/measurement_unit/magnetic_flux_density_unit	3
+2281	/cricket/cricket_bowling_pace	6
+2282	/cvg/computer_game_performance_type	3
+2283	/wine/wine_color	4
+2284	/base/disaster2/pipeline_explosion	0
+2285	/measurement_unit/specific_energy_unit	3
+2286	/american_football/football_division	11
+2287	/base/birdinfo/sampling_design	0
+2288	/automotive/fuel	6
+2289	/biology/plant_disease_documentation	0
+2290	/chemistry/particle_spin	26
+2291	/rail/electric_system	3
+2292	/base/engineering/mining_extraction_method	0
+2293	/base/smokers/fuel_source	0
+2294	/base/iraqimusicbase/album	0
+2295	/medicine/drug_form_shape	0
+2296	/location/mx_federal_district	2
+2297	/measurement_unit/absorbed_dose_unit	3
+2298	/food/cheese_milk_source	7
+2299	/astronomy/galactic_interaction_type	5
+2300	/symbols/heraldic_variation_of_the_field	9
+2301	/base/theyrulebc/point_of_diversion	0
+2302	/location/uk_constituent_country	5
+2303	/base/sa2base/sa2_tactics	0
+2304	/medicine/diagnostic_sign	4
+2305	/base/infrastructure/animal_slaughtering_and_processing_facility	0
+2306	/base/tallships/tall_ship_in_film	0
+2307	/base/breakfast/breakfast_cereal_box	0
+2308	/base/celebrations/celebration	0
+2309	/base/mapcentral/projected_coordinate_system	0
+2310	/event/event_promoter	2
+2311	/measurement_unit/unit_of_molar_mass	2
+2312	/location/cn_prefecture	10
+2313	/base/whoami/question	0
+2314	/measurement_unit/radiance_unit	2
+2315	/cricket/cricket_roster	3
+2316	/digicams/camera_viewfinder_type	5
+2317	/base/aubreymaturin/book	0
+2318	/food/tea_type	10
+2319	/base/satelites/orbit_inclination_classification	0
+2320	/spaceflight/rocket_engine_status	4
+2321	/wine/wine_type	8
+2322	/base/badpeople/bad_people_who_make_music	0
+2323	/location/tw_township	2
+2324	/location/cn_city_district	4
+2325	/people/gender	4
+2326	/fictional_universe/character_gender	6
+2327	/food/licensee	3
+2328	/base/fight/labour_dispute_cause	0
+2329	/tv/video_type	3
+2330	/measurement_unit/irradiance_unit	2
+2331	Astronomical units of length	0
+2332	/tv/tv_rating_system	2
+2333	/location/ca_territory	4
+2334	/olympics/olympic_medal	4
+2335	/olympics/olympic_medal_demonstration	4
+2336	/sports/sport_medal	4
+2337	/physics/fundamental_interaction	5
+2338	/games/playing_card_deck_type	5
+2339	/base/crime/testifying_person	0
+2340	/base/animalnames/animal	0
+2341	/base/vanhomeless/government_program	0
+2342	/base/ikariam/ikariam_resources	0
+2343	/base/sportbase/club_owner	0
+2344	/location/tr_region	8
+2345	/medicine/medical_trial_type	3
+2346	/law/constitutional_amendment_proposer	3
+2347	/pipeline/simple_merge_task	6267
+2348	/base/whamoworld/wham_o_toy_imitations	0
+2349	/astronomy/meteorite_source	4
+2350	/base/satelites/orbited_body	0
+2351	/location/cn_municipality	5
+2352	/base/ultimate/ultimate_region	0
+2353	/base/fantasyfootball/fantasy_football_game	0
+2354	/medicine/hospital_ownership_status	5
+2355	/sports/tournament_team	4
+2356	/base/engineering/project_phase	0
+2357	/base/infection/method_of_infectious_software_transmission	0
+2358	/measurement_unit/conductance_unit	2
+2359	/medicine/drug_formulation_category	0
+2360	/base/greatfilms/ranked_list	0
+2361	/symbols/heraldic_helm	4
+2362	/astronomy/planetographic_coordinate_system	8
+2363	/chemistry/phase_of_matter	5
+2364	/location/vn_township	7
+2365	/time/commemorative_event	2
+2366	/measurement_unit/angle_unit	8
+2367	/common/uri_template	208
+2368	/common/annotation_index	6
+2369	/cricket/cricket_series_event	4
+2370	/measurement_unit/unit_of_symbol_rate	2
+2371	/measurement_unit/magnetic_field_strength_unit	3
+2372	/base/sailors/ship_crew_role	0
+2373	/chemistry/solubility	0
+2374	/measurement_unit/catalytic_concentration_unit	2
+2375	/measurement_unit/absorbed_dose_rate_unit	2
+2376	/measurement_unit/heat_capacity_unit	2
+2377	/measurement_unit/exposure_unit	2
+2378	/pipeline/task_status	6
+2379	/measurement_unit/unit_of_density	3
+2380	/base/conservationaction/participant	0
+2381	/base/centreforeresearch/service	0
+2382	/base/animemanga/seiyu_performer	0
+2383	/base/jamesbond007/james_bond_villain	0
+2384	/measurement_unit/luminous_flux_unit	2
+2385	/music/concert_performance_role	4
+2386	/astronomy/comet_group	5
+2387	/base/animemanga/media_format	0
+2388	/aviation/airline_alliance	4
+2389	/measurement_unit/charge_unit	7
+2390	/base/convictsydney/governor	0
+2391	/business/product_with_ingredients	2
+2392	/location/mx_federal_district_borough	4
+2393	/opera/opera_producer	3
+2394	/biology/taxonomic_authority	8
+2395	/biology/genome_curator	2
+2396	/location/us_federal_district	2
+2397	/measurement_unit/molar_heat_capacity_unit	2
+2398	/skiing/run_rating	0
+2399	/skiing/ski_lodge	0
+2400	/internet/top_level_domain_type	8
+2401	/biology/genome_build	2
+2402	/aviation/waypoint_type	3
+2403	/base/smokers/smoker	0
+2404	/base/electromagneticspectrum/regulatory_authority	0
+2405	/media_common/finished_work	4
+2406	/engineering/engine_cooling_method	3
+2407	/rail/steam_locomotive_fuel_type	3
+2408	/base/thoroughbredracing/thoroughbred_racehorse_color	0
+2409	/measurement_unit/viscosity_unit	2
+2410	/base/contractbridge/world_bridge_federation_zone	0
+2411	/base/graffiti/graffiti_crew	0
+2412	/engineering/electric_current_type	3
+2413	/base/disaster2/train_accident_cause	0
+2414	/base/mystery/vall_e_event_type	0
+2415	/engineering/battery	3
+2416	Fictional universe	0
+2417	/base/crime/criminal_investigation_status	0
+2418	/location/mx_municipality	11
+2419	/games/playing_card_game_play_direction	3
+2420	/measurement_unit/catalytic_activity_unit	3
+2421	/measurement_unit/dose_equivalence_unit	2
+2422	/boxing/boxing_title	0
+2423	/measurement_unit/surface_tension_unit	2
+2424	/location/kp_county	5
+2425	/measurement_unit/unit_of_specific_fuel_consumption	2
+2426	/travel/accommodation_price_range	4
+2427	State Character	0
+2428	/base/cgcollection/computer_game_release	0
+2429	TWA Flight 128	0
+2430	/base/tallships/replica	0
+2431	/base/tallships/tall_ship_on_tv	0
+2432	/measurement_unit/illuminance_unit	2
+2433	/measurement_unit/unit_of_resistivity	3
+2434	/people/wedding_venue	5
+2435	Protein	0
+2436	/measurement_unit/inverse_temperature_unit	3
+2437	/celebrities/sexual_orientation	4
+2438	/base/qualia/recreational_drug	0
+2439	/geography/waterfall_type	2
+2440	/measurement_unit/electric_charge_density_unit	2
+2441	/measurement_unit/amount_concentration_unit	5
+2442	/sports/boxing_stance	3
+2443	/measurement_unit/radioactivity_unit	3
+2444	/location/es_autonomous_city	3
+2445	/biology/genomic_locus	19339
+2446	/symbols/heraldic_coronet	2
+2447	/measurement_unit/angular_acceleration_unit	2
+2448	/base/words/french_word	0
+2449	/base/birdinfo/bird_band_type	0
+2450	/astronomy/scattered_disc_object	2
+2451	/chess/chess_color	3
+2452	/base/scottishclans/tartan	0
+2453	/measurement_unit/specific_heat_capacity_unit	3
+2454	/rail/rail_gauge	4
+2455	/geography/glacier_terminus	6
+2456	/measurement_unit/unit_of_brake_specific_fuel_consumption	3
+2457	/base/atitdatlas/university	0
+2458	/cricket/cricket_umpire_panel	2
+2459	/aviation/aviation_waypoint	2
+2460	/amusement_parks/roller_coaster_propulsion_system	0
+2461	/base/animemanga/sound_drama_title	0
+2462	anarchy	0
+2463	User Language Preference	0
+2464	User Search Language Preference	0
+2465	/astronomy/trans_neptunian_object	5
+2466	/measurement_unit/volumetric_heat_capacity_unit	2
+2467	/measurement_unit/electric_field_strength_unit	3
+2468	"><img src=1 onerror=alert(2)>	0
+2469	/measurement_unit/inductance_unit	2
+2470	/location/br_federal_district	2
+2471	/measurement_unit/current_unit	4
+2472	/measurement_unit/unit_of_surface_density	2
+2473	/measurement_unit/capacitance_unit	2
+2474	/boats/engine_fuel	2
+2475	/base/litcentral/cited_quotation_source	0
+2476	/measurement_unit/unit_of_cargo_capacity	2
+2477	/dataworld/type_project	2
+2478	/engineering/power_plug_standard	3
+2479	/law/international_patent_category	4
+2480	/dataworld/gardening_task	2
+2481	/measurement_unit/angular_velocity_unit	3
+2482	/measurement_unit/electric_flux_density_unit	2
+2483	/opera/opera_designer_role	3
+2484	/measurement_unit/specific_volume_unit	2
+2485	/measurement_unit/luminous_intensity_unit	2
+2486	/dataworld/protected_namespace	0
+2487	/dataworld/public_type_schema_change	2
+2488	/biology/hybrid_parent_gender	3
+2489	/type/attribution	0
+2490	/dataworld/provenance	10363
+2491	/dataworld/data_provider	0
+2492	/measurement_unit/thermal_conductivity_unit	2
+2493	/measurement_unit/energy_density_unit	2
+2494	/location/ua_autonomous_republic	2
+2495	/base/politicalpromises/political_promise	0
+2496	/base/virology/biological_parasite_host_group	0
+2497	/measurement_unit/magnetic_flux_unit	2
+2498	/measurement_unit/permittivity_unit	2
+2499	/measurement_unit/resistance_unit	2
