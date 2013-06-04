@@ -324,7 +324,7 @@ object UnlinkableEntityTyper extends ScoobiApp {
 
   import edu.knowitall.browser.hadoop.util.RegWrapper
 
-  val tabSplit = "\t".r
+  lazy val tabSplit = "\t".r
 
   val minArgLength = 4
 
