@@ -73,10 +73,11 @@ public class CrosswikisCandidateFinder extends CandidateFinder {
         return returnFbids;
     }
     
-    public CrosswikisHandler getCrosswikisHandler() {
-      return cwHandler;
+    @Override
+    public boolean hasCandidates(String arg) {
+      return cwHandler.hasAnchor(arg);
     }
-
+    
     /**
      * Main method for testing the CrosswikisCandidateFinder.
      * 
