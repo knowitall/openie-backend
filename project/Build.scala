@@ -42,6 +42,12 @@ object NlpToolsBuild extends Build {
       "knowitall" at "http://knowitall.cs.washington.edu/maven2",
       "knowitall-snapshot" at "http://knowitall.cs.washington.edu/maven2-snapshot",
       mavenLocal),
+    publishTo <<= version { (v: String) =>
+      if (v.trim.endsWith("SNAPSHOT"))
+        Some(Resolver.file("file", new File("/cse/www2/knowitall/maven2-snapshot")))
+      else
+        Some(Resolver.file("file", new File("/cse/www2/knowitall/maven2")))
+    },
     scalacOptions ++= Seq("-unchecked", "-deprecation")
   ) ++ assemblySettings
 
@@ -56,7 +62,7 @@ object NlpToolsBuild extends Build {
 
   lazy val populator = Project(id = "openie-populator", base = file("populator"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
-      "org.apache.solr" % "solr-solrj" % "4.2.1",
+      "org.apache.solr" % "solr-solrj" % "4.3.0",
       logbackClassic,
       logbackCore,
       slf4jApi,
@@ -85,7 +91,7 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage %% "nlptools-chunk-opennlp" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       "org.apache.hadoop" % "hadoop-lzo" % "0.4.13",
-      "com.nicta" %% "scoobi" % "0.7.0-cdh3-SNAPSHOT",
+      "com.nicta" %% "scoobi" % "0.7.0-RC2-cdh3",
       logbackClassic,
       logbackCore,
       slf4jApi
