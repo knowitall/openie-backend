@@ -44,7 +44,7 @@ object NlpToolsBuild extends Build {
       mavenLocal),
     publishTo <<= version { (v: String) =>
       if (v.trim.endsWith("SNAPSHOT"))
-        Some(Resolver.file("file", new File("/cse/www2/knowitall/maven2-snapshots")))
+        Some(Resolver.file("file", new File("/cse/www2/knowitall/maven2-snapshot")))
       else
         Some(Resolver.file("file", new File("/cse/www2/knowitall/maven2")))
     },
