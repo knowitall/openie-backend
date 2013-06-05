@@ -137,7 +137,7 @@ object ScoobiEntityLinker extends ScoobiApp {
 
   def getEntityLinker(num: Int): ScoobiEntityLinker = {
     val el = getScratch(num).map(index => {
-      new EntityLinker(index)
+      new EntityLinker(new File(index))
     }) // java doesn't have Option
     new ScoobiEntityLinker(el, TaggedStemmer.instance)
   }

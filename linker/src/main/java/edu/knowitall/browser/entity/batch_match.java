@@ -53,11 +53,11 @@ class batch_match {
 
     private MoreLikeThis mlt;
 
-    public batch_match(String basePath) throws CorruptIndexException, IOException {
-        String index = basePath + File.separator + Constants.batchMatchPath();
+    public batch_match(File basePath) throws CorruptIndexException, IOException {
+        File index = Constants.batchMatchPath(basePath);
         System.err.println("Using " + index + " as my index.");
 
-        reader = IndexReader.open(FSDirectory.open(new File(index)), true);
+        reader = IndexReader.open(FSDirectory.open(index), true);
 
         searcher = new IndexSearcher(reader);
 
@@ -284,7 +284,7 @@ class batch_match {
 
     public static void main(String[] args) throws CorruptIndexException,
             IOException {
-
-        new batch_match("/scratch/" + Constants.batchMatchPath()).go();
+        File basePath = new File(args[0]);
+        new batch_match(Constants.batchMatchPath(basePath)).go();
     }
 }
