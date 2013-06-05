@@ -9,8 +9,8 @@ import java.util.List;
 import edu.knowitall.browser.util.DerbyDb;
 
 public class Indices extends DerbyDb {
-  public Indices(String url) {
-      super(url);
+  public Indices(String entityLinkingDerbyUrl) {
+      super(entityLinkingDerbyUrl);
   }
   
   public List<Integer> getIndices(List<String> fbids) {

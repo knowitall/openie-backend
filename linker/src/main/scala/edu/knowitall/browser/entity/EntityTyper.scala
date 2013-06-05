@@ -10,19 +10,10 @@ import scala.collection.JavaConversions.seqAsJavaList
   */
 class EntityTyper(val fbLookupTable: FbTypeLookup) {
 
-  def this(basePath: String) = this(
+  def this(basePath: File) = this(
     new FbTypeLookup(
-      new File(
-        List(basePath, Constants.mainIndexPath, EntityTyper.typeLookupIndex).mkString(
-          File.separator
-        )
-      ),
-      new File(
-        new File(
-          List(basePath, Constants.mainIndexPath).mkString(File.separator)
-        ),
-        EntityTyper.fbTypeEnumFile
-      )
+      Constants.typeLookupIndexPath(basePath),
+      Constants.freeBaseTypeEnumFile(basePath)
     )
   )
     

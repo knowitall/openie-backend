@@ -1,6 +1,7 @@
 package edu.knowitall.browser.entity;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
@@ -38,7 +39,7 @@ public abstract class CandidateFinder {
 
 	private static final Integer FileSearch_CacheSize = 250000; // 300000 is about 10% of the full files' sizes,
 
-	private SortedFileMap fbidToTitleInlinks(String inputFile) 	throws FileNotFoundException, IOException, ClassNotFoundException {
+	private SortedFileMap fbidToTitleInlinks(File inputFile) 	throws FileNotFoundException, IOException, ClassNotFoundException {
 		if (fbidToTitleInlinksRAW != SortedFileMap.empty)
 			return fbidToTitleInlinksRAW;
 		synchronized (fbidToTitleInlinksRAW) {
@@ -47,10 +48,9 @@ public abstract class CandidateFinder {
 			}
 			return fbidToTitleInlinksRAW;
 		}
-
 	}
 
-	private SortedFileMap titleMap(String inputFile)
+	private SortedFileMap titleMap(File inputFile)
 			throws FileNotFoundException, IOException, ClassNotFoundException {
 		if (titleMapRAW != SortedFileMap.empty)
 			return titleMapRAW;
@@ -62,7 +62,7 @@ public abstract class CandidateFinder {
 		}
 	}
 
-	private SortedFileMap cached(String inputFile)
+	private SortedFileMap cached(File inputFile)
 			throws FileNotFoundException, IOException, ClassNotFoundException {
 		if (cachedRAW != SortedFileMap.empty)
 			return cachedRAW;
@@ -74,55 +74,52 @@ public abstract class CandidateFinder {
 		}
 	}
 
-	private final String fbidTitleFile;
+	private final File fbidTitleFile;
 
 	// original perl scripts called this "fbid_to_line"
 	public SortedFileMap fbidToTitleInlinks() throws FileNotFoundException, IOException, ClassNotFoundException {
-
 	    return fbidToTitleInlinks(fbidTitleFile);
     }
 
-	private final String titleMapFile;
+	private final File titleMapFile;
 
 	public SortedFileMap titleMap() throws FileNotFoundException, IOException, ClassNotFoundException {
-
 	    return titleMap(titleMapFile);
 	}
 
-	private final String cachedMapFile;
+	private final File cachedMapFile;
 
 	public SortedFileMap cached() throws FileNotFoundException, IOException, ClassNotFoundException {
-
 	    return cached(cachedMapFile);
 	}
 
-	/**
-	 * Uses the default base dir and default support file locations.
-	 */
-	public CandidateFinder() {
-		this(DefaultBaseDir);
-	}
+//	/**
+//	 * Uses the default base dir and default support file locations.
+//	 */
+//	public CandidateFinder() {
+//		this(DefaultBaseDir);
+//	}
 
 	/**
 	 * Uses a given base dir for support files
 	 */
-	public CandidateFinder(String baseDir) {
-	    this.fbidTitleFile = baseDir + "/" + fbidToTitleInlinksDefaultFile;
-	    this.titleMapFile  = baseDir + "/" + titleMapDefaultFile;
-	    this.cachedMapFile = baseDir + "/" + cachedMapDefaultFile;
+	public CandidateFinder(File basePath) {
+	    this.fbidTitleFile = Constants.fbidToTitleInlinksFile(basePath);
+	    this.titleMapFile  = Constants.titleMapFile(basePath);
+	    this.cachedMapFile = Constants.cachedMapFile(basePath);
 	}
 
-	/**
-	 * Allows individually specified support file locations
-	 * @param fbidTitleFile
-	 * @param titleMapFile
-	 * @param cachedMapFile
-	 */
-	public CandidateFinder(String fbidTitleFile, String titleMapFile, String cachedMapFile) {
-	    this.fbidTitleFile = fbidTitleFile;
-	    this.titleMapFile  = titleMapFile;
-	    this.cachedMapFile = cachedMapFile;
-	}
+//	/**
+//	 * Allows individually specified support file locations
+//	 * @param fbidTitleFile
+//	 * @param titleMapFile
+//	 * @param cachedMapFile
+//	 */
+//	public CandidateFinder(String fbidTitleFile, String titleMapFile, String cachedMapFile) {
+//	    this.fbidTitleFile = fbidTitleFile;
+//	    this.titleMapFile  = titleMapFile;
+//	    this.cachedMapFile = cachedMapFile;
+//	}
 
 	public abstract List<Pair<String, Double>> linkToFbids(String arg) throws FileNotFoundException,
 	IOException, ClassNotFoundException;
@@ -235,35 +232,34 @@ public abstract class CandidateFinder {
 
 	public static final String DefaultBaseDir = "/scratch/browser-freebase";
 
-	private static synchronized SortedFileMap loadFbidToTitleInlinks(String inputFile)
+	private static synchronized SortedFileMap loadFbidToTitleInlinks(File inputFile)
 			throws IOException, FileNotFoundException, ClassNotFoundException {
-		System.err.println("Loading Fbid to Title/Inlink Map (fbid_to_line): " + inputFile);
+		System.err.println("Loading Fbid to Title/Inlink Map (fbid_to_line): " + inputFile.getCanonicalPath());
 
 		return new SortedFileMap(inputFile, FileSearch_CacheSize);
 	}
 
-	private static final String fbidToTitleInlinksDefaultFile = "fbid_to_line.sorted";
+//	private static final String fbidToTitleInlinksDefaultFile = "fbid_to_line.sorted";
 
-	private static synchronized SortedFileMap loadTitleMap(String inputFile) throws IOException,
+	private static synchronized SortedFileMap loadTitleMap(File inputFile) throws IOException,
 			FileNotFoundException, ClassNotFoundException {
-		System.err.println("Load entity name to fbid map \"titleMap\": " + inputFile);
+		System.err.println("Load entity name to fbid map \"titleMap\": " + inputFile.getCanonicalPath());
 
 		return new SortedFileMap(inputFile, FileSearch_CacheSize);
 	}
 
-	private static final String titleMapDefaultFile = "titleMap.sorted";
+//	private static final String titleMapDefaultFile = "titleMap.sorted";
 
-	private static synchronized SortedFileMap loadCachedMap(String inputFile) throws IOException,
+	private static synchronized SortedFileMap loadCachedMap(File inputFile) throws IOException,
 			FileNotFoundException, ClassNotFoundException {
-		System.err
-				.println("Loading \"cached\" token to fbid candidate map");
+		System.err.println("Loading \"cached\" token to fbid candidate map");
 
 		return new SortedFileMap(inputFile, FileSearch_CacheSize);
 	}
 
-	private static final String cachedMapDefaultFile = "cached.sorted";
+//	private static final String cachedMapDefaultFile = "cached.sorted";
 
-	protected static void println(String line) {
-		System.out.println(line);
-	}
+//	protected static void println(String line) {
+//		System.out.println(line);
+//	}
 }

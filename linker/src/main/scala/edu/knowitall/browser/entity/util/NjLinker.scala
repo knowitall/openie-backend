@@ -1,13 +1,11 @@
 package edu.knowitall.browser.entity.util
 
 import scala.io.Source
-
 import edu.knowitall.common.Resource.using
-
 import edu.knowitall.browser.entity.EntityLink
 import edu.knowitall.browser.entity.EntityLinker
-
 import scala.collection.JavaConversions._
+import java.io.File
 
 object NjLinker {
 
@@ -85,8 +83,8 @@ object NjLinker {
     val entityLinkersLocal = new ThreadLocal[Seq[EntityLinker]]() {
 
       override def initialValue = (1 to 4).map { num =>
-        if (num == 1) new EntityLinker("/scratch/browser-freebase/")
-        else new EntityLinker("/scratch%d/browser-freebase/".format(num))
+        if (num == 1) new EntityLinker(new File("/scratch/browser-freebase/"))
+        else new EntityLinker(new File("/scratch%d/browser-freebase/".format(num)))
       }
     }
 
