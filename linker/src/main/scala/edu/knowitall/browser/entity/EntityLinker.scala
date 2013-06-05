@@ -31,7 +31,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     new CrosswikisCandidateFinder(basePath),
     new EntityTyper(basePath)
   )
-
+  
   /** A default constructor that uses /scratch/browser-freebase/ as the location for its supporting
    * dictionaries */
   def this() = this("/scratch/browser-freebase/")

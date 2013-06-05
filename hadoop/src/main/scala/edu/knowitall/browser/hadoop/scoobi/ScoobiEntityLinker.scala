@@ -25,6 +25,9 @@ import com.nicta.scoobi.io.text.TextInput
 import com.nicta.scoobi.io.text.TextOutput
 import com.nicta.scoobi.io.text.TextSource
 import com.hadoop.mapreduce.LzoTextInputFormat
+import edu.knowitall.tool.postag.PostaggedToken
+import edu.knowitall.browser.entity.util.HeadPhraseFinder
+import edu.knowitall.browser.entity.CrosswikisCandidateFinder
 
 /**
   * A mapper job that
@@ -46,9 +49,10 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
   private var arg2sLinked = 0
   private var totalGroups = 0
 
-  def getEntity(el: EntityLinker, arg: String, head: ReVerbExtraction, sources: Set[String]): Option[EntityLink] = {
+  def getEntity(el: EntityLinker, arg: Seq[PostaggedToken], sources: Set[String]): Option[EntityLink] = {
     if (arg.length < min_arg_length) None
-    val tryLink = el.getBestEntity(arg, sources.toSeq)
+    val headPhrase = HeadPhraseFinder.getHeadPhrase(arg, el.candidateFinder)
+    val tryLink = el.getBestEntity(headPhrase, sources.toSeq)
     if (tryLink == null) None else Some(tryLink)
   }
 
@@ -73,7 +77,7 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
     val (arg1Entity, arg1Types) = if (reuseLinks && group.arg1.entity.isDefined) {
       (group.arg1.entity, group.arg1.types)
     } else {
-      val entity = getEntity(randomLinker, head.arg1Text, head, sources) match {
+      val entity = getEntity(randomLinker, head.arg1Tokens, sources) match {
         case Some(rawEntity) => { arg1sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
@@ -83,7 +87,7 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
     val (arg2Entity, arg2Types) = if (reuseLinks && group.arg2.entity.isDefined) {
       (group.arg2.entity, group.arg2.types)
     } else {
-      val entity = getEntity(randomLinker, head.arg2Text, head, sources) match {
+      val entity = getEntity(randomLinker, head.arg2Tokens, sources) match {
         case Some(rawEntity) => { arg2sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
@@ -132,7 +136,9 @@ object ScoobiEntityLinker extends ScoobiApp {
   def getEntityLinker: ScoobiEntityLinker = getEntityLinker(4)
 
   def getEntityLinker(num: Int): ScoobiEntityLinker = {
-    val el = getScratch(num).map(index => new EntityLinker(index)) // java doesn't have Option
+    val el = getScratch(num).map(index => {
+      new EntityLinker(index)
+    }) // java doesn't have Option
     new ScoobiEntityLinker(el, TaggedStemmer.instance)
   }
 
