@@ -81,14 +81,18 @@ public class SortedFileMap {
      * @throws IOException
      */
     public SortedFileMap(String filename, int maxCacheLines) throws IOException {
+        this(new File(filename), maxCacheLines);
+    }
+    
+    public SortedFileMap(File file, int maxCacheLines) throws IOException {
         this.cacheSize = maxCacheLines;
-        this.file = new File(filename);
+        this.file = file;
 
-        System.err.println("Indexing file for SortedFileMap: " + filename);
+        System.err.println("Indexing file for SortedFileMap: " + file.getCanonicalPath());
         BufferedReader indexReader = new BufferedReader(new FileReader(file));
         this.fileIndex = SortedFileIndexer.indexSortedFile(indexReader);
         indexReader.close();
-        System.err.println("done indexing file for SortedFileMap: " + filename);
+        System.err.println("done indexing file for SortedFileMap: " + file.getCanonicalPath());
     }
 
     public boolean containsKey(String key) throws IOException {

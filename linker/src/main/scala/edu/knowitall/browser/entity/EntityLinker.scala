@@ -10,6 +10,7 @@ import scala.io.Source
 import edu.knowitall.common.Resource.using
 import scopt.OptionParser
 import scala.collection.mutable.HashMap
+import java.io.File
 
 //import edu.knowitall.browser.hadoop.scoobi.EntityTyper
 
@@ -23,18 +24,18 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
   private var cacheTimeouts = 0
 
   private val fbidIndices = new Indices(
-    Constants.derbyDbUrl(Constants.defaultDerbyDbBasePath, Constants.entityLinkingDbName)
+    Constants.derbyDbUrl(Constants.entityLinkingDbPath(Constants.defaultDerbyDbBasePath))
   )
 
-  def this(basePath: String) = this(
+  def this(basePath: File) = this(
     new batch_match(basePath),
     new CrosswikisCandidateFinder(basePath),
     new EntityTyper(basePath)
   )
   
-  /** A default constructor that uses /scratch/browser-freebase/ as the location for its supporting
-   * dictionaries */
-  def this() = this("/scratch/browser-freebase/")
+//  /** A default constructor that uses /scratch/browser-freebase/ as the location for its supporting
+//   * dictionaries */
+//  def this() = this("/scratch/browser-freebase/")
 
   private def tryFbidCache(arg: String): Seq[Pair[String, java.lang.Double]] =
     candidateFinder.linkToFbids(arg)
@@ -180,7 +181,7 @@ object EntityLinker {
 
     if (!parser.parse(args)) return
 
-    val linker = new EntityLinker(baseDir)
+    val linker = new EntityLinker(new File(baseDir))
 
     def parseInputLine(line: String): (Args, Context) = {
       val split = tabSplitter.split(line)
