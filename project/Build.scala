@@ -42,6 +42,12 @@ object NlpToolsBuild extends Build {
       "knowitall" at "http://knowitall.cs.washington.edu/maven2",
       "knowitall-snapshot" at "http://knowitall.cs.washington.edu/maven2-snapshot",
       mavenLocal),
+    publishTo <<= version { (v: String) =>
+      if (v.trim.endsWith("SNAPSHOT"))
+        Some(Resolver.file("file", new File("/cse/www2/knowitall/maven2-snapshots")))
+      else
+        Some(Resolver.file("file", new File("/cse/www2/knowitall/maven2")))
+    },
     scalacOptions ++= Seq("-unchecked", "-deprecation")
   ) ++ assemblySettings
 
