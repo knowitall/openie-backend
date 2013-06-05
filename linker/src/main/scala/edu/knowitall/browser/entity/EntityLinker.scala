@@ -13,7 +13,7 @@ import scala.collection.mutable.HashMap
 
 //import edu.knowitall.browser.hadoop.scoobi.EntityTyper
 
-class EntityLinker(val bm: batch_match, val candidateFinder: CrosswikisCandidateFinder,
+class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     val typer: EntityTyper) {
   private val PAD_SOURCES = 4 // extend source sentences to this
   // number minimum
@@ -31,7 +31,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CrosswikisCandidate
     new CrosswikisCandidateFinder(basePath),
     new EntityTyper(basePath)
   )
-
+  
   /** A default constructor that uses /scratch/browser-freebase/ as the location for its supporting
    * dictionaries */
   def this() = this("/scratch/browser-freebase/")

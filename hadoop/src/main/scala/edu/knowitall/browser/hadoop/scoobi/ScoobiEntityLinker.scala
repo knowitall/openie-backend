@@ -51,7 +51,7 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
 
   def getEntity(el: EntityLinker, arg: Seq[PostaggedToken], sources: Set[String]): Option[EntityLink] = {
     if (arg.length < min_arg_length) None
-    val headPhrase = HeadPhraseFinder.getHeadPhrase(arg, el.candidateFinder.getCrosswikisHandler())
+    val headPhrase = HeadPhraseFinder.getHeadPhrase(arg, el.candidateFinder)
     val tryLink = el.getBestEntity(headPhrase, sources.toSeq)
     if (tryLink == null) None else Some(tryLink)
   }

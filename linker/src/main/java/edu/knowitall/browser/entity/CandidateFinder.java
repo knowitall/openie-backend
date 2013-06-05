@@ -25,7 +25,7 @@ import edu.knowitall.browser.util.SortedFileMap;
  * @author Rob
  *
  */
-abstract class CandidateFinder {
+public abstract class CandidateFinder {
 
 	protected static Pattern splitPattern = Pattern.compile("\t");
 	protected static Pattern spacePattern = Pattern.compile(" ");
@@ -126,6 +126,11 @@ abstract class CandidateFinder {
 
 	public abstract List<Pair<String, Double>> linkToFbids(String arg) throws FileNotFoundException,
 	IOException, ClassNotFoundException;
+	
+    /**
+     * Return true if there are some candidates for the given arg, false otherwise.
+     */
+    public abstract boolean hasCandidates(String arg);
 
 	/** Does not attach types */
 	public List<Pair<Entity, Double>> linkToEntities(String arg) throws FileNotFoundException,
