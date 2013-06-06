@@ -1,7 +1,7 @@
 package edu.knowitall.browser.solr
 
 import com.twitter.bijection.Bijection
-import java.io.{ByteArrayOutputStream, ObjectOutputStream}
+import java.io.{ByteArrayOutputStream, ObjectOutputStream, File}
 import java.net.{MalformedURLException, URL}
 import scala.concurrent._
 import scala.collection.JavaConverters.{asJavaIteratorConverter, seqAsJavaListConverter, setAsJavaSetConverter}
@@ -197,6 +197,28 @@ object SolrLoader {
     def close() {}
   }
 
+  case class DirectorySource(file: java.io.File) extends Source {
+    require(file.exists, "file does not exist: " + file)
+
+    val files = 
+      if (file.isDirectory) file.listFiles.toList
+      else List(file)
+
+    files.foreach(file => logger.info("Appending file to import: " + file))
+
+    def groupIterator() = {
+      val thunks: Iterator[() => Iterator[ExtractionGroup[ReVerbExtraction]]] = files.iterator.map(file => 
+        () => 
+          Source.fromFile(file, "UTF-8").getLines map ReVerbExtractionGroup.deserializeFromString map (_.get)
+      )
+
+      // i'm ignoring closing handles--resource leak
+      thunks.foldLeft(thunks.next.apply()){ case (it, th) => it ++ th.apply() }
+    }
+
+    def close() {}
+  }
+
   case class Config(
     val source: Source = StdinSource(),
     val url: String = "",
@@ -212,7 +234,9 @@ object SolrLoader {
           str match {
             case "stdin" => c.copy(source = StdinSource())
             case "lucene" => c.copy(source = LuceneSource())
+            case path if new File(path).exists => c.copy(source = DirectorySource(new File(path))) 
             case url if control.Exception.catching(classOf[MalformedURLException]) opt new URL(url) isDefined => c.copy(source = UrlSource(url))
+            case source => throw new IllegalArgumentException("Unknown source (not a file or URL): " + source)
           }
         },
         flag("stdout", "dump to stdout") { (c: Config) => c.copy(stdOut = true) },
