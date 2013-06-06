@@ -56,7 +56,7 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage %% "nlptools-core" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       "net.debasishg" %% "sjson" % "0.19",
-      "com.twitter" %% "chill" % "0.2.2"
+      "com.twitter" %% "chill" % "0.2.3"
     )
   ))
 
