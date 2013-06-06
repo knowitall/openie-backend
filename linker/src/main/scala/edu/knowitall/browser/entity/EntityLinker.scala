@@ -1,16 +1,18 @@
 package edu.knowitall.browser.entity
 
+import java.io.File
 import java.io.FileOutputStream
 import java.io.PrintStream
 import java.util.ArrayList
+
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.JavaConversions.iterableAsScalaIterable
 import scala.collection.JavaConversions.seqAsJavaList
+import scala.collection.mutable.HashMap
 import scala.io.Source
+
 import edu.knowitall.common.Resource.using
 import scopt.OptionParser
-import scala.collection.mutable.HashMap
-import java.io.File
 
 //import edu.knowitall.browser.hadoop.scoobi.EntityTyper
 
@@ -32,10 +34,6 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     new CrosswikisCandidateFinder(basePath),
     new EntityTyper(basePath)
   )
-  
-//  /** A default constructor that uses /scratch/browser-freebase/ as the location for its supporting
-//   * dictionaries */
-//  def this() = this("/scratch/browser-freebase/")
 
   private def tryFbidCache(arg: String): Seq[Pair[String, java.lang.Double]] =
     candidateFinder.linkToFbids(arg)
@@ -167,14 +165,14 @@ object EntityLinker {
   // where fbidX has 5 columns of name,fbid,score,inlinks,types
   def main(args: Array[String]): Unit = {
 
-    var baseDir = CandidateFinder.DefaultBaseDir
+    var baseDir = "."
     var inputFile = Option.empty[String]
     var outputFile = Option.empty[String]
     var numArgs = 1
 
     val parser = new OptionParser() {
       arg("num_args", "Number of input columns that are arg strings to link, any remaining columns are treated as context sentences.", { str => numArgs = str.toInt })
-      opt("baseDir", "The base directory for linker support files. Default:%s".format(CandidateFinder.DefaultBaseDir), { str => baseDir = str })
+      opt("baseDir", "The base directory for linker support files. Default: .", { str => baseDir = str })
       opt("inputFile", "An optional input file to read input from, default standard input", { str => inputFile = Some(str) })
       opt("outputFile", "An optional output file to write output to, default standard output", { str => outputFile = Some(str) })
     }
