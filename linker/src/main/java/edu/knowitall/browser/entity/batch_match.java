@@ -45,7 +45,7 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.search.similar.MoreLikeThis;
 import org.apache.lucene.store.FSDirectory;
 
-class batch_match {
+public class batch_match {
 
     private IndexReader reader;
 
