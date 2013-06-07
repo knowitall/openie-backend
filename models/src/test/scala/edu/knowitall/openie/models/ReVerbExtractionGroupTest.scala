@@ -32,7 +32,7 @@ class ReVerbExtractionGroupTest extends FlatSpec {
   }
 
   it should "round-trip through Chill serialization" in {
-    val kryo = Chill.createInjection()
+    val kryo = Chill.createInjection(maxBufferSize = 2 << 22)
     val extrs = getExtrsHelper
     extrs.foreach { e =>
       assert(e === kryo.invert(kryo(e)).get)
