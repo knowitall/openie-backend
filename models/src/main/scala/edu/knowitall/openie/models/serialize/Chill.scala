@@ -81,7 +81,7 @@ object Chill {
   }
 
 
-  def createInjection(minBufferSize: Int = 1 << 16, maxBufferSize: Int = 1 << 24): Injection[AnyRef, Array[Byte]] = {
+  def createInjection(minBufferSize: Int = 1 << 16, maxBufferSize: Int = 1 << 20): Injection[AnyRef, Array[Byte]] = {
     def myRegistrations(kryo: Kryo) = kryo
       .forClassViaBijectionDefault2(intervalBijection)
       .forClassViaBijection(freebaseEntityBijection)
