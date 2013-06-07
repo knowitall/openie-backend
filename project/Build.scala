@@ -13,7 +13,7 @@ object NlpToolsBuild extends Build {
   val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
 
   val nlptoolsPackage = "edu.washington.cs.knowitall.nlptools"
-  val nlptoolsVersion = "2.4.1"
+  val nlptoolsVersion = "2.4.2"
 
   val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.12"
   val logbackCore = "ch.qos.logback" % "logback-core" % "1.0.12"
@@ -87,7 +87,7 @@ object NlpToolsBuild extends Build {
   )) dependsOn(models)
 
   lazy val hadoop = Project(id = "openie-hadoop", base = file("hadoop"), settings = buildSettings ++ Seq(
-    libraryDependencies ++= Seq("edu.washington.cs.knowitall" % "reverb-core" % "1.4.1" excludeAll(ExclusionRule(organization = "jwnl")),
+    libraryDependencies ++= Seq("edu.washington.cs.knowitall" % "reverb-core" % "1.4.3" excludeAll(ExclusionRule(organization = "jwnl")),
       nlptoolsPackage %% "nlptools-chunk-opennlp" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       "org.apache.hadoop" % "hadoop-lzo" % "0.4.13",
@@ -112,7 +112,7 @@ object NlpToolsBuild extends Build {
 
   lazy val linker = Project(id = "openie-linker", base = file("linker"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
-      "edu.washington.cs.knowitall" % "reverb-core" % "1.4.0" excludeAll(ExclusionRule(organization = "jwnl")),
+      "edu.washington.cs.knowitall" % "reverb-core" % "1.4.3" excludeAll(ExclusionRule(organization = "jwnl")),
       nlptoolsPackage %% "nlptools-core" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion,
