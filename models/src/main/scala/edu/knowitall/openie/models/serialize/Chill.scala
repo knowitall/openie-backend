@@ -9,7 +9,6 @@ import edu.knowitall.collection.immutable.Interval
 import edu.knowitall.openie.models._
 import edu.knowitall.tool.chunk.ChunkedToken
 import com.esotericsoftware.kryo.Kryo
-import com.twitter.chill.KryoImplicits._
 import com.twitter.bijection.ImplicitBijection
 import com.esotericsoftware.kryo.{ Serializer => KSerializer }
 import org.objenesis.strategy.StdInstantiatorStrategy
@@ -25,7 +24,7 @@ object Chill {
     ChunkedToken,
     (String, String, String, Int)
   ](ChunkedToken.unapply(_).get){ case (chunk, postag, token, offset) =>
-    new ChunkedToken(chunk, postag, token, offset)
+    new ChunkedToken(chunk, postag, token, offset) 
   }
 
   val freebaseEntityBijection = Bijection.build[
@@ -84,7 +83,7 @@ object Chill {
 
   def createInjection(): Injection[AnyRef, Array[Byte]] = {
     def myRegistrations(kryo: Kryo) = kryo
-      .forClassViaBijectionDefault(intervalBijection)
+      .forClassViaBijectionDefault2(intervalBijection)
       .forClassViaBijection(freebaseEntityBijection)
       .forClassViaBijection(freebaseTypeBijection)
       .forClassViaBijection(reverbExtractionBijection)
@@ -107,7 +106,14 @@ object Chill {
 }
 
 class RicherKryo(k: Kryo) {
-  def forClassViaBijectionDefault[A, B](bij: Bijection[A, B])(implicit acmf: ClassManifest[A], bcmf: ClassManifest[B]): Kryo = {
+  def forClassViaBijection[A, B](bij: Bijection[A, B])(implicit acmf: ClassManifest[A], bcmf: ClassManifest[B]): Kryo = {
+    implicit def implicitBij = bij
+    val kserb = k.getSerializer(bcmf.erasure).asInstanceOf[KSerializer[B]]
+    k.register(acmf.erasure, KryoSerializer.viaBijection[A, B](kserb))
+    k
+  }
+
+  def forClassViaBijectionDefault2[A, B](bij: Bijection[A, B])(implicit acmf: ClassManifest[A], bcmf: ClassManifest[B]): Kryo = {
     implicit def implicitBij = bij
     val kserb = k.getSerializer(bcmf.erasure).asInstanceOf[KSerializer[B]]
     k.addDefaultSerializer(acmf.erasure, KryoSerializer.viaBijection[A, B](kserb))
