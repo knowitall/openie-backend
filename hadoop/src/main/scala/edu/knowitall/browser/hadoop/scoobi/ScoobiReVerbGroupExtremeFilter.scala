@@ -65,11 +65,13 @@ object ScoobiReVerbGroupExtremeFilter extends ScoobiApp {
   private def instanceFilterCondition(confThreshold: Double)(inst: Instance[ReVerbExtraction]): Boolean = {
     def definiteNoun(tokens: Seq[ChunkedToken]): Boolean = {
       var tokensLeft = tokens
-      while (!tokens.isEmpty) {
-        tokensLeft = tokens.dropWhile(_.postag != "DT")
-        if (tokensLeft.head.postag == "NN" || tokensLeft.head.postag == "NNP") {
+      while (!tokensLeft.isEmpty) {
+        tokensLeft = tokensLeft.dropWhile(_.postag != "DT")
+        if (!tokensLeft.isEmpty && (tokensLeft.head.postag == "NN" || tokensLeft.head.postag == "NNP")) {
           return true
         }
+
+        tokensLeft = tokensLeft.drop(1)
       }
 
       return false
