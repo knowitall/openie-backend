@@ -83,6 +83,9 @@ object ScoobiReVerbGroupExtremeFilter extends ScoobiApp {
       !(inst.extraction.relTokens.size == 1 && inst.extraction.relTokens.exists(token => relationBlacklist(MorphaStemmer.lemmatize(token.string)))) &&
       !(inst.extraction.arg1Tokens.exists(token => argumentBlacklist(MorphaStemmer.lemmatize(token.string)))) &&
       !(inst.extraction.arg2Tokens.exists(token => argumentBlacklist(MorphaStemmer.lemmatize(token.string)))) &&
+      !inst.extraction.arg1Tokens.exists(token => Postagger.pronouns.contains(token.string)) &&
+      !inst.extraction.arg2Tokens.exists(token => Postagger.pronouns.contains(token.string)) &&
+      !inst.extraction.relTokens.exists(token => Postagger.pronouns.contains(token.string)) &&
       !definiteNoun(inst.extraction.arg1Tokens) &&
       !definiteNoun(inst.extraction.arg2Tokens)
   }
