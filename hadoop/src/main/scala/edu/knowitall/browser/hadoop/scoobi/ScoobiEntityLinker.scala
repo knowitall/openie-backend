@@ -21,6 +21,13 @@ import edu.washington.cs.knowitall.nlp.extraction.ChunkedArgumentExtraction
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedExtraction
 import scopt.OptionParser
 import edu.knowitall.openie.models.util.TaggedStemmer
+import com.nicta.scoobi.io.text.TextInput
+import com.nicta.scoobi.io.text.TextOutput
+import com.nicta.scoobi.io.text.TextSource
+import com.hadoop.mapreduce.LzoTextInputFormat
+import edu.knowitall.tool.postag.PostaggedToken
+import edu.knowitall.browser.entity.util.HeadPhraseFinder
+import edu.knowitall.browser.entity.CrosswikisCandidateFinder
 
 /**
   * A mapper job that
@@ -42,9 +49,10 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
   private var arg2sLinked = 0
   private var totalGroups = 0
 
-  def getEntity(el: EntityLinker, arg: String, head: ReVerbExtraction, sources: Set[String]): Option[EntityLink] = {
+  def getEntity(el: EntityLinker, arg: Seq[PostaggedToken], sources: Set[String]): Option[EntityLink] = {
     if (arg.length < min_arg_length) None
-    val tryLink = el.getBestEntity(arg, sources.toSeq)
+    val headPhrase = HeadPhraseFinder.getHeadPhrase(arg, el.candidateFinder)
+    val tryLink = el.getBestEntity(headPhrase, sources.toSeq)
     if (tryLink == null) None else Some(tryLink)
   }
 
@@ -56,13 +64,6 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
   }
 
   def linkEntities(reuseLinks: Boolean)(group: ExtractionGroup[ReVerbExtraction]): ExtractionGroup[ReVerbExtraction] = {
-    // a hack for the thread problem
-    if (groupsProcessed == 0) {
-      val keys = Thread.getAllStackTraces.keySet
-      System.err.println("Num threads running: " + keys.size)
-      keys.foreach { thread => System.err.println("%s, %s, %s".format(thread.getId, thread.getName, thread.getPriority)) }
-    }
-
     groupsProcessed += 1
 
     val extrs = group.instances.map(_.extraction)
@@ -76,22 +77,20 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
     val (arg1Entity, arg1Types) = if (reuseLinks && group.arg1.entity.isDefined) {
       (group.arg1.entity, group.arg1.types)
     } else {
-      val entity = getEntity(randomLinker, head.arg1Head, head, sources) match {
+      val entity = getEntity(randomLinker, head.arg1Tokens, sources) match {
         case Some(rawEntity) => { arg1sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
-      //if (group.arg1.entity.isDefined) require(group.arg1.entity.equals(entity._1))
       entity
     }
 
     val (arg2Entity, arg2Types) = if (reuseLinks && group.arg2.entity.isDefined) {
       (group.arg2.entity, group.arg2.types)
     } else {
-      val entity = getEntity(randomLinker, head.arg2Head, head, sources) match {
+      val entity = getEntity(randomLinker, head.arg2Tokens, sources) match {
         case Some(rawEntity) => { arg2sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
-      //if (group.arg2.entity.isDefined) require(group.arg2.entity.equals(entity._1))
       entity
     }
 
@@ -137,7 +136,9 @@ object ScoobiEntityLinker extends ScoobiApp {
   def getEntityLinker: ScoobiEntityLinker = getEntityLinker(4)
 
   def getEntityLinker(num: Int): ScoobiEntityLinker = {
-    val el = getScratch(num).map(index => new EntityLinker(index)) // java doesn't have Option
+    val el = getScratch(num).map(index => {
+      new EntityLinker(new File(index))
+    }) // java doesn't have Option
     new ScoobiEntityLinker(el, TaggedStemmer.instance)
   }
 
@@ -213,7 +214,10 @@ object ScoobiEntityLinker extends ScoobiApp {
     }
 
     if (parser.parse(args)) {
-      val lines: DList[String] = TextInput.fromTextFile(inputPath)
+      val lines: DList[String] = TextInput.fromTextSource(
+        new TextSource(
+          Seq(inputPath),
+          inputFormat = classOf[LzoTextInputFormat]))
       val linkedGroups: DList[String] = linkGroups(lines, minFreq, maxFreq, reportInterval, skipLinking)
 
       persist(TextOutput.toTextFile(linkedGroups, outputPath + "/"));

@@ -96,7 +96,7 @@ import FbTypeLookupGenerator.tabRegex
   }
 
   def loadEnumFile(enumFile: File): SortedMap[Int, String] = {
-    System.err.println("Loading type enumeration...")
+    System.err.println("Loading type enumeration: " + enumFile)
     using(Source.fromFile(enumFile)) { source =>
       val elements = source.getLines.flatMap { line =>
         tabRegex.split(line) match {

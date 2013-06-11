@@ -1,16 +1,14 @@
 package edu.knowitall.browser.hadoop.scoobi
 
 import scala.Option.option2Iterable
-
 import com.nicta.scoobi.Scoobi.DList
 import com.nicta.scoobi.Scoobi.ScoobiApp
 import com.nicta.scoobi.Scoobi.StringFmt
-import com.nicta.scoobi.Scoobi.TextInput
-import com.nicta.scoobi.Scoobi.TextOutput
 import com.nicta.scoobi.Scoobi.persist
-
 import edu.knowitall.openie.models.ReVerbExtractionGroup
 import scopt.OptionParser
+import com.nicta.scoobi.io.text.TextOutput
+import com.nicta.scoobi.io.text.TextInput
 
 /**
   * A mapper job that takes tab-delimited ReVerbExtractions as input, and outputs the mapping

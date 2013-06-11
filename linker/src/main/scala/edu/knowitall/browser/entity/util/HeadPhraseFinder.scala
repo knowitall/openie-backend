@@ -2,9 +2,10 @@ package edu.knowitall.browser.entity.util
 
 import edu.knowitall.browser.util.CrosswikisHandler
 import edu.knowitall.tool.postag.PostaggedToken
+import edu.knowitall.browser.entity.CandidateFinder
 
 object HeadPhraseFinder {
-  def getHeadPhrase(postagTokens: Seq[PostaggedToken], cwHandler: CrosswikisHandler): String = {
+  def getHeadPhrase(postagTokens: Seq[PostaggedToken], candidateFinder: CandidateFinder): String = {
     var headPhrase = postagTokens
 
     // Strip "(DT | CD | JJ | RBS) of" from the beginning.
@@ -50,7 +51,8 @@ object HeadPhraseFinder {
     // Check if the phrase is in Crosswikis, stripping off the leading word until one is found. If
     // no phrase is found, return headPhrase.
     var dropIndex = 0
-    while (headPhrase.length > dropIndex && !cwHandler.hasAnchor(headPhrase.drop(dropIndex).map(_.string).mkString(" "))) {
+    while (headPhrase.length > dropIndex
+        && !candidateFinder.hasCandidates(headPhrase.drop(dropIndex).map(_.string).mkString(" "))) {
       dropIndex += 1
     }
     if (dropIndex != headPhrase.length) {

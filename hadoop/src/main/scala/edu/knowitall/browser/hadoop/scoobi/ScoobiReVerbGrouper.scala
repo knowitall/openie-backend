@@ -17,6 +17,10 @@ import edu.knowitall.browser.entity.EntityLinker
 import edu.knowitall.browser.entity.Pair
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedExtraction
 import edu.knowitall.openie.models.util.TaggedStemmer
+import com.nicta.scoobi.io.text.TextOutput
+import com.nicta.scoobi.io.text.TextInput
+import com.nicta.scoobi.io.text.TextSource
+import com.hadoop.mapreduce.LzoTextInputFormat
 
 /**
   * A mapper + reducer job that
@@ -31,6 +35,8 @@ class ScoobiReVerbGrouper(val stemmer: TaggedStemmer, val corpus: String) {
 
   private var largestGroup = 0
 
+  private final val MAX_GROUP_SIZE = 500000
+
   def getKeyValuePair(line: String): Option[(String, String)] = try {
 
     extrsProcessed += 1
@@ -41,8 +47,12 @@ class ScoobiReVerbGrouper(val stemmer: TaggedStemmer, val corpus: String) {
 
     extrOpt match {
       case Some(extr) => {
-        val key = extr.indexGroupingKeyString
-        Some((key, line))
+        val key = extr.indexGroupingKey
+        val keyString = "%s__%s__%s".format(key._1, key._2, key._3)
+
+        // don't output if part of the key is empty
+        if (key.productIterator.exists(_.asInstanceOf[String].isEmpty)) None
+        else Some((keyString, line))
       }
       case None => None
     }
@@ -77,17 +87,20 @@ class ScoobiReVerbGrouper(val stemmer: TaggedStemmer, val corpus: String) {
 
     if (instances.size > largestGroup) largestGroup = instances.size
 
-    val newGroup = new ExtractionGroup(
-      normTuple._1,
-      normTuple._2,
-      normTuple._3,
-      arg1Entity,
-      arg2Entity,
-      Set.empty[FreeBaseType],
-      Set.empty[FreeBaseType],
-      instances)
+    if (instances.size > MAX_GROUP_SIZE) None
+    else {
+      val newGroup = new ExtractionGroup(
+        normTuple._1,
+        normTuple._2,
+        normTuple._3,
+        arg1Entity,
+        arg2Entity,
+        Set.empty[FreeBaseType],
+        Set.empty[FreeBaseType],
+        instances)
 
-    Some(newGroup)
+      Some(newGroup)
+    }
   } catch {
     case e: Exception => {System.err.println("empty list!"); e.printStackTrace; None }
   }
@@ -121,7 +134,7 @@ object ScoobiReVerbGrouper extends ScoobiApp {
     val (inputPath, outputPath, corpus) = (args(0), args(1), args(2))
 
     // serialized ReVerbExtractions
-    val extrs: DList[String] = fromTextFile(inputPath)
+    val extrs: DList[String] = TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
 
     val groups = groupExtractions(extrs, corpus)
 

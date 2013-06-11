@@ -21,6 +21,11 @@ import scopt.OptionParser
 import scala.collection.mutable
 import scala.io.Source
 import edu.knowitall.openie.models.serialize.StringSerializer
+import com.nicta.scoobi.io.text.TextInput
+import com.nicta.scoobi.io.text.TextInput
+import com.nicta.scoobi.io.text.TextOutput
+import com.nicta.scoobi.io.text.TextSource
+import com.hadoop.mapreduce.LzoTextInputFormat
 
 case class TyperSettings(
   val argField: ArgField, // which argument field? (arg1 or arg2)
@@ -323,7 +328,7 @@ object UnlinkableEntityTyper extends ScoobiApp {
 
   import edu.knowitall.browser.hadoop.util.RegWrapper
 
-  val tabSplit = "\t".r
+  lazy val tabSplit = "\t".r
 
   val minArgLength = 4
 
@@ -388,7 +393,10 @@ object UnlinkableEntityTyper extends ScoobiApp {
 
     val typer = new UnlinkableEntityTyper(typerSettings, serializer)
 
-    val input: DList[String] = TextInput.fromTextFile(inputPath)
+    val input: DList[String] = TextInput.fromTextSource(
+        new TextSource(
+          Seq(inputPath),
+          inputFormat = classOf[LzoTextInputFormat]))
 
     val finalResult: DList[String] = {
       if (onlyPhaseOne) {

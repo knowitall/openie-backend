@@ -1,7 +1,6 @@
 package edu.knowitall.browser.hadoop.scoobi
 
 import com.nicta.scoobi.Scoobi._
-
 import edu.knowitall.common.Timing
 import edu.knowitall.collection.immutable.Interval
 import edu.knowitall.openie.models.ReVerbExtraction
@@ -10,24 +9,24 @@ import edu.knowitall.openie.models.FreeBaseType
 import edu.knowitall.openie.models.Instance
 import edu.knowitall.openie.models.ExtractionGroup
 import edu.knowitall.openie.models.ReVerbExtractionGroup
-
 import edu.washington.cs.knowitall.extractor.ReVerbExtractor
 import edu.washington.cs.knowitall.nlp.ChunkedSentence
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedBinaryExtraction
-
 import edu.knowitall.tool.chunk.OpenNlpChunker
 import edu.knowitall.tool.chunk.ChunkedToken
-
 import scopt.OptionParser
-
 import scala.collection.JavaConversions._
+import com.nicta.scoobi.io.text.TextOutput
+import com.nicta.scoobi.io.text.TextInput
+import com.nicta.scoobi.io.text.TextSource
+import com.hadoop.mapreduce.LzoTextInputFormat
 
 object ScoobiReVerb extends ScoobiApp {
 
   implicit def rangeToInterval(range: edu.washington.cs.knowitall.commonlib.Range): Interval = Interval.closed(range.getStart, range.getLastIndex)
 
-  private val tabSplit = "\t".r
-  private val wsSplit = "\\s".r
+  private lazy val tabSplit = "\t".r
+  private lazy val wsSplit = "\\s".r
 
   lazy val extractor = new ReVerbExtractor
 
@@ -43,7 +42,7 @@ object ScoobiReVerb extends ScoobiApp {
     if (!parser.parse(args)) return
 
     // serialized ReVerbExtractions
-    val lines: DList[String] = TextInput.fromTextFile(inputPath)
+    val lines: DList[String] = TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
 
     def parseChunkedSentence(strs: Seq[String], poss: Seq[String], chks: Seq[String]): Option[ChunkedSentence] = {
       try {

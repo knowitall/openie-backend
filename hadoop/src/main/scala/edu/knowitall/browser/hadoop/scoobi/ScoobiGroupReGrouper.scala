@@ -1,25 +1,25 @@
 package edu.knowitall.browser.hadoop.scoobi
 
 import scala.collection.JavaConversions._
-
 import com.nicta.scoobi.Scoobi._
-
 import edu.knowitall.openie.models.ExtractionArgument
 import edu.knowitall.openie.models.ExtractionRelation
 import edu.knowitall.openie.models.ReVerbExtraction
 import edu.knowitall.openie.models.ExtractionGroup
 import edu.knowitall.openie.models.Instance
 import edu.knowitall.openie.models.ReVerbExtractionGroup
-
 import edu.washington.cs.knowitall.commonlib.Range
 import edu.knowitall.collection.immutable.Interval
-
 import edu.washington.cs.knowitall.extractor.conf.ReVerbOpenNlpConfFunction
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedExtraction
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedArgumentExtraction
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedBinaryExtraction
 import edu.washington.cs.knowitall.nlp.ChunkedSentence
 import edu.knowitall.tool.chunk.ChunkedToken
+import com.nicta.scoobi.io.text.TextOutput
+import com.nicta.scoobi.io.text.TextInput
+import com.nicta.scoobi.io.text.TextSource
+import com.hadoop.mapreduce.LzoTextInputFormat
 
 object GroupReGrouperStaticVars {
   val confLocal = new ThreadLocal[ReVerbOpenNlpConfFunction]() {
@@ -39,7 +39,7 @@ object ScoobiGroupReGrouper extends ScoobiApp {
     val (inputPath, outputPath) = (args(0), args(1))
 
     // serialized ReVerbExtractions
-    val groups: DList[String] = fromTextFile(inputPath)
+    val groups: DList[String] = TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
 
     val reGroups = groups.map { line =>
       val x = groupMapProcessor(line).get

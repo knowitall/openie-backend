@@ -1,22 +1,19 @@
 package edu.knowitall.browser.hadoop.scoobi
 
 import com.nicta.scoobi.Scoobi._
-
 import java.io.File
 import java.io.FileWriter
-
 import scala.util.Random
 import scala.collection.JavaConversions._
 import scala.collection.mutable
-
 import edu.knowitall.common.Timing._
 import edu.knowitall.openie.models.ReVerbExtraction
 import edu.knowitall.openie.models.ExtractionGroup
 import edu.knowitall.openie.models.ReVerbExtractionGroup
 import edu.knowitall.browser.entity.EntityLinker
 import edu.knowitall.browser.entity.Pair
-
 import edu.washington.cs.knowitall.nlp.extraction.ChunkedExtraction
+import com.nicta.scoobi.io.text.TextOutput
 
 object ScoobiGroupToAnswer extends ScoobiApp {
   def run() = {
