@@ -24,7 +24,7 @@ object Chill {
     ChunkedToken,
     (String, String, String, Int)
   ](ChunkedToken.unapply(_).get){ case (chunk, postag, token, offset) =>
-    new ChunkedToken(chunk, postag, token, offset) 
+    new ChunkedToken(chunk, postag, token, offset)
   }
 
   val freebaseEntityBijection = Bijection.build[
@@ -65,7 +65,7 @@ object Chill {
    *
    * This should be available in the next release of Chill.
    */
-  class KryoInjectionInstance(kryo: Kryo, output: Output) extends Injection[AnyRef, Array[Byte]] {
+  class KryoBijectionInstance(kryo: Kryo, output: Output) extends Bijection[AnyRef, Array[Byte]] {
     private val input: Input = new Input
 
     def apply(obj: AnyRef): Array[Byte] = {
@@ -74,14 +74,14 @@ object Chill {
       output.toBytes
     }
 
-    def invert(b: Array[Byte]): Option[AnyRef] = {
+    override def invert(b: Array[Byte]): AnyRef = {
       input.setBuffer(b)
-      allCatch.opt(kryo.readClassAndObject(input))
+      kryo.readClassAndObject(input)
     }
   }
 
 
-  def createInjection(): Injection[AnyRef, Array[Byte]] = {
+  def createBijection(): Bijection[AnyRef, Array[Byte]] = {
     def myRegistrations(kryo: Kryo) = kryo
       .forClassViaBijectionDefault2(intervalBijection)
       .forClassViaBijection(freebaseEntityBijection)
@@ -101,7 +101,7 @@ object Chill {
       val max: Int = 1 << 24
       new Output(init, max)
     }
-    new KryoInjectionInstance(kryo, output)
+    new KryoBijectionInstance(kryo, output)
   }
 }
 

@@ -1,6 +1,6 @@
 package edu.knowitall.browser.solr
 
-import com.twitter.bijection.Injection
+import com.twitter.bijection.Bijection
 import java.io.{ByteArrayOutputStream, ObjectOutputStream}
 import java.net.{MalformedURLException, URL}
 import scala.concurrent._
@@ -36,9 +36,9 @@ abstract class SolrLoader {
 class SolrJLoader(urlString: String) extends SolrLoader {
   val solr = new HttpSolrServer(urlString)
   val id = new AtomicInteger(0)
-  val kryos = new ThreadLocal[Injection[AnyRef, Array[Byte]]] {
+  val kryos = new ThreadLocal[Bijection[AnyRef, Array[Byte]]] {
     override def initialValue() = {
-      Chill.createInjection()
+      Chill.createBijection()
     }
   }
 
@@ -94,7 +94,7 @@ class SolrJLoader(urlString: String) extends SolrLoader {
 class SolrJsonLoader(solrUrl: String) extends SolrLoader {
   import dispatch._
 
-  val kryo = Chill.createInjection()
+  val kryo = Chill.createBijection()
 
   val b64 = new BASE64Encoder()
   val http = new Http()
