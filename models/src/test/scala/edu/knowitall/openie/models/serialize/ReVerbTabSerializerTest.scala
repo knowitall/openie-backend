@@ -1,10 +1,12 @@
-package edu.knowitall.openie.models
+package edu.knowitall.openie.models.serialize
 
 import scala.Option.option2Iterable
 import scala.io.Source
 import org.junit.Assert.assertEquals
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
+import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.Resources
 import org.scalatest.junit.JUnitRunner
 
 

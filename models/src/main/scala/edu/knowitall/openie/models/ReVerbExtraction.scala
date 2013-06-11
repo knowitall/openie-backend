@@ -32,10 +32,6 @@ case class ReVerbExtraction(
 
   override def toString: String = ReVerbExtraction.serializeToString(this)
 
-  private def writeReplace(): java.lang.Object = {
-    new ReVerbExtractionSerializationProxy(this)
-  }
-
   override def arg1Tokens = sentenceTokens(arg1Interval)
 
   override def relTokens = sentenceTokens(relInterval)
@@ -194,58 +190,5 @@ object ReVerbExtraction extends TabSerializer[ReVerbExtraction] {
       }
       case _ => { System.err.println("Couldn't parse interval:" + str); None }
     }
-  }
-}
-
-@SerialVersionUID(1L)
-private class ReVerbExtractionSerializationProxy(
-  @transient var sentenceTokens: IndexedSeq[ChunkedToken],  // after seeing https://issues.scala-lang.org/browse/SI-5697, lets avoid serializing any scala objects.
-  var arg1Interval: Interval,
-  var relInterval:  Interval,
-  var arg2Interval: Interval,
-  var sourceUrl: String) extends scala.Serializable {
-
-  def this() = this(IndexedSeq.empty, Interval.empty, Interval.empty, Interval.empty, "")
-
-  def this(reVerbExtr: ReVerbExtraction) =
-    this(reVerbExtr.sentenceTokens.toIndexedSeq, reVerbExtr.arg1Interval, reVerbExtr.relInterval, reVerbExtr.arg2Interval, reVerbExtr.sourceUrl)
-
-  private def writeObject(oos: ObjectOutputStream): Unit = {
-
-    oos.defaultWriteObject()
-
-    // now serialize the chunkedTokens as a list of Tokens, then PosTags, then ChunkTags
-    val numTokens = sentenceTokens.length
-    val tokens = sentenceTokens.map(_.string)
-    val posTags = sentenceTokens.map(_.postag)
-    val chunkTags = sentenceTokens.map(_.chunk)
-
-    // Write out number of sentence tokens
-    oos.writeInt(numTokens)
-    // write out sentence tokens
-    tokens.foreach(token => oos.writeObject(token))
-    // write out sentence pos tags
-    posTags.foreach(posTag => oos.writeObject(posTag))
-    // write out sentence chunk tags
-    chunkTags.foreach(chkTag => oos.writeObject(chkTag))
-  }
-
-  private def readResolve(): java.lang.Object = {
-    new ReVerbExtraction(this.sentenceTokens, this.arg1Interval, this.relInterval, this.arg2Interval, this.sourceUrl)
-  }
-
-  private def readObject(ois: ObjectInputStream): Unit = {
-
-    ois.defaultReadObject()
-
-    // read in number of sentence tokens
-    val numTokens = ois.readInt()
-    // read in tokens
-    val tokens = for (_ <- 1 to numTokens) yield ois.readObject.asInstanceOf[String]
-    // read in pos tags
-    val posTags = for (_ <- 1 to numTokens) yield ois.readObject.asInstanceOf[String]
-    // read in chunk tags
-    val chunkTags = for (_ <- 1 to numTokens) yield ois.readObject.asInstanceOf[String]
-    this.sentenceTokens = ReVerbExtraction.chunkedTokensFromLayers(tokens, posTags, chunkTags).toIndexedSeq
   }
 }
