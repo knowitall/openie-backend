@@ -24,18 +24,11 @@ class ReVerbExtractionGroupTest extends FlatSpec {
     extrSet.foreach(l => assert(extrSet.contains(l)))
   }
 
-  it should "round-trip through Java serialization" in {
-    val extrs = getExtrsHelper
-    extrs.foreach { e =>
-      assert(e === (ReVerbExtractionGroup.deserializeFromString(ReVerbExtractionGroup.serializeToString(e)).getOrElse(fail())))
-    }
-  }
-
   it should "round-trip through Chill serialization" in {
-    val kryo = Chill.createInjection()
+    val kryo = Chill.createBijection()
     val extrs = getExtrsHelper
     extrs.foreach { e =>
-      assert(e === kryo.invert(kryo(e)).get)
+      assert(e === kryo.invert(kryo(e)))
     }
   }
 }
