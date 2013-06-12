@@ -64,7 +64,7 @@ class UnlinkableEntityTyper[T <: ExtractionTuple](val settings: TyperSettings, v
   import settings._
 
   def getOptReg(regString: String) = time(getOptRegUntimed(regString), Timers.incParseRegCount _)
-  def getOptRegUntimed(regString: String): Option[T] = tupleSerializer.deserializeFromString(regString)
+  def getOptRegUntimed(regString: String): Option[T] = (scala.util.control.Exception.allCatch opt tupleSerializer.deserializeFromString(regString)).flatten
 
   var numRelInfosOutput = 0
   var numRelInfosSkipped = 0
@@ -393,10 +393,7 @@ object UnlinkableEntityTyper extends ScoobiApp {
 
     val typer = new UnlinkableEntityTyper(typerSettings, serializer)
 
-    val input: DList[String] = TextInput.fromTextSource(
-        new TextSource(
-          Seq(inputPath),
-          inputFormat = classOf[LzoTextInputFormat]))
+    val input: DList[String] = TextInput.fromTextFile(inputPath)
 
     val finalResult: DList[String] = {
       if (onlyPhaseOne) {
