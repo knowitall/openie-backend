@@ -3,7 +3,6 @@ package edu.knowitall.browser.hadoop.scoobi
 import com.nicta.scoobi.Scoobi._
 import edu.knowitall.common.Timing
 import edu.knowitall.collection.immutable.Interval
-import edu.knowitall.openie.models.ReVerbExtraction
 import edu.knowitall.openie.models.FreeBaseEntity
 import edu.knowitall.openie.models.FreeBaseType
 import edu.knowitall.openie.models.Instance
@@ -23,6 +22,12 @@ import com.hadoop.mapreduce.LzoTextInputFormat
 import edu.knowitall.tool.parse.graph.DependencyGraph
 import edu.knowitall.tool.chunk.Chunker
 import edu.knowitall.tool.tokenize.Tokenizer
+import edu.knowitall.srlie.SrlExtractor
+import edu.knowitall.chunkedextractor.Relnoun
+import edu.knowitall.tool.stem.MorphaStemmer
+import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.TripleExtraction
+import edu.knowitall.srlie.confidence.SrlConfidenceFunction
 
 object ScoobiOpenIE4 extends ScoobiApp {
 
@@ -31,7 +36,9 @@ object ScoobiOpenIE4 extends ScoobiApp {
   private lazy val tabSplit = "\t".r
   private lazy val wsSplit = "\\s".r
 
-  lazy val extractor = new ReVerbExtractor
+  lazy val relnoun = new Relnoun
+  lazy val srlie = new SrlExtractor
+  lazy val srlieConf = SrlConfidenceFunction.loadDefaultClassifier()
 
   def run(): Unit = {
 
@@ -62,16 +69,21 @@ object ScoobiOpenIE4 extends ScoobiApp {
       }
     }
 
-    def getExtractions(sentence: String, strs: Seq[String], poss: Seq[String], chks: Seq[String], dgraph: DependencyGraph, url: String): Iterable[ReVerbExtraction] = {
+    def getExtractions(sentence: String, strs: Seq[String], poss: Seq[String], chks: Seq[String], dgraph: DependencyGraph, url: String): Iterable[TripleExtraction] = {
       val tokens = Chunker.tokensFrom(chks, poss, Tokenizer.computeOffsets(strs, sentence))
       val relnounExtrs = {
-        val extrs = relnoun(tokens)
-        Nil
+        val extrs = relnoun(tokens map MorphaStemmer.lemmatizePostaggedToken)
+        extrs.map { inst =>
+          new TripleExtraction(0.8, inst.sent.toIndexedSeq, inst.extr.arg1.text, inst.extr.rel.text, inst.extr.arg2.text, inst.extr.arg1.interval, inst.extr.rel.interval, inst.extr.arg2.interval, url)
+        }
       }
 
-      val srlieExtrs {
-        val extrs = srlie(dgraph)
-        Nil
+      val srlieExtrs = {
+        val extrs = srlie(dgraph).flatMap(_.triplize(true))
+        extrs.map { inst =>
+          val conf = srlieConf(inst)
+          new TripleExtraction(conf, tokens.toIndexedSeq, inst.extr.arg1.text, inst.extr.rel.text, inst.extr.arg2s.head.text, inst.extr.arg1.interval, inst.extr.rel.span, inst.extr.arg2s.head.interval, url)
+        }
       }
 
       relnounExtrs ++ srlieExtrs
@@ -83,7 +95,7 @@ object ScoobiOpenIE4 extends ScoobiApp {
       tabSplit.split(line) match {
         case Array(_, url, _, _, sentence, strs, poss, chks, dependencies, _*) => {
           val rvExtrs = getExtractions(sentence, split(strs), split(poss), split(chks), DependencyGraph.deserialize(dependencies), url)
-          rvExtrs map ReVerbExtraction.serializeToString
+          rvExtrs map TripleExtraction.serializeToString
         }
         case _ => {
           System.err.println("Couldn't parse line: %s".format(line))
