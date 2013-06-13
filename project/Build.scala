@@ -88,6 +88,7 @@ object NlpToolsBuild extends Build {
 
   lazy val hadoop = Project(id = "openie-hadoop", base = file("hadoop"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq("edu.washington.cs.knowitall" % "reverb-core" % "1.4.3" excludeAll(ExclusionRule(organization = "jwnl")),
+      "edu.washington.cs.knowitall.srlie" % "openie-srl_2.10" % "1.0.0-RC1",
       nlptoolsPackage %% "nlptools-chunk-opennlp" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       "org.apache.hadoop" % "hadoop-lzo" % "0.4.13",
