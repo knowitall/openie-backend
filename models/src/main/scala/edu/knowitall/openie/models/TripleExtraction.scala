@@ -17,25 +17,31 @@ import edu.knowitall.tool.tokenize.Token
 import edu.knowitall.common.HashCodeHelper
 import edu.knowitall.openie.models.util.TaggedStemmer
 import sjson.json.DefaultProtocol
+import edu.knowitall.tool.tokenize.Tokenizer
+import edu.knowitall.tool.chunk.Chunker
+import scala.util.matching.Regex
 
 @SerialVersionUID(7720340660222065636L)
-case class ReVerbExtraction(
-  val sentenceTokens: IndexedSeq[ChunkedToken],
+case class TripleExtraction(
+  val confidence: Double,
+  val corpus: String,
+  val sentenceTokens: Seq[ChunkedToken],
+  override val arg1Text: String,
+  override val relText: String,
+  override val arg2Text: String,
   val arg1Interval: Interval,
   val relInterval:  Interval,
   val arg2Interval: Interval,
   val sourceUrl: String) extends Extraction {
 
-  import ReVerbExtraction.{strippedDeterminers, modifierTagsToStrip, modifiersToKeep}
+  import TripleExtraction.{strippedDeterminers, modifierTagsToStrip, modifiersToKeep}
 
   override def sentenceText = sentenceTokens.map(_.string).mkString(" ")
 
-  override def toString: String = ReVerbExtraction.serializeToString(this)
+  override def toString: String = TripleExtraction.serializeToString(this)
 
   override def arg1Tokens = sentenceTokens(arg1Interval)
-
   override def relTokens = sentenceTokens(relInterval)
-
   override def arg2Tokens = sentenceTokens(arg2Interval)
 
   def normTokens(interval: Interval) = sentenceTokens(interval) filter indexTokenFilter map { token =>
@@ -104,10 +110,10 @@ case class ReVerbExtraction(
   }
 }
 
-object ReVerbExtraction extends TabSerializer[ReVerbExtraction] {
+object TripleExtraction extends TabSerializer[TripleExtraction] {
 
-  private val tabSplitPattern = "\t".r
-  private val spaceSplitPattern = "\\s".r
+  private val tabPattern = "\t".r
+  private val spacePattern = "\\s".r
   private val numExtractorPattern = "([0-9]+)".r
 
   val strippedDeterminers = Set("a", "an", "the", "these", "those", "this", "that", "which", "what")
@@ -130,65 +136,66 @@ object ReVerbExtraction extends TabSerializer[ReVerbExtraction] {
 
   def tokensForInterval(interval: Interval, tokens: IndexedSeq[ChunkedToken]): Seq[ChunkedToken] = interval.map(tokens(_))
 
-  override protected val tabDelimitedFormatSpec: List[(String, ReVerbExtraction => String)] = {
-    type RVE = ReVerbExtraction
+  override protected val tabDelimitedFormatSpec: List[(String, TripleExtraction => String)] = {
+    type RVE = TripleExtraction
     List(
-      ("arg1 range", (e: RVE) => e.arg1Interval.toString),
-      ("rel range", (e: RVE) => e.relInterval.toString),
-      ("arg2 range", (e: RVE) => e.arg2Interval.toString),
+      ("confidence", (e: RVE) => e.confidence.toString),
+      ("corpus", (e: RVE) => e.corpus.toString),
+      ("arg1 text", (e: RVE) => e.arg1Text.toString),
+      ("rel text", (e: RVE) => e.relText.toString),
+      ("arg2 text", (e: RVE) => e.arg2Text.toString),
+      ("arg1 interval", (e: RVE) => e.arg1Interval.toString),
+      ("rel interval", (e: RVE) => e.relInterval.toString),
+      ("arg2 interval", (e: RVE) => e.arg2Interval.toString),
       ("sentence tokens", (e: RVE) => e.sentenceTokens.map(_.string).mkString(" ")),
       ("sentence postags", (e: RVE) => e.sentenceTokens.map(_.postag).mkString(" ")),
       ("sentence chunktags", (e: RVE) => e.sentenceTokens.map(_.chunk).mkString(" ")),
       ("source url", (e: RVE) => e.sourceUrl))
   }
 
-  override def deserializeFromTokens(tokens: Seq[String]): Option[ReVerbExtraction] = {
-
-    val split = tokens.take(tabDelimitedFormatSpec.length).toIndexedSeq
-
-    def failure = { System.err.println("Unable to parse tab-delimited ReVerbExtraction from tokens: " + split); None }
-
-    if (split.size != tabDelimitedFormatSpec.length) {
-      failure
-    } else {
-      try {
-        val argIntervals = split.take(3).flatMap(intervalFromString(_))
-        if (argIntervals.size != 3) {
-          failure
-        } else {
-          // here split.length is guaranteed to be right, and fieldRanges.length is guaranteed to be 3
-          val sentLayers = split.drop(3).take(3).map(spaceSplitPattern.split(_))
-          val sentenceTokens = chunkedTokensFromLayers(sentLayers(0), sentLayers(1), sentLayers(2))
-          val sourceUrl = split(6)
-          val extr = new ReVerbExtraction(sentenceTokens.toIndexedSeq, argIntervals(0), argIntervals(1), argIntervals(2), sourceUrl)
-          Some(extr)
-        }
-      } catch {
-        case e: Exception => {
-          System.err.println("Exception parsing subsequent ReVerbExtraction")
-          e.printStackTrace
-          failure
-        }
-      }
+  val emptyRegex = new Regex("\\{\\}")
+  val singletonRegex = new Regex("\\{([+-]?\\d+)\\}")
+  val openIntervalRegex = new Regex("\\[([+-]?\\d+), ([+-]?\\d+)\\)")
+  val closedIntervalRegex = new Regex("\\[([+-]?\\d+), ([+-]?\\d+)\\]")
+  def deserializeInterval(pickled: String) = {
+    pickled match {
+      case emptyRegex() => Interval.empty
+      case singletonRegex(value) => Interval.singleton(value.toInt)
+      case openIntervalRegex(a, b) => Interval.open(a.toInt, b.toInt)
+      case closedIntervalRegex(a, b) => Interval.closed(a.toInt, b.toInt)
     }
   }
 
-  private def intervalFromString(str: String): Option[Interval] = {
+  override def deserializeFromTokens(tokens: Seq[String]): Option[TripleExtraction] = {
 
-    val endOpen = str.endsWith(")")
+    val split = tokens.take(tabDelimitedFormatSpec.length)
 
-    val matches = for (s <- numExtractorPattern.findAllIn(str)) yield s
-    matches toSeq match {
-      case Seq(num1, num2) => {
-        val start = num1.toInt
-        val end = num2.toInt
-        if (endOpen) Some(Interval.open(start, end))
-        else Some(Interval.closed(start, end))
+    def onFailure() = System.err.println("Unable to parse tab-delimited TripleExtraction from tokens: " + split)
+
+    if (split.size != tabDelimitedFormatSpec.length) {
+      onFailure()
+      None
+    } else {
+      try {
+        val Seq(confidence, corpus,
+            arg1Text, relText, arg2Text,
+            arg1Interval, relInterval, arg2Interval,
+            sentenceStrings, sentencePostags, sentenceChunks, sourceUrl) = split
+
+        val tokens = Tokenizer.computeOffsets(spacePattern.split(sentenceStrings), sentenceStrings)
+        val sentenceTokens = Chunker.tokensFrom(spacePattern.split(sentenceChunks), spacePattern.split(sentencePostags), tokens)
+        val extr = new TripleExtraction(confidence.toDouble, corpus, sentenceTokens,
+            arg1Text, relText, arg2Text,
+            deserializeInterval(arg1Interval), deserializeInterval(relInterval), deserializeInterval(arg2Interval),
+            sourceUrl)
+        Some(extr)
+      } catch {
+        case e: Exception => {
+          e.printStackTrace
+          onFailure()
+          None
+        }
       }
-      case Seq(num) => {
-        Some(Interval.singleton(num.toInt))
-      }
-      case _ => { System.err.println("Couldn't parse interval:" + str); None }
     }
   }
 }

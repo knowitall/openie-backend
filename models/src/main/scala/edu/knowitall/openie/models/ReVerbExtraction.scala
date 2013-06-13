@@ -19,25 +19,27 @@ import edu.knowitall.openie.models.util.TaggedStemmer
 import sjson.json.DefaultProtocol
 
 @SerialVersionUID(7720340660222065636L)
-case class TripleExtraction(
-  val confidence: Double,
+case class ReVerbExtraction(
   val sentenceTokens: IndexedSeq[ChunkedToken],
-  override val arg1Text: String,
-  override val relText: String,
-  override val arg2Text: String,
   val arg1Interval: Interval,
   val relInterval:  Interval,
   val arg2Interval: Interval,
   val sourceUrl: String) extends Extraction {
 
-  import TripleExtraction.{strippedDeterminers, modifierTagsToStrip, modifiersToKeep}
+  import ReVerbExtraction.{strippedDeterminers, modifierTagsToStrip, modifiersToKeep}
 
   override def sentenceText = sentenceTokens.map(_.string).mkString(" ")
 
-  override def toString: String = TripleExtraction.serializeToString(this)
+  override def toString: String = ReVerbExtraction.serializeToString(this)
+
+  private def writeReplace(): java.lang.Object = {
+    new ReVerbExtractionSerializationProxy(this)
+  }
 
   override def arg1Tokens = sentenceTokens(arg1Interval)
+
   override def relTokens = sentenceTokens(relInterval)
+
   override def arg2Tokens = sentenceTokens(arg2Interval)
 
   def normTokens(interval: Interval) = sentenceTokens(interval) filter indexTokenFilter map { token =>
@@ -106,7 +108,7 @@ case class TripleExtraction(
   }
 }
 
-object TripleExtraction extends TabSerializer[TripleExtraction] {
+object ReVerbExtraction extends TabSerializer[ReVerbExtraction] {
 
   private val tabSplitPattern = "\t".r
   private val spaceSplitPattern = "\\s".r
@@ -132,13 +134,9 @@ object TripleExtraction extends TabSerializer[TripleExtraction] {
 
   def tokensForInterval(interval: Interval, tokens: IndexedSeq[ChunkedToken]): Seq[ChunkedToken] = interval.map(tokens(_))
 
-  override protected val tabDelimitedFormatSpec: List[(String, TripleExtraction => String)] = {
-    type RVE = TripleExtraction
+  override protected val tabDelimitedFormatSpec: List[(String, ReVerbExtraction => String)] = {
+    type RVE = ReVerbExtraction
     List(
-      ("confidence", (e: RVE) => e.confidence.toString),
-      ("arg1 string", (e: RVE) => e.arg1Text),
-      ("rel string", (e: RVE) => e.relText),
-      ("arg2 string", (e: RVE) => e.arg2Text),
       ("arg1 range", (e: RVE) => e.arg1Interval.toString),
       ("rel range", (e: RVE) => e.relInterval.toString),
       ("arg2 range", (e: RVE) => e.arg2Interval.toString),
@@ -148,20 +146,16 @@ object TripleExtraction extends TabSerializer[TripleExtraction] {
       ("source url", (e: RVE) => e.sourceUrl))
   }
 
-  override def deserializeFromTokens(tokens: Seq[String]): Option[TripleExtraction] = {
+  override def deserializeFromTokens(tokens: Seq[String]): Option[ReVerbExtraction] = {
 
-    var split = tokens.take(tabDelimitedFormatSpec.length).toIndexedSeq
+    val split = tokens.take(tabDelimitedFormatSpec.length).toIndexedSeq
 
-    def failure = { System.err.println("Unable to parse tab-delimited TripleExtraction from tokens: " + split); None }
+    def failure = { System.err.println("Unable to parse tab-delimited ReVerbExtraction from tokens: " + split); None }
 
     if (split.size != tabDelimitedFormatSpec.length) {
       failure
     } else {
       try {
-        val confidence = split.head.toDouble
-        split = split.drop(1)
-        val argTexts = split.take(3)
-        split = split.drop(3)
         val argIntervals = split.take(3).flatMap(intervalFromString(_))
         if (argIntervals.size != 3) {
           failure
@@ -170,12 +164,12 @@ object TripleExtraction extends TabSerializer[TripleExtraction] {
           val sentLayers = split.drop(3).take(3).map(spaceSplitPattern.split(_))
           val sentenceTokens = chunkedTokensFromLayers(sentLayers(0), sentLayers(1), sentLayers(2))
           val sourceUrl = split(6)
-          val extr = new TripleExtraction(confidence, sentenceTokens.toIndexedSeq, argTexts(0), argTexts(1), argTexts(2), argIntervals(0), argIntervals(1), argIntervals(2), sourceUrl)
+          val extr = new ReVerbExtraction(sentenceTokens.toIndexedSeq, argIntervals(0), argIntervals(1), argIntervals(2), sourceUrl)
           Some(extr)
         }
       } catch {
         case e: Exception => {
-          System.err.println("Exception parsing subsequent TripleExtraction")
+          System.err.println("Exception parsing subsequent ReVerbExtraction")
           e.printStackTrace
           failure
         }
@@ -200,5 +194,58 @@ object TripleExtraction extends TabSerializer[TripleExtraction] {
       }
       case _ => { System.err.println("Couldn't parse interval:" + str); None }
     }
+  }
+}
+
+@SerialVersionUID(1L)
+private class ReVerbExtractionSerializationProxy(
+  @transient var sentenceTokens: IndexedSeq[ChunkedToken],  // after seeing https://issues.scala-lang.org/browse/SI-5697, lets avoid serializing any scala objects.
+  var arg1Interval: Interval,
+  var relInterval:  Interval,
+  var arg2Interval: Interval,
+  var sourceUrl: String) extends scala.Serializable {
+
+  def this() = this(IndexedSeq.empty, Interval.empty, Interval.empty, Interval.empty, "")
+
+  def this(reVerbExtr: ReVerbExtraction) =
+    this(reVerbExtr.sentenceTokens.toIndexedSeq, reVerbExtr.arg1Interval, reVerbExtr.relInterval, reVerbExtr.arg2Interval, reVerbExtr.sourceUrl)
+
+  private def writeObject(oos: ObjectOutputStream): Unit = {
+
+    oos.defaultWriteObject()
+
+    // now serialize the chunkedTokens as a list of Tokens, then PosTags, then ChunkTags
+    val numTokens = sentenceTokens.length
+    val tokens = sentenceTokens.map(_.string)
+    val posTags = sentenceTokens.map(_.postag)
+    val chunkTags = sentenceTokens.map(_.chunk)
+
+    // Write out number of sentence tokens
+    oos.writeInt(numTokens)
+    // write out sentence tokens
+    tokens.foreach(token => oos.writeObject(token))
+    // write out sentence pos tags
+    posTags.foreach(posTag => oos.writeObject(posTag))
+    // write out sentence chunk tags
+    chunkTags.foreach(chkTag => oos.writeObject(chkTag))
+  }
+
+  private def readResolve(): java.lang.Object = {
+    new ReVerbExtraction(this.sentenceTokens, this.arg1Interval, this.relInterval, this.arg2Interval, this.sourceUrl)
+  }
+
+  private def readObject(ois: ObjectInputStream): Unit = {
+
+    ois.defaultReadObject()
+
+    // read in number of sentence tokens
+    val numTokens = ois.readInt()
+    // read in tokens
+    val tokens = for (_ <- 1 to numTokens) yield ois.readObject.asInstanceOf[String]
+    // read in pos tags
+    val posTags = for (_ <- 1 to numTokens) yield ois.readObject.asInstanceOf[String]
+    // read in chunk tags
+    val chunkTags = for (_ <- 1 to numTokens) yield ois.readObject.asInstanceOf[String]
+    this.sentenceTokens = ReVerbExtraction.chunkedTokensFromLayers(tokens, posTags, chunkTags).toIndexedSeq
   }
 }

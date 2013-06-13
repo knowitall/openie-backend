@@ -70,7 +70,7 @@ object ScoobiOpenIE4 extends ScoobiApp {
     }
 
     def getExtractions(sentence: String, strs: Seq[String], poss: Seq[String], chks: Seq[String], dgraph: DependencyGraph, url: String): Iterable[TripleExtraction] = {
-      val tokens = Chunker.tokensFrom(chks, poss, Tokenizer.computeOffsets(strs, sentence))
+      val tokens = Chunker.tokensFrom(chks, poss, Tokenizer.computeOffsets(strs, strs.mkString(" ")))
       val relnounExtrs = {
         val extrs = relnoun(tokens map MorphaStemmer.lemmatizePostaggedToken)
         extrs.map { inst =>
