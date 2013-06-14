@@ -42,17 +42,18 @@ object ScoobiOpenIE4 extends ScoobiApp {
 
   def run(): Unit = {
 
-    var inputPath, outputPath = ""
+    var inputPath, outputPath, corpus = ""
 
     val parser = new OptionParser() {
       arg("inputPath", "hdfs input path, sentences each on a line", { str => inputPath = str })
       arg("outputPath", "hdfs output path, chunked sentences", { str => outputPath = str })
+      arg("corpus", "corpus name", { str => corpus = str })
     }
 
     if (!parser.parse(args)) return
 
     // serialized ReVerbExtractions
-    val lines: DList[String] = TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
+    val lines: DList[String] = TextInput.fromTextFile(inputPath)// TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
 
     def parseChunkedSentence(strs: Seq[String], poss: Seq[String], chks: Seq[String]): Option[ChunkedSentence] = {
       try {
@@ -72,17 +73,35 @@ object ScoobiOpenIE4 extends ScoobiApp {
     def getExtractions(sentence: String, strs: Seq[String], poss: Seq[String], chks: Seq[String], dgraph: DependencyGraph, url: String): Iterable[TripleExtraction] = {
       val tokens = Chunker.tokensFrom(chks, poss, Tokenizer.computeOffsets(strs, strs.mkString(" ")))
       val relnounExtrs = {
-        val extrs = relnoun(tokens map MorphaStemmer.lemmatizePostaggedToken)
-        extrs.map { inst =>
-          new TripleExtraction(0.8, inst.sent.toIndexedSeq, inst.extr.arg1.text, inst.extr.rel.text, inst.extr.arg2.text, inst.extr.arg1.interval, inst.extr.rel.interval, inst.extr.arg2.interval, url)
+        try {
+          val extrs = relnoun(tokens map MorphaStemmer.lemmatizePostaggedToken)
+          extrs.map { inst =>
+            new TripleExtraction(0.8, corpus, inst.sent.toIndexedSeq, inst.extr.arg1.text, inst.extr.rel.text, inst.extr.arg2.text, inst.extr.arg1.tokenInterval, inst.extr.rel.tokenInterval, inst.extr.arg2.tokenInterval, url)
+          }
+        }
+        catch {
+          case e: Exception =>
+            System.err.println("Exception with relnouns on: " + sentence)
+            System.err.println("Exception with relnouns on: " + tokens)
+            e.printStackTrace()
+            Nil
         }
       }
 
       val srlieExtrs = {
-        val extrs = srlie(dgraph).flatMap(_.triplize(true))
-        extrs.map { inst =>
-          val conf = srlieConf(inst)
-          new TripleExtraction(conf, tokens.toIndexedSeq, inst.extr.arg1.text, inst.extr.rel.text, inst.extr.arg2s.head.text, inst.extr.arg1.interval, inst.extr.rel.span, inst.extr.arg2s.head.interval, url)
+        try {
+          val extrs = srlie(dgraph).flatMap(_.triplize(true)).filter(_.extr.arg2s.size == 1)
+          extrs.map { inst =>
+            val conf = srlieConf(inst)
+            new TripleExtraction(conf, corpus, tokens.toIndexedSeq, inst.extr.arg1.text, inst.extr.rel.text, inst.extr.arg2s.head.text, inst.extr.arg1.interval, inst.extr.rel.span, inst.extr.arg2s.head.interval, url)
+          }
+        }
+        catch {
+          case e: Exception =>
+            System.err.println("Exception with relnouns on: " + sentence)
+            System.err.println("Exception with relnouns on: " + dgraph.serialize)
+            e.printStackTrace()
+            Nil
         }
       }
 
@@ -91,7 +110,7 @@ object ScoobiOpenIE4 extends ScoobiApp {
 
     def split(str: String) = wsSplit.split(str)
 
-    val finalExtractions = lines.flatMap { line =>
+    val finalExtractions = lines.mapFlatten { line =>
       tabSplit.split(line) match {
         case Array(_, url, _, _, sentence, strs, poss, chks, dependencies, _*) => {
           val rvExtrs = getExtractions(sentence, split(strs), split(poss), split(chks), DependencyGraph.deserialize(dependencies), url)
