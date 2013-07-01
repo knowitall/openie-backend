@@ -7,7 +7,7 @@ import AssemblyKeys._
 object NlpToolsBuild extends Build {
   // settings
   val buildOrganization = "edu.washington.cs.knowitall.openie"
-  val buildVersion = "1.0.0-SNAPSHOT"
+  val buildVersion = "1.0"
   val buildScalaVersions = Seq("2.10.1")
 
   val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
@@ -88,7 +88,7 @@ object NlpToolsBuild extends Build {
 
   lazy val hadoop = Project(id = "openie-hadoop", base = file("hadoop"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq("edu.washington.cs.knowitall" % "reverb-core" % "1.4.3" excludeAll(ExclusionRule(organization = "jwnl")),
-      "edu.washington.cs.knowitall.srlie" %% "openie-srl" % "1.0.0-RC1",
+      "edu.washington.cs.knowitall.srlie" %% "srlie" % "1.0.0-RC2",
       "edu.washington.cs.knowitall.chunkedextractor" %% "chunkedextractor" % "1.0.4",
       nlptoolsPackage %% "nlptools-chunk-opennlp" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,

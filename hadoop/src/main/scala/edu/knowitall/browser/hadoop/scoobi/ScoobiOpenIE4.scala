@@ -28,6 +28,7 @@ import edu.knowitall.tool.stem.MorphaStemmer
 import edu.knowitall.openie.models.ReVerbExtraction
 import edu.knowitall.openie.models.TripleExtraction
 import edu.knowitall.srlie.confidence.SrlConfidenceFunction
+import edu.knowitall.openie.models.NaryExtraction
 
 object ScoobiOpenIE4 extends ScoobiApp {
 
@@ -53,7 +54,7 @@ object ScoobiOpenIE4 extends ScoobiApp {
     if (!parser.parse(args)) return
 
     // serialized ReVerbExtractions
-    val lines: DList[String] = TextInput.fromTextFile(inputPath)// TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
+    val lines: DList[String] = TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
 
     def parseChunkedSentence(strs: Seq[String], poss: Seq[String], chks: Seq[String]): Option[ChunkedSentence] = {
       try {
@@ -70,42 +71,63 @@ object ScoobiOpenIE4 extends ScoobiApp {
       }
     }
 
-    def getExtractions(sentence: String, strs: Seq[String], poss: Seq[String], chks: Seq[String], dgraph: DependencyGraph, url: String): Iterable[TripleExtraction] = {
+    def getExtractions(sentence: String, strs: Seq[String], poss: Seq[String], chks: Seq[String], dgraph: DependencyGraph, url: String): (Iterable[TripleExtraction], Iterable[NaryExtraction]) = {
       val tokens = Chunker.tokensFrom(chks, poss, Tokenizer.computeOffsets(strs, strs.mkString(" ")))
-      val relnounExtrs = {
-        try {
-          val extrs = relnoun(tokens map MorphaStemmer.lemmatizePostaggedToken)
-          extrs.map { inst =>
-            new TripleExtraction(0.8, corpus, inst.sent.toIndexedSeq, inst.extr.arg1.text, inst.extr.rel.text, inst.extr.arg2.text, inst.extr.arg1.tokenInterval, inst.extr.rel.tokenInterval, inst.extr.arg2.tokenInterval, url)
+      Timing.timeThen {
+        val relnounExtrs = {
+          try {
+            val extrs = relnoun(tokens map MorphaStemmer.lemmatizePostaggedToken)
+            extrs.map { inst =>
+              new TripleExtraction(0.8, corpus, inst.sent.toIndexedSeq, inst.extr.arg1.text, inst.extr.rel.text, inst.extr.arg2.text, inst.extr.arg1.tokenInterval, inst.extr.rel.tokenInterval, inst.extr.arg2.tokenInterval, url)
+            }
+          }
+          catch {
+            case e: Exception =>
+              System.err.println("Exception with relnouns on: " + sentence)
+              System.err.println("Exception with relnouns on: " + tokens)
+              e.printStackTrace()
+              Nil
           }
         }
-        catch {
-          case e: Exception =>
-            System.err.println("Exception with relnouns on: " + sentence)
-            System.err.println("Exception with relnouns on: " + tokens)
-            e.printStackTrace()
-            Nil
-        }
-      }
 
-      val srlieExtrs = {
-        try {
-          val extrs = srlie(dgraph).flatMap(_.triplize(true)).filter(_.extr.arg2s.size == 1)
-          extrs.map { inst =>
-            val conf = srlieConf(inst)
-            new TripleExtraction(conf, corpus, tokens.toIndexedSeq, inst.extr.arg1.text, inst.extr.rel.text, inst.extr.arg2s.head.text, inst.extr.arg1.interval, inst.extr.rel.span, inst.extr.arg2s.head.interval, url)
+        val (srlieNaryExtrs, srlieTripleExtrs) = {
+          try {
+            val extrs = srlie(dgraph).filter(_.extr.arg2s.size > 0)
+            val naryExtrs = extrs.map { inst =>
+              val conf = srlieConf(inst)
+              new NaryExtraction(conf, corpus, tokens.toIndexedSeq,
+                  NaryExtraction.Part(inst.extr.arg1.text, inst.extr.arg1.interval),
+                  NaryExtraction.Part(inst.extr.rel.text, inst.extr.rel.span),
+                  inst.extr.arg2s.map(arg2 => NaryExtraction.Part(arg2.text, arg2.interval)).toList,
+                  url)
+            }
+            val tripleExtrs = extrs.flatMap(_.triplize()).map { inst =>
+              val conf = srlieConf(inst)
+              new TripleExtraction(conf, corpus, tokens.toIndexedSeq, inst.extr.arg1.text, inst.extr.rel.text, inst.extr.arg2s.head.text, inst.extr.arg1.interval, inst.extr.rel.span, inst.extr.arg2s.head.interval, url)
+            }
+
+            (naryExtrs, tripleExtrs)
+          }
+          catch {
+            case e: Exception =>
+              System.err.println("Exception with relnouns on: " + sentence)
+              System.err.println("Exception with relnouns on: " + dgraph.serialize)
+              e.printStackTrace()
+              (Nil, Nil)
           }
         }
-        catch {
-          case e: Exception =>
-            System.err.println("Exception with relnouns on: " + sentence)
-            System.err.println("Exception with relnouns on: " + dgraph.serialize)
-            e.printStackTrace()
-            Nil
+
+        val triples = relnounExtrs ++ srlieTripleExtrs
+        val nary = srlieNaryExtrs ++ relnounExtrs.map { extr =>
+          new NaryExtraction(extr.confidence, extr.corpus, extr.sentenceTokens, NaryExtraction.Part(extr.arg1Text, extr.arg1Interval), NaryExtraction.Part(extr.relText, extr.relInterval), List(NaryExtraction.Part(extr.arg2Text, extr.arg2Interval)), extr.sourceUrl)
+        }
+
+        (triples, nary)
+      } { ns =>
+        if (ns > 60 * Timing.Seconds.divisor) {
+          System.err.println(s"Long time ${Timing.Seconds.format(ns)} to process: " + Timing.Seconds.format(ns))
         }
       }
-
-      relnounExtrs ++ srlieExtrs
     }
 
     def split(str: String) = wsSplit.split(str)
@@ -113,8 +135,9 @@ object ScoobiOpenIE4 extends ScoobiApp {
     val finalExtractions = lines.mapFlatten { line =>
       tabSplit.split(line) match {
         case Array(_, url, _, _, sentence, strs, poss, chks, dependencies, _*) => {
-          val rvExtrs = getExtractions(sentence, split(strs), split(poss), split(chks), DependencyGraph.deserialize(dependencies), url)
-          rvExtrs map TripleExtraction.serializeToString
+          val (tripleExtrs, naryExtrs) = getExtractions(sentence, split(strs), split(poss), split(chks), DependencyGraph.deserialize(dependencies), url)
+          (tripleExtrs map TripleExtraction.serializeToString map ("T\t" + _)) ++
+            (naryExtrs map NaryExtraction.serializeToString map ("N\t" + _))
         }
         case _ => {
           System.err.println("Couldn't parse line: %s".format(line))
