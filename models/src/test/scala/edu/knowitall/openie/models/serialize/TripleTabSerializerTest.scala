@@ -12,12 +12,15 @@ import edu.knowitall.openie.models.TripleExtraction
 import edu.knowitall.tool.chunk.Chunker
 import edu.knowitall.tool.tokenize.WhitespaceTokenizer
 import edu.knowitall.collection.immutable.Interval
+import edu.knowitall.openie.models.Extraction
 
 @RunWith(classOf[JUnitRunner])
 class TripleTabSerializerTest extends FlatSpec {
+  import Extraction._
+
   "extractions" should "round-trip through tab serialization" in {
     val tokens = Chunker.tokensFrom("B-NP B-VP B-NP I-NP".split(" "), "NN VB DT NN".split(" "), WhitespaceTokenizer.tokenize("This is a test"))
-    val extr = new TripleExtraction(0.0, "corpus", tokens, "this", "is", "a", Interval.open(0, 1), Interval.open(1, 2), Interval.open(2,3), "url")
-    TripleExtraction.deserializeFromString(TripleExtraction.serializeToString(extr)).get === extr
+    val extr = new TripleExtraction(0.0, "corpus", tokens, "this", "is", "a", Interval.open(0, 1), Interval.open(1, 2), Interval.open(2, 3), "url")
+    implicitly[TabFormat[Extraction]].read(implicitly[TabFormat[Extraction]].write(extr)).get === extr
   }
 }

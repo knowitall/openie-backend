@@ -115,7 +115,7 @@ object ScoobiReVerbGrouper extends ScoobiApp {
 
   /** extrs --> grouped by normalization key */
   def groupExtractions(extrs: DList[String], corpus: String): DList[String] = {
-    lazy val grouper = new ScoobiReVerbGrouper(TaggedStemmer.instance, corpus)
+    lazy val grouper = new ScoobiReVerbGrouper(TaggedStemmer, corpus)
     val keyValuePair: DList[(String, String)] = extrs.flatMap { line =>
       grouper.getKeyValuePair(line)
     }

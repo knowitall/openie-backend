@@ -42,7 +42,7 @@ case class NaryExtraction(
   def arg2sTokens = arg2s.map(arg2 => sentenceTokens(arg2.interval))
 
   def normTokens(interval: Interval) = sentenceTokens(interval) filter indexTokenFilter map { token =>
-    val stemmer = TaggedStemmer.instance
+    val stemmer = TaggedStemmer
     val norm = stemmer.stem(token)
     new ChunkedToken(new PostaggedToken(new Token(norm, token.offset), token.postag), token.chunk)
   }
@@ -78,7 +78,7 @@ case class NaryExtraction(
       else true
     }
 
-    val stemmer = TaggedStemmer.instance
+    val stemmer = TaggedStemmer
 
     val stemmed = stemmer.stemAll(cleaned)
 

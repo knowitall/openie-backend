@@ -139,7 +139,7 @@ object ScoobiEntityLinker extends ScoobiApp {
     val el = getScratch(num).map(index => {
       new EntityLinker(new File(index))
     }) // java doesn't have Option
-    new ScoobiEntityLinker(el, TaggedStemmer.instance)
+    new ScoobiEntityLinker(el, TaggedStemmer)
   }
 
   def linkGroups(groups: DList[String], minFreq: Int, maxFreq: Int, reportInterval: Int,

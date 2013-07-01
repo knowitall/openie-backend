@@ -62,12 +62,11 @@ case class QuerySpec(
 
   private def stemAllTokens(line: String) = {
     QuerySpec.logger.debug("stem tokens: " + line)
-    val stemmer = TaggedStemmer.instance
     val postagger = QuerySpec.taggers.take()
     try {
       if (stem) {
         val tokens = postagger.postag(line)
-        val stemmed = stemmer.stemAll(tokens)
+        val stemmed = TaggedStemmer.stemAll(tokens)
         val filtered = stemmed.filter(!strippedDeterminers.contains(_))
         filtered.mkString(" ")
       } else {
