@@ -7,7 +7,7 @@ import AssemblyKeys._
 object NlpToolsBuild extends Build {
   // settings
   val buildOrganization = "edu.washington.cs.knowitall.openie"
-  val buildVersion = "1.0"
+  val buildVersion = "1.1-SNAPSHOT"
   val buildScalaVersions = Seq("2.10.1")
 
   val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
