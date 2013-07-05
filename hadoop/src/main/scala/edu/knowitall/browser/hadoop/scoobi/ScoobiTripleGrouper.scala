@@ -52,7 +52,7 @@ class ScoobiTripleGrouper(val stemmer: TaggedStemmer) {
     implicitly[TabFormat[Extraction]].read(line).toOption.orElse {
       throw new MatchError("Could not deserialize extraction: " + line)
       None
-    }.filter(extractionFilterCondition(0.8)).flatMap { extr =>
+    }.filter(cluster => ScoobiClusterFilter.instanceFilterCondition(0.6)(cluster)).flatMap { extr =>
       val key = extr.indexGroupingKey
       val keyString = "%s__%s__%s".format(key._1, key._2, key._3)
 
@@ -103,34 +103,6 @@ class ScoobiTripleGrouper(val stemmer: TaggedStemmer) {
     }
   } catch {
     case e: Exception => {System.err.println("Exception on key: " + key); e.printStackTrace; None }
-  }
-
-  private def extractionFilterCondition(confThreshold: Double)(extr: Extraction): Boolean = {
-    def definiteNoun(tokens: Seq[PostaggedToken]): Boolean = {
-      var tokensLeft = tokens
-      while (!tokensLeft.isEmpty) {
-        tokensLeft = tokensLeft.dropWhile(_.postag != "DT")
-        if (!tokensLeft.isEmpty && (tokensLeft.head.postag == "NN" || tokensLeft.head.postag == "NNP")) {
-          return true
-        }
-
-        tokensLeft = tokensLeft.drop(1)
-      }
-
-      return false
-    }
-    val relationBlacklist = Set("said", "have", "is")
-    val argumentBlacklist = Set("both", "all", "some", "other", "this", "that", "those",
-        "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "yesterday", "tomorrow", "today")
-    extr.confidence > confThreshold &&
-      !(extr.relTokens.size == 1 && extr.relTokens.exists(token => relationBlacklist(MorphaStemmer.lemmatize(token.string)))) &&
-      !(extr.arg1Tokens.exists(token => argumentBlacklist(MorphaStemmer.lemmatize(token.string)))) &&
-      !(extr.arg2Tokens.exists(token => argumentBlacklist(MorphaStemmer.lemmatize(token.string)))) &&
-      !extr.arg1Tokens.exists(token => Postagger.pronouns.contains(token.string)) &&
-      !extr.arg2Tokens.exists(token => Postagger.pronouns.contains(token.string)) &&
-      !extr.relTokens.exists(token => Postagger.pronouns.contains(token.string)) &&
-      !definiteNoun(extr.arg1Tokens) &&
-      !definiteNoun(extr.arg2Tokens)
   }
 }
 
