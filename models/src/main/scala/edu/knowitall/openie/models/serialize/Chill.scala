@@ -81,7 +81,7 @@ object Chill {
   }
 
 
-  def createBijection(): Bijection[AnyRef, Array[Byte]] = {
+  def createBijection(initBufferSize: Int = 1 << 10, maxBufferSize: Int = 1 << 24): Bijection[AnyRef, Array[Byte]] = {
     def myRegistrations(kryo: Kryo) = kryo
       .forClassViaBijectionDefault2(intervalBijection)
       .forClassViaBijection(freebaseEntityBijection)
@@ -97,8 +97,8 @@ object Chill {
       k
     }
     val output = {
-      val init: Int = 1 << 10
-      val max: Int = 1 << 24
+      val init: Int = initBufferSize
+      val max: Int = maxBufferSize
       new Output(init, max)
     }
     new KryoBijectionInstance(kryo, output)
