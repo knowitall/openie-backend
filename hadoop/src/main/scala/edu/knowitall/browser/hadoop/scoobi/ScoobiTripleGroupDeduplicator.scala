@@ -24,17 +24,23 @@ import edu.knowitall.openie.models.ExtractionCluster
 import edu.knowitall.openie.models.serialize.TabFormat
 import edu.knowitall.openie.models.Extraction
 import edu.knowitall.openie.models.util.ExtractionDeduplicator
+import scala.util.{ Success, Failure, Try }
 
 object ScoobiTripleGroupDeduplicator extends ScoobiApp {
   def run() = {
     val (inputPath, outputPath) = (args(0), args(1))
 
     // serialized ReVerbExtractions
-    val lines: DList[String] = TextInput.fromTextFile(args(0)) // TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
+    val lines: DList[String] = TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
 
     val deduplicated = lines.mapFlatten { line =>
-      ExtractionCluster.TabFormat.read(line).toOption.map { cluster =>
-        ExtractionCluster.TabFormat.write(ExtractionDeduplicator.deduplicate(cluster))
+      ExtractionCluster.TabFormat.read(line) match {
+        case Failure(e) =>
+          System.err.println("Could not deserialize line: " + line)
+          e.printStackTrace
+          None
+        case Success(cluster) =>
+          Some(ExtractionCluster.TabFormat.write(ExtractionDeduplicator.deduplicate(cluster)))
       }
     }
 
