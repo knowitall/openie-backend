@@ -23,6 +23,7 @@ import edu.knowitall.openie.models.TripleExtraction
 import edu.knowitall.openie.models.ExtractionCluster
 import edu.knowitall.openie.models.serialize.TabFormat
 import edu.knowitall.openie.models.Extraction
+import edu.knowitall.openie.models.util.ExtractionDeduplicator
 
 /**
   * A mapper + reducer job that
@@ -111,9 +112,8 @@ object ScoobiTripleGrouper extends ScoobiApp {
 
     keyValuePair.groupByKey.mapFlatten {
       case (key, sources) =>
-        grouper.processCluster(key, sources) match {
-          case Some(group) => Some(implicitly[TabFormat[ExtractionCluster[Extraction]]].write(group))
-          case None => None
+        grouper.processCluster(key, sources).map { cluster =>
+          implicitly[TabFormat[ExtractionCluster[Extraction]]].write(ExtractionDeduplicator.deduplicate(cluster))
         }
     }
   }
@@ -122,7 +122,7 @@ object ScoobiTripleGrouper extends ScoobiApp {
     val (inputPath, outputPath) = (args(0), args(1))
 
     // serialized ReVerbExtractions
-    val extrs: DList[String] = TextInput.fromTextFile(args(0)) // TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
+    val extrs: DList[String] = TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
 
     val groups = groupExtractions(extrs)
 
