@@ -81,7 +81,7 @@ object ExtractionCluster {
       val arg2Types = if (split(6).equals("X")) Set.empty[FreeBaseType] else deserializeTypeList(split(6))
 
       val formatter = implicitly[SpecTabFormat[Extraction]]
-      val instances = Try(tokens.grouped(formatter.columns.size).map { pickledSeq =>
+      val instances = Try(tokens.drop(7).grouped(formatter.columns.size).map { pickledSeq =>
         formatter.readSeq(pickledSeq).get // rethrow exception
       })
 
