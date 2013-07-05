@@ -7,6 +7,9 @@ import scala.util.Random
 import scala.collection.JavaConversions._
 import scala.collection.mutable
 import edu.knowitall.common.Timing._
+import edu.knowitall.tool.postag.PostaggedToken
+import edu.knowitall.tool.stem.MorphaStemmer
+import edu.knowitall.tool.postag.Postagger
 import edu.knowitall.openie.models.FreeBaseEntity
 import edu.knowitall.openie.models.FreeBaseType
 import edu.knowitall.openie.models.Instance
@@ -46,16 +49,17 @@ class ScoobiTripleGrouper(val stemmer: TaggedStemmer) {
     if (extrsProcessed % 20000 == 0) System.err.println("Extractions processed: %d".format(extrsProcessed))
 
     // parse the line to an Extraction
-    val extr = implicitly[TabFormat[Extraction]].read(line).getOrElse {
+    implicitly[TabFormat[Extraction]].read(line).toOption.orElse {
       throw new MatchError("Could not deserialize extraction: " + line)
+      None
+    }.filter(extractionFilterCondition(0.8)).flatMap { extr =>
+      val key = extr.indexGroupingKey
+      val keyString = "%s__%s__%s".format(key._1, key._2, key._3)
+
+      // don't output if part of the key is empty
+      if (key.productIterator.exists(_.asInstanceOf[String].isEmpty)) None
+      else Some((keyString, line))
     }
-
-    val key = extr.indexGroupingKey
-    val keyString = "%s__%s__%s".format(key._1, key._2, key._3)
-
-    // don't output if part of the key is empty
-    if (key.productIterator.exists(_.asInstanceOf[String].isEmpty)) None
-    else Some((keyString, line))
   } catch {
     case e: Exception => { e.printStackTrace; None }
   }
@@ -99,6 +103,34 @@ class ScoobiTripleGrouper(val stemmer: TaggedStemmer) {
     }
   } catch {
     case e: Exception => {System.err.println("Exception on key: " + key); e.printStackTrace; None }
+  }
+
+  private def extractionFilterCondition(confThreshold: Double)(extr: Extraction): Boolean = {
+    def definiteNoun(tokens: Seq[PostaggedToken]): Boolean = {
+      var tokensLeft = tokens
+      while (!tokensLeft.isEmpty) {
+        tokensLeft = tokensLeft.dropWhile(_.postag != "DT")
+        if (!tokensLeft.isEmpty && (tokensLeft.head.postag == "NN" || tokensLeft.head.postag == "NNP")) {
+          return true
+        }
+
+        tokensLeft = tokensLeft.drop(1)
+      }
+
+      return false
+    }
+    val relationBlacklist = Set("said", "have", "is")
+    val argumentBlacklist = Set("both", "all", "some", "other", "this", "that", "those",
+        "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "yesterday", "tomorrow", "today")
+    extr.confidence > confThreshold &&
+      !(extr.relTokens.size == 1 && extr.relTokens.exists(token => relationBlacklist(MorphaStemmer.lemmatize(token.string)))) &&
+      !(extr.arg1Tokens.exists(token => argumentBlacklist(MorphaStemmer.lemmatize(token.string)))) &&
+      !(extr.arg2Tokens.exists(token => argumentBlacklist(MorphaStemmer.lemmatize(token.string)))) &&
+      !extr.arg1Tokens.exists(token => Postagger.pronouns.contains(token.string)) &&
+      !extr.arg2Tokens.exists(token => Postagger.pronouns.contains(token.string)) &&
+      !extr.relTokens.exists(token => Postagger.pronouns.contains(token.string)) &&
+      !definiteNoun(extr.arg1Tokens) &&
+      !definiteNoun(extr.arg2Tokens)
   }
 }
 
