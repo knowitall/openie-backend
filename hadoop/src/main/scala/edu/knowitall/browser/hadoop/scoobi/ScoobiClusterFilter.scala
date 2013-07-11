@@ -31,8 +31,8 @@ object ScoobiClusterFilter extends ScoobiApp {
 
   private final lazy val nonQuestionableChars = Pattern.compile("[\\p{Lower}\\p{Digit} ]+")
   private final lazy val stripExtraWS = Pattern.compile("\\s+")
-  private final lazy val stripChars= Pattern.compile("[^\\p{Graph}\\p{Cntrl} ]+")
-  private final lazy val leadingBadChars = Pattern.compile("^\\s*(\\.|,|\\\"|\\'|\\()\\s")
+  private final lazy val controlChars= Pattern.compile("[\\p{Cntrl}*")
+  private final lazy val leadingBadChars = Pattern.compile("""^\s*[*-.,\"'()]*\s*""")
   private final lazy val leadingArticle = Pattern.compile("^\\s*(the|this|these|those|that|a|an)\\s*", Pattern.CASE_INSENSITIVE)
   private final lazy val startCap = Pattern.compile(".*\\b[A-Z].*")
   private final lazy val likelyErrorPattern = Pattern.compile(".*(http|\\(|\\)|\\\"|\\[|thing).*", Pattern.CASE_INSENSITIVE)
@@ -53,16 +53,13 @@ object ScoobiClusterFilter extends ScoobiApp {
   def clusterFilterCondition(cluster: ExtractionCluster[Extraction]): Boolean = {
     def emptyArg = cluster.arg1.norm.trim.isEmpty || cluster.rel.norm.trim.isEmpty || cluster.arg2.norm.trim.isEmpty
 
-    !(emptyArg)
+    !emptyArg && cluster.instances.size > 1
   }
 
   def instanceFilterCondition(confThreshold: Double)(inst: Extraction): Boolean = {
-    def clean(arg: String) = {
-      var clean = this.clean(arg.trim)
-
-      clean = leadingArticle.matcher(clean).replaceAll("");
-
-      clean.toLowerCase
+    def normalize(cleanArg: String) = {
+      var clean = leadingArticle.matcher(cleanArg).replaceAll("").toLowerCase
+      stripExtraWS.matcher(clean).replaceAll(" ").trim();
     }
 
     def tooShort(part: String) = {
@@ -75,7 +72,12 @@ object ScoobiClusterFilter extends ScoobiApp {
     val arg1clean = clean(inst.arg1Text)
     val arg2clean = clean(inst.arg2Text)
     val relclean = clean(inst.relText)
-    val extr = arg1clean + relclean + arg2clean
+
+    val arg1normalized = clean(inst.arg1Text)
+    val arg2normalized = clean(inst.arg2Text)
+    val relnormalized = clean(inst.relText)
+
+    val extr = arg1normalized + relnormalized + arg2normalized
 
     def negative = {
       val negatives = Set("no", "not", "none", "n't", "never")
@@ -91,23 +93,26 @@ object ScoobiClusterFilter extends ScoobiApp {
       inst.arg1Text.length + inst.arg2Text.length + inst.relText.length > MAX_EXTRACTION_LENGTH
 
     def containsPronoun =
-      Postagger.pronouns.contains(arg1clean) || Postagger.pronouns.contains(arg2clean)
+      Postagger.pronouns.contains(arg1normalized) || Postagger.pronouns.contains(arg2normalized)
 
     def likelyError =
-      likelyErrorPattern.matcher(arg1clean).matches() ||
-      likelyErrorPattern.matcher(arg2clean).matches()
+      likelyErrorPattern.matcher(arg1normalized).matches() ||
+      likelyErrorPattern.matcher(arg2normalized).matches()
 
     val argumentBlacklist = Set("both", "other", "this", "that", "those",
       "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "yesterday", "tomorrow", "today")
 
-    !(negative ||
+    !(inst.arg1Text != arg1clean ||
+      inst.relText != relclean ||
+      inst.arg2Text != arg2clean ||
+      negative ||
       tooLong ||
       containsPronoun ||
       inst.confidence < confThreshold ||
-      (arg1clean.isEmpty || relclean.isEmpty || arg2clean.isEmpty) ||
-      (arg1clean == arg2clean) ||
+      (arg1normalized.isEmpty || relnormalized.isEmpty || arg2normalized.isEmpty) ||
+      (arg1normalized == arg2normalized) ||
       (nonQuestionableChars.matcher(extr).replaceAll("").size >= 5) ||
-      (tooShort(arg1clean) || tooShort(relclean) || tooShort(arg2clean)) ||
+      (tooShort(arg1normalized) || tooShort(relnormalized) || tooShort(arg2normalized)) ||
       (inst.arg1Tokens.exists(token => argumentBlacklist(token.string.toLowerCase))) ||
       (inst.arg2Tokens.exists(token => argumentBlacklist(token.string.toLowerCase))) ||
       likelyError)
@@ -116,8 +121,7 @@ object ScoobiClusterFilter extends ScoobiApp {
   def clean(string: String) = {
     var clean = string.trim
 
-    clean = stripChars.matcher(clean).replaceAll("");
-    clean = stripExtraWS.matcher(clean).replaceAll(" ").trim();
+    clean = controlChars.matcher(clean).replaceAll("");
     clean = leadingBadChars.matcher(clean).replaceAll("");
 
     clean
