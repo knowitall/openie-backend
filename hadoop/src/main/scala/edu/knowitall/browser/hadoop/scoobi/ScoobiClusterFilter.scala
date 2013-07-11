@@ -24,7 +24,7 @@ import com.hadoop.mapreduce.LzoTextInputFormat
 import edu.knowitall.openie.models.ExtractionCluster
 import edu.knowitall.tool.stem.MorphaStemmer
 
-object ScoobiClusterFilter {
+object ScoobiClusterFilter extends ScoobiApp {
   final val INDEX_CONFIDENCE_THRESHOLD = 0.5
   final val MIN_GROUP_INSTANCES = 2
   final val MAX_EXTRACTION_LENGTH = 60
@@ -37,17 +37,16 @@ object ScoobiClusterFilter {
   private final lazy val startCap = Pattern.compile(".*\\b[A-Z].*")
   private final lazy val likelyErrorPattern = Pattern.compile(".*(http|\\(|\\)|\\\"|\\[|thing).*", Pattern.CASE_INSENSITIVE)
 
-  def filterInstances(clusters: Iterable[ExtractionCluster[Extraction]]): Iterable[ExtractionCluster[Extraction]] = clusters.map { reg =>
+  def filterInstances(cluster: ExtractionCluster[Extraction]): ExtractionCluster[Extraction] = 
       new ExtractionCluster[Extraction](
-          reg.arg1.norm,
-          reg.rel.norm,
-          reg.arg2.norm,
-          reg.arg1.entity,
-          reg.arg2.entity,
-          reg.arg1.types,
-          reg.arg2.types,
-          reg.instances filter instanceFilterCondition(INDEX_CONFIDENCE_THRESHOLD))
-    }
+          cluster.arg1.norm,
+          cluster.rel.norm,
+          cluster.arg2.norm,
+          cluster.arg1.entity,
+          cluster.arg2.entity,
+          cluster.arg1.types,
+          cluster.arg2.types,
+          cluster.instances filter instanceFilterCondition(INDEX_CONFIDENCE_THRESHOLD))
 
   def filterClusters(clusters: Iterable[ExtractionCluster[Extraction]]): Iterable[ExtractionCluster[Extraction]] = clusters filter clusterFilterCondition filter (_.instances.size >= 2)
 
@@ -122,5 +121,22 @@ object ScoobiClusterFilter {
     clean = leadingBadChars.matcher(clean).replaceAll("");
 
     clean
+  }
+
+  def run() = {
+    val (inputPath, outputPath) = (args(0), args(1))
+
+    // serialized ReVerbExtractions
+    val clusters: DList[String] = TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
+
+    val cleaned = clusters.flatMap { line =>
+      val filtered = ExtractionCluster.formatter.read(line).toOption.map { cluster =>
+        filterInstances(cluster)
+      }.filter(clusterFilterCondition)
+
+      filtered.map(ExtractionCluster.formatter.write(_))
+    }
+
+    persist(TextOutput.toTextFile(cleaned, outputPath + "/"));
   }
 }
