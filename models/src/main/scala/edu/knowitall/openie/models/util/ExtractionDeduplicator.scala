@@ -49,10 +49,8 @@ object ExtractionDeduplicator {
     val filteredInstances = confSorted.filter { inst =>
 
       // get start and end position of window
-      // we assume that arg1 < rel < arg2 in terms of position - not
-      // necessarily true for other types of extractions!!!
-      val start = inst.arg1Interval.start
-      val end = inst.arg2Interval.end
+      val start = Iterable(inst.arg1Interval.start, inst.relInterval.start, inst.arg2Interval.start).min
+      val end = Iterable(inst.arg1Interval.end, inst.relInterval.end, inst.arg2Interval.end).max
 
       // if the instance covers the whole sentence, don't throw it away!
       if (start == 0 && end >= inst.sentenceTokens.length - 2) { // -2 for the trailing period!
@@ -89,53 +87,4 @@ object ExtractionDeduplicator {
 
     deduped
   }
-
-  // this is the deduplicaton scheme that the old demo used
-  def oldDeduplicate(cluster: ExtractionCluster[Extraction]): ExtractionCluster[Extraction] = {
-
-    if (cluster.instances.size <= 1) return cluster
-
-    // minimum fragment length of slightly longer (e.g. 1 token) than the extraction
-    val extrLength = Seq(cluster.arg1.norm, cluster.rel.norm, cluster.arg2.norm).map(_.length).sum + 4
-
-    // iterate over tuples in the list of potential duplicates.
-    // split on punctuation [.,!?<>:;[]{}\|@#$%^&*()-+]
-    // no apostrophe, basically.
-    // for each substring in the split, of length >= extrlength,
-    // see if its in the hash. If any are in the hash,
-    // it.remove() the tuple, and move on.
-    val fragments = new mutable.HashSet[String]
-    val sentences = new mutable.HashSet[String]
-
-    val filteredInstances = cluster.instances.toSeq.sortBy(-_.confidence).filter { inst =>
-
-      val sentence = inst.sentenceTokens.map(_.string).mkString(" ").toLowerCase
-
-      if (sentences.contains(sentence)) false
-      else {
-        sentences.add(sentence)
-        val scan = new Scanner(sentence)
-        scan.useDelimiter(splitPattern);
-
-        var keepThisInstance = true
-
-        while (scan.hasNext()) {
-          val nextFrag = scan.next().trim()
-          // toss out fragments not as long as the extraction
-          if (fragments.contains(nextFrag)) {
-            keepThisInstance = false
-          } else if (nextFrag.length() >= extrLength) {
-            fragments.add(nextFrag)
-          }
-        }
-        keepThisInstance
-      }
-    }
-
-    require(!filteredInstances.isEmpty)
-
-    val deduped = new ExtractionCluster(cluster.arg1, cluster.rel, cluster.arg2, filteredInstances)
-    deduped
-  }
-
 }
