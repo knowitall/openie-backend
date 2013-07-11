@@ -116,7 +116,7 @@ object ScoobiTripleGrouper extends ScoobiApp {
 
     keyValuePair.groupByKey.mapFlatten {
       case (key, sources) =>
-        grouper.processCluster(key, sources).map { cluster =>
+        grouper.processCluster(key, sources).filter(_.instances.size > 1).map { cluster =>
           implicitly[TabFormat[ExtractionCluster[Extraction]]].write(ExtractionDeduplicator.deduplicate(cluster))
         }
     }
