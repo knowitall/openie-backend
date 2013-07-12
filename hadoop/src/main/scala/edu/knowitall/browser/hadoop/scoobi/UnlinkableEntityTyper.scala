@@ -340,7 +340,7 @@ object UnlinkableEntityTyper extends ScoobiApp {
   def run() = {
 
     var inputPath, outputPath = ""
-    var argField: ArgField = Arg1()
+    var argField: ArgField = Arg1
 
     var maxSimilarEntities = 15
     var maxPredictedTypes = 5
@@ -358,8 +358,8 @@ object UnlinkableEntityTyper extends ScoobiApp {
       arg("inputPath", "hdfs input path, ExtractionGroups", { str => inputPath = str })
       arg("outputPath", "hdfs output path, ExtractionGroups", { str => outputPath = str })
       arg("arg", "arg1 to predict types for arg1's, arg2 to predict types for arg2s", { str =>
-        if (str.equals("arg1")) argField = Arg1()
-        else if (str.equals("arg2")) argField = Arg2()
+        if (str.equals("arg1")) argField = Arg1
+        else if (str.equals("arg2")) argField = Arg2
         else throw new IllegalArgumentException("arg must be either arg1 or arg2")
       })
       opt("maxSimilarEntities", "maximum similar entities considered per argument", { str => maxSimilarEntities = str.toInt })
