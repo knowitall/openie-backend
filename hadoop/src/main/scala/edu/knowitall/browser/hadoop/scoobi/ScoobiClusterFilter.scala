@@ -32,7 +32,7 @@ object ScoobiClusterFilter extends ScoobiApp {
   private final lazy val nonQuestionableChars = Pattern.compile("[\\p{Lower}\\p{Digit} ]+")
   private final lazy val stripExtraWS = Pattern.compile("\\s+")
   private final lazy val controlChars= Pattern.compile("[\\p{Cntrl}]*")
-  private final lazy val leadingBadChars = Pattern.compile("""^\s*[*-.,\"'()]*\s*""")
+  private final lazy val leadingBadChars = Pattern.compile("""^\s*[!*-.,\"'()]*\s*""")
   private final lazy val leadingArticle = Pattern.compile("^\\s*(the|this|these|those|that|a|an)\\s*", Pattern.CASE_INSENSITIVE)
   private final lazy val startCap = Pattern.compile(".*\\b[A-Z].*")
   private final lazy val likelyErrorPattern = Pattern.compile(".*(http|\\(|\\)|\\\"|\\[|thing).*", Pattern.CASE_INSENSITIVE)
