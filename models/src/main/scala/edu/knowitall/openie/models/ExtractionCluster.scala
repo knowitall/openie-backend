@@ -63,7 +63,7 @@ object ExtractionCluster {
       "arg2Types" -> (e => serializeTypeList(e.arg2.types)),
       "instances" -> (e => e.instances.iterator.map(t => implicitly[TabFormat[Extraction]].write(t)).mkString("\t")))
 
-    override def readSeq(tokens: Seq[String]): Try[ExtractionCluster[Extraction]] = {
+    override def readSeq(tokens: Seq[String]): Try[ExtractionCluster[Extraction]] = Try {
 
       // first take all non-instance columns
       val split = tokens.take(spec.length - 1).toIndexedSeq
@@ -81,13 +81,11 @@ object ExtractionCluster {
       val arg2Types = if (split(6).equals("X")) Set.empty[FreeBaseType] else deserializeTypeList(split(6))
 
       val formatter = implicitly[SpecTabFormat[Extraction]]
-      val instances = Try(tokens.drop(7).grouped(formatter.columns.size).map { pickledSeq =>
+      val instances = tokens.drop(7).grouped(formatter.columns.size).map { pickledSeq =>
         formatter.readSeq(pickledSeq).get // rethrow exception
-      })
-
-      instances.filter(!_.isEmpty).map { instances =>
-        new ExtractionCluster(arg1Norm, relNorm, arg2Norm, arg1Entity, arg2Entity, arg1Types, arg2Types, instances.toSeq)
       }
+
+      new ExtractionCluster(arg1Norm, relNorm, arg2Norm, arg1Entity, arg2Entity, arg1Types, arg2Types, instances.toSeq)
     }
 
     private val commaEscapeString = Pattern.compile(Pattern.quote("|/|")) // something not likely to occur

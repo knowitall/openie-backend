@@ -44,10 +44,10 @@ class ScoobiTripleGroupLinker(val subLinkers: Seq[EntityLinker], val stemmer: Ta
   import ScoobiTripleGroupLinker.getRandomElement
   import ScoobiTripleGroupLinker.min_arg_length
 
-  private var groupsProcessed = 0
-  private var arg1sLinked = 0
-  private var arg2sLinked = 0
-  private var totalGroups = 0
+  private var groupsProcessed: Int = 0
+  private var arg1sLinked: Int = 0
+  private var arg2sLinked: Int = 0
+  private var totalGroups: Int = 0
 
   def getEntity(el: EntityLinker, arg: Seq[PostaggedToken], sources: Set[String]): Option[EntityLink] = {
     if (arg.length < min_arg_length) None
@@ -112,9 +112,7 @@ object ScoobiTripleGroupLinker extends ScoobiApp {
   import EntityLinkerStaticVars._
   private val min_arg_length = 3
 
-  val random = new scala.util.Random
-
-  val linker = getEntityLinker(4)
+  lazy val linker = getEntityLinker(4)
 
   // hardcoded for the rv cluster - the location of Tom's freebase context similarity index.
   // Indexes are on the /scratchX/ where X in {"", 2, 3, 4}, the method getScratch currently
@@ -141,17 +139,18 @@ object ScoobiTripleGroupLinker extends ScoobiApp {
     if (skipLinking) return frequencyFilter(groups, minFreq, maxFreq, reportInterval, skipLinking)
 
     groups.flatMap { line =>
-      /*
-        val format = "MinFreq: %d, MaxFreq: %d, groups input: %d, groups output: %d, arg1 links: %d, arg2 links: %d"
-        System.err.println(format.format(minFreq, maxFreq, counter.count, linker.groupsProcessed, linker.arg1sLinked, linker.arg2sLinked))
-        */
+      if (linker.groupsProcessed % 1000 == 0) {
+        val format = s"MinFreq: $minFreq, MaxFreq: $maxFreq, groups input: ${linker.groupsProcessed}, arg1 links: ${linker.arg2sLinked}, arg2 links: ${linker.arg2sLinked}"
+        System.err.println(format)
+      }
 
       val extrOp = ExtractionCluster.TabFormat.read(line).toOption
       extrOp match {
-        case Some(extr) => {
+        case Some(extr) if extr.instances.size > 0 => {
           if (extr.instances.size <= maxFreq && extr.instances.size >= minFreq) {
             Some(ExtractionCluster.TabFormat.write(linker.linkEntities(reuseLinks = false)(extr)))
           } else {
+            System.err.println("Trouble deserializing: " + line)
             None
           }
         }
