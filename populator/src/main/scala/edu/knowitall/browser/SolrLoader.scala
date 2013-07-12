@@ -12,7 +12,6 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer
 import org.apache.solr.common.SolrInputDocument
 import org.slf4j.LoggerFactory
 import dispatch.{Http, as, enrichFuture, implyRequestHandlerTuple, implyRequestVerbs, url}
-import edu.knowitall.browser.lucene.ParallelIndexPrinter
 import edu.knowitall.common.Resource.using
 import edu.knowitall.common.Timing
 import edu.knowitall.openie.models.{ExtractionGroup, ReVerbExtraction, ReVerbExtractionGroup}
@@ -162,23 +161,12 @@ class SolrJsonLoader(solrUrl: String) extends SolrLoader {
 }
 
 object SolrLoader {
-  import edu.knowitall.browser.lucene.ParallelIndexPrinter
 
   val logger = LoggerFactory.getLogger(classOf[SolrLoader])
 
   sealed abstract class Source {
     def groupIterator(): Iterator[ExtractionGroup[ReVerbExtraction]]
     def close(): Unit
-  }
-
-  case class LuceneSource() extends Source {
-    val printer = ParallelIndexPrinter.defaultInstance
-
-    def groupIterator() = {
-      printer.getRegs
-    }
-
-    def close() {}
   }
 
   case class StdinSource() extends Source {
@@ -211,7 +199,6 @@ object SolrLoader {
         arg("source", "source (stdin|lucene|url)") { (str: String, c: Config) =>
           str match {
             case "stdin" => c.copy(source = StdinSource())
-            case "lucene" => c.copy(source = LuceneSource())
             case url if control.Exception.catching(classOf[MalformedURLException]) opt new URL(url) isDefined => c.copy(source = UrlSource(url))
           }
         },

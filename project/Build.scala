@@ -23,12 +23,14 @@ object NlpToolsBuild extends Build {
   val specs2 = "org.specs2" %% "specs2" % "1.12.3"
   val scalatest = "org.scalatest" %% "scalatest" % "1.9.1"
 
+  val liftJson = "net.liftweb" %% "lift-json" % "2.5-RC5"
+
   lazy val root = Project(id = "openie", base = file(".")) settings (
     crossScalaVersions := buildScalaVersions,
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     publish := { },
     publishLocal := { }
-  ) aggregate(models, backend, linker, hadoop)
+  ) aggregate(models, backend, linker, hadoop, populator)
 
   // parent build definition
   val buildSettings = Defaults.defaultSettings ++ Seq (
@@ -66,6 +68,7 @@ object NlpToolsBuild extends Build {
       logbackClassic,
       logbackCore,
       slf4jApi,
+      liftJson,
       "commons-logging" % "commons-logging-api" % "1.0.4", // solrj stupidly needs this?
       "com.github.scopt" %% "scopt" % "2.1.0",
       "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
@@ -75,7 +78,7 @@ object NlpToolsBuild extends Build {
   lazy val backend = Project(id = "openie-backend", base = file("backend"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
       "org.apache.lucene" % "lucene-core" % "3.6.1",
-      "net.liftweb" %% "lift-json" % "2.5-RC5",
+      liftJson,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion excludeAll(ExclusionRule(organization = "jwnl")),
       "com.google.guava" % "guava" % "14.0.1",
