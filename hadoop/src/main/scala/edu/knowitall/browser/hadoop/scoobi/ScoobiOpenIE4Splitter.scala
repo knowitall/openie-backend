@@ -30,6 +30,10 @@ import edu.knowitall.openie.models.TripleExtraction
 import edu.knowitall.srlie.confidence.SrlConfidenceFunction
 import edu.knowitall.openie.models.NaryExtraction
 
+/**
+ * This job takes the output of ScoobiOpenIE4 and gives either triples or nary
+ * extractions.
+ */
 object ScoobiOpenIE4Splitter extends ScoobiApp {
 
   private lazy val tabSplit = "\t".r

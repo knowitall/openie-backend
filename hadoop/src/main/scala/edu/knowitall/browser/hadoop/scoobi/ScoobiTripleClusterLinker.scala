@@ -39,10 +39,10 @@ import edu.knowitall.browser.entity.CrosswikisCandidateFinder
   *
   * Also adds types - entityTyper does not have to be run as a separate job
   */
-class ScoobiTripleGroupLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedStemmer) {
+class ScoobiTripleClusterLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedStemmer) {
 
-  import ScoobiTripleGroupLinker.getRandomElement
-  import ScoobiTripleGroupLinker.min_arg_length
+  import ScoobiTripleClusterLinker.getRandomElement
+  import ScoobiTripleClusterLinker.min_arg_length
 
   private var groupsProcessed: Int = 0
   private var arg1sLinked: Int = 0
@@ -108,7 +108,7 @@ class ScoobiTripleGroupLinker(val subLinkers: Seq[EntityLinker], val stemmer: Ta
   }
 }
 
-object ScoobiTripleGroupLinker extends ScoobiApp {
+object ScoobiTripleClusterLinker extends ScoobiApp {
   import EntityLinkerStaticVars._
   private val min_arg_length = 3
 
@@ -127,11 +127,11 @@ object ScoobiTripleGroupLinker extends ScoobiApp {
 
   def getRandomElement[T](seq: Seq[T]): T = seq(Random.nextInt(seq.size))
 
-  def getEntityLinker(num: Int): ScoobiTripleGroupLinker = {
+  def getEntityLinker(num: Int): ScoobiTripleClusterLinker = {
     val el = getScratch(num).map(index => {
       new EntityLinker(new File(index))
     }) // java doesn't have Option
-    new ScoobiTripleGroupLinker(el, TaggedStemmer)
+    new ScoobiTripleClusterLinker(el, TaggedStemmer)
   }
 
   def linkGroups(groups: DList[String], minFreq: Int, maxFreq: Int, reportInterval: Int,

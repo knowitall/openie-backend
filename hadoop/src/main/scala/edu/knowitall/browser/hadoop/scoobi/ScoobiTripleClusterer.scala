@@ -34,7 +34,7 @@ import edu.knowitall.openie.models.util.ExtractionDeduplicator
   * then constructs ExtractionCluster[ReVerbExtraction] from the reducer input. The Entity Linker
   * code is run in the reducer.
   */
-class ScoobiTripleGrouper(val stemmer: TaggedStemmer) {
+class ScoobiTripleClusterer(val stemmer: TaggedStemmer) {
   final val max_group_size = 40000
 
   private var extrsProcessed = 0
@@ -109,7 +109,7 @@ class ScoobiTripleGrouper(val stemmer: TaggedStemmer) {
 object ScoobiTripleGrouper extends ScoobiApp {
   /** extrs --> grouped by normalization key */
   def groupExtractions(extrs: DList[String]): DList[String] = {
-    lazy val grouper = new ScoobiTripleGrouper(TaggedStemmer)
+    lazy val grouper = new ScoobiTripleClusterer(TaggedStemmer)
     val keyValuePair: DList[(String, String)] = extrs.mapFlatten { line =>
       grouper.getKeyValuePair(line)
     }

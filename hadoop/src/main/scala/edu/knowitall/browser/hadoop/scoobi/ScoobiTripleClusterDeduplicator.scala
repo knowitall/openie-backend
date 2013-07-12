@@ -26,7 +26,10 @@ import edu.knowitall.openie.models.Extraction
 import edu.knowitall.openie.models.util.ExtractionDeduplicator
 import scala.util.{ Success, Failure, Try }
 
-object ScoobiTripleGroupDeduplicator extends ScoobiApp {
+/**
+ * Run ExtractionDeduplicator.deduplicate on triple clusters.
+ */
+object ScoobiTripleClusterDeduplicator extends ScoobiApp {
   def run() = {
     val (inputPath, outputPath) = (args(0), args(1))
 
