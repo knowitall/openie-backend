@@ -28,7 +28,7 @@ object NlpToolsBuild extends Build {
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     publish := { },
     publishLocal := { }
-  ) aggregate(models, populator, backend, linker, hadoop)
+  ) aggregate(models, backend, linker, hadoop)
 
   // parent build definition
   val buildSettings = Defaults.defaultSettings ++ Seq (
@@ -70,7 +70,7 @@ object NlpToolsBuild extends Build {
       "com.github.scopt" %% "scopt" % "2.1.0",
       "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
       "net.databinder.dispatch" %% "dispatch-core" % "0.10.0")
-  )) dependsOn(backend)
+  )) dependsOn(models)
 
   lazy val backend = Project(id = "openie-backend", base = file("backend"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
@@ -110,7 +110,7 @@ object NlpToolsBuild extends Build {
         }
       }
     }
-  )) dependsOn(backend, linker)
+  )) dependsOn(linker)
 
   lazy val linker = Project(id = "openie-linker", base = file("linker"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
@@ -118,7 +118,6 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage %% "nlptools-core" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion,
-      "org.apache.lucene" % "lucene-core" % "3.0.3",
       "org.apache.lucene" % "lucene-queries" % "3.0.3",
       "org.apache.lucene" % "lucene-core" % "3.6.0",
       "com.github.scopt" %% "scopt" % "2.1.0",

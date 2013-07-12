@@ -60,7 +60,7 @@ class UnlinkableEntityTyper[T <: ExtractionTuple](val settings: TyperSettings, v
   import UnlinkableEntityTyper.{ allPairs, tabSplit, minArgLength }
   import TypeInfoUtils.typeStringMap
   import scala.util.Random
-  import edu.knowitall.browser.lucene.ExtractionGroupFetcher.entityStoplist
+  // import edu.knowitall.browser.lucene.ExtractionGroupFetcher.entityStoplist
   import settings._
 
   def getOptReg(regString: String) = time(getOptRegUntimed(regString), Timers.incParseRegCount _)
@@ -99,9 +99,9 @@ class UnlinkableEntityTyper[T <: ExtractionTuple](val settings: TyperSettings, v
   // returns rel string, group string
   def relationEntityKv(tupleString: String) = time(relationRegKvUntimed(tupleString), Timers.incRelRegCount _)
   def relationRegKvUntimed(tupleString: String): Option[(String, String)] = getOptReg(tupleString) flatMap { tuple =>
-    def entityBlacklistFilter(entity: EntityInfo): Boolean = !entityStoplist.contains(entity.fbid)
+    // def entityBlacklistFilter(entity: EntityInfo): Boolean = !entityStoplist.contains(entity.fbid)
     def typelessEntityFilter(entity: EntityInfo): Boolean = !entity.types.isEmpty
-    argField.loadEntityInfo(tuple) filter entityBlacklistFilter filter typelessEntityFilter map { entityInfo => (tuple.relNorm, entityInfo.toString) }
+    argField.loadEntityInfo(tuple) filter /*entityBlacklistFilter filter*/ typelessEntityFilter map { entityInfo => (tuple.relNorm, entityInfo.toString) }
   }
 
   def relationArgKv(tupleString: String): Option[(String, String)] = getOptReg(tupleString) flatMap { tuple =>
