@@ -47,14 +47,7 @@ case class TripleExtraction(
   override def relTokens = sentenceTokens(relInterval)
   override def arg2Tokens = sentenceTokens(arg2Interval)
 
-  def normTokens(interval: Interval) = sentenceTokens(interval) filter indexTokenFilter map { token =>
-    val norm = TaggedStemmer.stem(token)
-    new ChunkedToken(new PostaggedToken(new Token(norm, token.offset), token.postag), token.chunk)
-  }
-
   def sentenceTokens(interval: Interval): Seq[ChunkedToken] = interval.map(sentenceTokens(_))
-
-  def indexTokenFilter(token: Token) = !Extraction.strippedDeterminers.contains(token.string.toLowerCase)
 
   // returns an (arg1, rel, arg2) tuple of normalized string tokens
   def indexGroupingKey: (String, String, String) = {

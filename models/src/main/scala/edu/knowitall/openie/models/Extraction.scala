@@ -12,6 +12,7 @@ import scala.util.matching.Regex
 import scala.util.Try
 import edu.knowitall.tool.tokenize.Tokenizer
 import edu.knowitall.tool.chunk.Chunker
+import edu.knowitall.tool.tokenize.Token
 
 /**
   * A base class for all Extraction types.
@@ -25,9 +26,9 @@ import edu.knowitall.tool.chunk.Chunker
   *
   */
 abstract class Extraction {
-  def arg1Tokens: Seq[PostaggedToken]
-  def relTokens: Seq[PostaggedToken]
-  def arg2Tokens: Seq[PostaggedToken]
+  def arg1Tokens: Seq[ChunkedToken]
+  def relTokens: Seq[ChunkedToken]
+  def arg2Tokens: Seq[ChunkedToken]
 
   def arg1Interval: Interval
   def relInterval: Interval
@@ -50,6 +51,13 @@ abstract class Extraction {
   def confidence: Double
   def corpus: String
   def source: String
+
+  import ReVerbExtraction.strippedDeterminers
+  def indexTokenFilter(token: Token) = !strippedDeterminers.contains(token.string.toLowerCase)
+  def stemmedTokens(tokens: Seq[ChunkedToken]) = tokens filter indexTokenFilter map { token =>
+    val norm = TaggedStemmer.stem(token)
+    new ChunkedToken(new PostaggedToken(new Token(norm, token.offset), token.postag), token.chunk)
+  }
 
   def frontendGroupingKey: (String, String, String) = {
     (frontendArgKey(arg1Tokens), frontendArgKey(relTokens), frontendArgKey(arg2Tokens))
@@ -132,7 +140,6 @@ object Extraction {
     }
   }
 }
-
 
 object ExtractionProtocol extends DefaultProtocol {
     import dispatch.classic.json._

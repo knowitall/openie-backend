@@ -223,7 +223,7 @@ object SolrLoader {
         arg("source", "source (stdin|lucene|url)") { (str: String, c: Config) =>
           str match {
             case "stdin" => c.copy(source = StdinSource())
-            case path if new File(path).exists => c.copy(source = DirectorySource(new File(path))) 
+            case path if new File(path).exists => c.copy(source = DirectorySource(new File(path)))
             case url if control.Exception.catching(classOf[MalformedURLException]) opt new URL(url) isDefined => c.copy(source = UrlSource(url))
             case source => throw new IllegalArgumentException("Unknown source (not a file or URL): " + source)
           }

@@ -54,8 +54,6 @@ case class ReVerbExtraction(
 
   def sentenceTokens(interval: Interval): Seq[ChunkedToken] = interval.map(sentenceTokens(_))
 
-  def indexTokenFilter(token: Token) = !strippedDeterminers.contains(token.string.toLowerCase)
-
   // returns an (arg1, rel, arg2) tuple of normalized string tokens
   def indexGroupingKey: (String, String, String) = {
 

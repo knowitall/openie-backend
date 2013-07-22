@@ -41,12 +41,6 @@ case class NaryExtraction(
   def relTokens = sentenceTokens(rel.interval)
   def arg2sTokens = arg2s.map(arg2 => sentenceTokens(arg2.interval))
 
-  def normTokens(interval: Interval) = sentenceTokens(interval) filter indexTokenFilter map { token =>
-    val stemmer = TaggedStemmer
-    val norm = stemmer.stem(token)
-    new ChunkedToken(new PostaggedToken(new Token(norm, token.offset), token.postag), token.chunk)
-  }
-
   def sentenceTokens(interval: Interval): Seq[ChunkedToken] = interval.map(sentenceTokens(_))
 
   def indexTokenFilter(token: Token) = !strippedDeterminers.contains(token.string.toLowerCase)
