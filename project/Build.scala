@@ -70,6 +70,7 @@ object NlpToolsBuild extends Build {
       slf4jApi,
       liftJson,
       "commons-logging" % "commons-logging-api" % "1.0.4", // solrj stupidly needs this?
+      "commons-io" % "commons-io" % "2.4", // recursive subfiles
       "com.github.scopt" %% "scopt" % "2.1.0",
       "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
       "net.databinder.dispatch" %% "dispatch-core" % "0.10.0")

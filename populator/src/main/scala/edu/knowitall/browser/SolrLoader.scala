@@ -4,7 +4,7 @@ import com.twitter.bijection.Bijection
 import java.io.{ByteArrayOutputStream, ObjectOutputStream, File}
 import java.net.{MalformedURLException, URL}
 import scala.concurrent._
-import scala.collection.JavaConverters.{asJavaIteratorConverter, seqAsJavaListConverter, setAsJavaSetConverter}
+import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.io.Source
 import scala.util.control
@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import edu.knowitall.openie.models.ExtractionCluster
 import edu.knowitall.openie.models.Extraction
 import edu.knowitall.openie.models.serialize.TabReader
+import org.apache.commons.io.FileUtils
 
 abstract class SolrLoader {
   def close()
@@ -190,15 +191,15 @@ object SolrLoader {
     require(file.exists, "file does not exist: " + file)
 
     val files = 
-      if (file.isDirectory) file.listFiles.toList
+      if (file.isDirectory) FileUtils.listFiles(file, null, true).asScala.toList
       else List(file)
 
     files.foreach(file => logger.info("Appending file to import: " + file))
 
     def groupIterator() = {
-      val thunks: Iterator[() => Iterator[ExtractionGroup[ReVerbExtraction]]] = files.iterator.map(file => 
+      val thunks: Iterator[() => Iterator[ExtractionCluster[Extraction]]] = files.iterator.map(file => 
         () => 
-          Source.fromFile(file, "UTF-8").getLines map ReVerbExtractionGroup.deserializeFromString map (_.get)
+          Source.fromFile(file, "UTF-8").getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
       )
 
       // i'm ignoring closing handles--resource leak
