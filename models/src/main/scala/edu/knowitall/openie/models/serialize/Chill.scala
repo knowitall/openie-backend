@@ -45,18 +45,18 @@ object Chill {
   def tupled(interval: Interval) = (interval.start, interval.end)
   def detupled(tuple: (Int, Int)) = (Interval.open(tuple._1, tuple._2))
   type IntervalTuple = (Int, Int)
-  val reverbExtractionBijection = Bijection.build[
-    ReVerbExtraction,
-    (IndexedSeq[ChunkedToken], IntervalTuple, IntervalTuple, IntervalTuple, String)
+  val extractionTripleBijection = Bijection.build[
+    TripleExtraction,
+    (Double, String, Seq[ChunkedToken], String, String, String, IntervalTuple, IntervalTuple, IntervalTuple, String)
   ]{
-    extr => (extr.sentenceTokens, tupled(extr.arg1Interval), tupled(extr.relInterval), tupled(extr.arg2Interval), extr.sourceUrl)
-  } { case (tokens, arg1Interval, relInterval, arg2Interval, source) =>
-    ReVerbExtraction(tokens, detupled(arg1Interval), detupled(relInterval), detupled(arg2Interval), source)
+    extr => (extr.confidence, extr.corpus, extr.sentenceTokens, extr.arg1Text, extr.relText, extr.arg2Text, tupled(extr.arg1Interval), tupled(extr.relInterval), tupled(extr.arg2Interval), extr.source)
+  } { case (confidence, corpus, tokens, arg1Text, relText, arg2Text, arg1Interval, relInterval, arg2Interval, source) =>
+    TripleExtraction(confidence, corpus, tokens, arg1Text, relText, arg2Text, detupled(arg1Interval), detupled(relInterval), detupled(arg2Interval), source)
   }
-  val reverbExtractionGroupBijection = Bijection.build[
-    ExtractionGroup[ReVerbExtraction],
-    (ExtractionArgument, ExtractionRelation, ExtractionArgument, Set[Instance[ReVerbExtraction]])
-  ](ExtractionGroup.unapply[ReVerbExtraction](_).get)((ExtractionGroup.apply[ReVerbExtraction] _).tupled)
+  def extractionClusterBijection[T <: Extraction] = Bijection.build[
+    ExtractionCluster[T],
+    (ExtractionArgument, ExtractionRelation, ExtractionArgument, Seq[T])
+  ](ExtractionCluster.unapply[T](_).get)((ExtractionCluster.apply[T] _).tupled)
 
   /**
    * Reuse the Output and Kryo, which is faster
@@ -86,8 +86,8 @@ object Chill {
       .forClassViaBijectionDefault2(intervalBijection)
       .forClassViaBijection(freebaseEntityBijection)
       .forClassViaBijection(freebaseTypeBijection)
-      .forClassViaBijection(reverbExtractionBijection)
-      .forClassViaBijection(reverbExtractionGroupBijection)
+      .forClassViaBijection(extractionTripleBijection)
+      .forClassViaBijection(extractionClusterBijection[Extraction])
     val kryo = {
       val k = new KryoBase
       k.setRegistrationRequired(false)
