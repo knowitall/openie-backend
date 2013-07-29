@@ -45,12 +45,11 @@ object ScoobiConverter extends ScoobiApp {
 
   def run(): Unit = {
 
-    var inputPath, outputPath, corpus = ""
+    var inputPath, outputPath = ""
 
     val parser = new OptionParser() {
       arg("inputPath", "hdfs input path, sentences each on a line", { str => inputPath = str })
       arg("outputPath", "hdfs output path, chunked sentences", { str => outputPath = str })
-      arg("corpus", "corpus name", { str => corpus = str })
     }
 
     if (!parser.parse(args)) return
@@ -58,7 +57,7 @@ object ScoobiConverter extends ScoobiApp {
     // serialized ReVerbExtractions
     val lines: DList[String] = TextInput.fromTextSource(new TextSource(Seq(inputPath),  inputFormat = classOf[LzoTextInputFormat].asInstanceOf[Class[org.apache.hadoop.mapreduce.lib.input.TextInputFormat]]))
 
-    val clusters = lines.map { line =>
+    val clusters = lines.flatMap { line =>
       ReVerbExtractionGroup.deserializeFromTokens(line.split("\t")).map { reg =>
         val extractions = reg.instances.map { inst =>
           TripleExtraction(inst.confidence, inst.corpus, inst.extraction.sentenceTokens, inst.extraction.arg1Text, inst.extraction.relText, inst.extraction.arg2Text, inst.extraction.arg1Interval, inst.extraction.relInterval, inst.extraction.arg2Interval, inst.extraction.source)
