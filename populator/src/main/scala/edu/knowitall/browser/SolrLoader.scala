@@ -75,7 +75,7 @@ class SolrJLoader(urlString: String) extends SolrLoader {
       document.setField("arg2_fulltypes", cluster.arg2.types.map(_.name).asJava)
       document.setField("arg2_types", cluster.arg2.types.map(_.typ).asJava)
 
-      document.setField("corpora", cluster.instances.map(_.corpus).toList.asJava)
+      document.setField("corpora", cluster.instances.map(_.corpus).toList.distinct.asJava)
       document.setField("instances", instanceBytes)
       document.setField("size", cluster.instances.size)
     }
@@ -190,15 +190,15 @@ object SolrLoader {
   case class DirectorySource(file: java.io.File) extends Source {
     require(file.exists, "file does not exist: " + file)
 
-    val files = 
+    val files =
       if (file.isDirectory) FileUtils.listFiles(file, null, true).asScala.toList
       else List(file)
 
     files.foreach(file => logger.info("Appending file to import: " + file))
 
     def groupIterator() = {
-      val thunks: Iterator[() => Iterator[ExtractionCluster[Extraction]]] = files.iterator.map(file => 
-        () => 
+      val thunks: Iterator[() => Iterator[ExtractionCluster[Extraction]]] = files.iterator.map(file =>
+        () =>
           Source.fromFile(file, "UTF-8").getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
       )
 
