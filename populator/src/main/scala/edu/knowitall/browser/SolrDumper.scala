@@ -30,6 +30,9 @@ import org.apache.solr.client.solrj.SolrQuery
 import edu.knowitall.openie.models.FreeBaseEntity
 import edu.knowitall.openie.models.FreeBaseType
 import edu.knowitall.openie.models.Instance
+import scala.util.control.Exception
+import scala.util.Success
+import scala.util.Failure
 
 class SolrJServer(urlString: String) {
   val solr = new HttpSolrServer(urlString)
@@ -85,18 +88,17 @@ class SolrJServer(urlString: String) {
 }
 
 object SolrDumper {
-  val logger = LoggerFactory.getLogger(classOf[SolrLoader])
+  val logger = LoggerFactory.getLogger(this.getClass)
 
   case class Config(
     val dest: PrintWriter = null,
     val url: String = "",
-    val stdOut: Boolean = false,
     val count: Int = Int.MaxValue,
     val blockSize: Int = 10000,
     val parallel: Boolean = false)
 
   def main(args: Array[String]): Unit = {
-    val parser = new OptionParser[Config]("SolrLoader") {
+    val parser = new OptionParser[Config]("SolrDumper") {
       def options = Seq(
         arg("solr-url", "solr url") { (str: String, c: Config) => c.copy(url = str) },
         arg("dest", "dest (stdout|lucene|url)") { (str: String, c: Config) =>
@@ -106,7 +108,6 @@ object SolrDumper {
             case _ => throw new IllegalArgumentException("Destination already exists: " + str)
           }
         },
-        flag("stdout", "dump to stdout") { (c: Config) => c.copy(stdOut = true) },
         flag("p", "parallel", "import in parallel") { (c: Config) => c.copy(parallel = true) },
         intOpt("n", "count", "number to process") { (n: Int, c: Config) => c.copy(count = n) })
     }
@@ -118,15 +119,22 @@ object SolrDumper {
   }
 
   def run(config: Config) = {
-    SolrLoader.logger.info("Dumping from " + config.url + " to " + config.dest)
+    SolrDumper.logger.info("Dumping from " + config.url + " to " + config.dest)
     println("Starting dump...")
     using(new SolrJServer(config.url)) { solr =>
       for {
         index <- Iterator.from(0)
         startIndex = index * config.blockSize
         if startIndex < config.count
+
         _ = println(s"Downloading ${config.blockSize} dumps starting at: $startIndex")
-        dumps = solr.dump(startIndex, config.blockSize)
+
+        dumps <- Iterator.continually(Exception.catching(classOf[Exception]) either solr.dump(startIndex, config.blockSize)).map { tri =>
+          tri match {
+            case Right(x) => Some(x)
+            case Left(e) => e.printStackTrace; None
+          }
+        }.find(_.isDefined).get
       } {
         dumps map ReVerbExtractionGroup.serializeToString foreach config.dest.println
         config.dest.flush()
