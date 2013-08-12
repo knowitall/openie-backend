@@ -101,9 +101,11 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     * @throws FileNotFoundException
     */
   private def getBestFbid(arg: String, fbidPairs: Seq[Pair[String, java.lang.Double]], fbidScores: Iterable[Pair[String, java.lang.Double]]): EntityLink = {
-    var bestScore = Double.NegativeInfinity
+    var bestCombinedScore = Double.NegativeInfinity
     var bestTitle = ""
     var bestFbid = ""
+    var bestCandidateScore = 0.0
+    var bestDocSimScore = 0.0
     var bestInlinks = 0
 
     var fbidScoresEmpty = true
@@ -123,9 +125,11 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
       val cprob = fbidCprobs.get(fbidScore.one) match {
         case Some(cprob) =>
           val thisScore = scoreFbid(arg, title, cprob, inlinks, fbidScore.two)
-          if (thisScore > bestScore) {
-            bestScore = thisScore;
+          if (thisScore > bestCombinedScore) {
+            bestCombinedScore = thisScore;
             bestInlinks = inlinks;
+            bestCandidateScore = cprob;
+            bestDocSimScore = fbidScore.two
             bestTitle = title;
             bestFbid = fbidScore.one;
           }
@@ -140,7 +144,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     if (bestTitle.isEmpty()) {
       return null;
     } else {
-      return new EntityLink(bestTitle, bestFbid, bestScore, bestInlinks);
+      return new EntityLink(bestTitle, bestFbid, bestCandidateScore, bestInlinks, bestDocSimScore);
     }
   }
 
@@ -186,7 +190,7 @@ object EntityLinker {
       val (args, context) = parseInputLine(line)
       val entities = args.map(arg => (arg, Option(linker.getBestEntity(arg, context))))
       def entityToTabbed(argEntity: (String, Option[EntityLink])) = argEntity._2 match {
-        case Some(link) => Seq(link.entity.name, link.entity.fbid, link.score, link.inlinks, link.retrieveTypes.mkString(","))
+        case Some(link) => Seq(link.entity.name, link.entity.fbid, link.combinedScore, link.inlinks, link.retrieveTypes.mkString(","))
         case None => "%s: No Link".format(argEntity._1)
       }
       val entityStrings = entities map entityToTabbed

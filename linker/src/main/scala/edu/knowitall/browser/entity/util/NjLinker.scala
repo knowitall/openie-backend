@@ -27,7 +27,7 @@ object NjLinker {
 
     override def toString: String = {
 
-      def formatLink(link: EntityLink): String = "%s\t%s\t%.03f\t%s".format(link.entity.name, link.entity.fbid, link.score, link.retrieveTypes.mkString(","))
+      def formatLink(link: EntityLink): String = "%s\t%s\t%.03f\t%s".format(link.entity.name, link.entity.fbid, link.combinedScore, link.retrieveTypes.mkString(","))
 
       val arg1EntityString = arg1Entity match {
         case Some(link) => formatLink(link)
