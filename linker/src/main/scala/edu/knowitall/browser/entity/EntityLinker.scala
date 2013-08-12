@@ -71,10 +71,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     while (sources.size() < PAD_SOURCES) {
       val newSources = new ArrayList[String](PAD_SOURCES)
       newSources.addAll(sources);
-
-      for (s <- sources)
-        if (newSources.size() < PAD_SOURCES)
-          newSources.add(s)
+      newSources.addAll(sources);
 
       sources = newSources;
     }
