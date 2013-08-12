@@ -34,14 +34,11 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
   private def tryFbidCache(arg: String): Seq[Pair[String, java.lang.Double]] =
     candidateFinder.linkToFbids(arg)
 
-  def getBestEntity(arg: String, sourceSentences: Seq[String]): EntityLink = {
+  def getBestEntity(arg: String, sourceSentences: Seq[String]): Option[EntityLink] = getBestEntities(arg, sourceSentences).headOption
+  
+  def getBestEntities(arg: String, sourceSentences: Seq[String]): Seq[EntityLink] = {
 
-    val entity = getBestFbidFromSources(arg, sourceSentences)
-    if (entity == null) return null
-
-    val typedEntity = typer.typeEntity(entity)
-
-    return typedEntity
+    getBestFbidsFromSources(arg, sourceSentences).map(typer.typeEntity)
   }
 
   /**
@@ -53,7 +50,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     * @throws IOException
     * @throws ClassNotFoundException
     */
-  private def getBestFbidFromSources(arg: String, inputSources: Seq[String]): EntityLink = {
+  private def getBestFbidsFromSources(arg: String, inputSources: Seq[String]): Seq[EntityLink] = {
 
     var sources = inputSources
 
@@ -85,7 +82,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     val fbids = fbidPairs.map(pair => pair.one).toList
     val fbidScores = bm.processSingleArgWithSources(arg, fbids, sources).toIterable
 
-    return getBestFbid(arg, fbidPairs, fbidScores);
+    return getBestFbids(arg, fbidPairs, fbidScores);
   }
 
   /**
@@ -99,8 +96,8 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     * @throws ClassNotFoundException
     * @throws IOException
     * @throws FileNotFoundException
-    */
-  private def getBestFbid(arg: String, fbidPairs: Seq[Pair[String, java.lang.Double]], fbidScores: Iterable[Pair[String, java.lang.Double]]): EntityLink = {
+    */EntityLinker
+  private def getBestFbids(arg: String, fbidPairs: Seq[Pair[String, java.lang.Double]], fbidScores: Iterable[Pair[String, java.lang.Double]]): Seq[EntityLink] = {
     var bestCombinedScore = Double.NegativeInfinity
     var bestTitle = ""
     var bestFbid = ""
@@ -108,6 +105,8 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
     var bestDocSimScore = 0.0
     var bestInlinks = 0
 
+    var bestLinks = List.empty[EntityLink]
+    
     var fbidScoresEmpty = true
 
     val fbidCprobs = HashMap[String, java.lang.Double]();
@@ -124,28 +123,13 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
       val inlinks = titleInlinks.two
       val cprob = fbidCprobs.get(fbidScore.one) match {
         case Some(cprob) =>
-          val thisScore = scoreFbid(arg, title, cprob, inlinks, fbidScore.two)
-          if (thisScore > bestCombinedScore) {
-            bestCombinedScore = thisScore;
-            bestInlinks = inlinks;
-            bestCandidateScore = cprob;
-            bestDocSimScore = fbidScore.two
-            bestTitle = title;
-            bestFbid = fbidScore.one;
-          }
-        case None => 0
+          bestLinks ::= new EntityLink(title, fbidScore.one, cprob, inlinks, fbidScore.two)
+          
+        case None => { System.err.println("Warning, candidate score not present.") }
       }
     }
 
-    if (bestTitle.isEmpty() && !fbidScoresEmpty)
-      throw new RuntimeException(
-        "There should have been a FB match here, implementation error.");
-
-    if (bestTitle.isEmpty()) {
-      return null;
-    } else {
-      return new EntityLink(bestTitle, bestFbid, bestCandidateScore, bestInlinks, bestDocSimScore);
-    }
+    bestLinks.sortBy(-_.combinedScore)
   }
 
   private def scoreFbid(arg: String, title: String, cprob: Double, inlinks: Int, score: Double): Double = {
@@ -179,7 +163,12 @@ object EntityLinker {
 
     if (!parser.parse(args)) return
 
-    val linker = new EntityLinker(new File(baseDir))
+    val baseDirFile = new File(baseDir)
+    
+    val linker = new EntityLinker(
+      new batch_match(baseDirFile),
+      new CrosswikisCandidateFinder(baseDirFile, 0.01, 10),
+      new EntityTyper(baseDirFile))
 
     def parseInputLine(line: String): (Args, Context) = {
       val split = tabSplitter.split(line)
@@ -188,13 +177,13 @@ object EntityLinker {
 
     def linkLine(line: String): String = {
       val (args, context) = parseInputLine(line)
-      val entities = args.map(arg => (arg, Option(linker.getBestEntity(arg, context))))
-      def entityToTabbed(argEntity: (String, Option[EntityLink])) = argEntity._2 match {
-        case Some(link) => Seq(link.entity.name, link.entity.fbid, link.combinedScore, link.inlinks, link.retrieveTypes.mkString(","))
-        case None => "%s: No Link".format(argEntity._1)
+      val entities = args.flatMap(arg => linker.getBestEntities(arg, context).map(link => (arg, link)))
+      def entityToTabbed(argEntity: (String, EntityLink)) = {
+        val link = argEntity._2
+        Seq(link.entity.name, link.entity.fbid, link.candidateScore, link.inlinks, link.docSimScore, link.combinedScore, link.retrieveTypes.mkString(",")).mkString("\t")
       }
       val entityStrings = entities map entityToTabbed
-      entityStrings.mkString("\t")
+      entityStrings.mkString("\n")
     }
 
     def getInput: Source = inputFile match {

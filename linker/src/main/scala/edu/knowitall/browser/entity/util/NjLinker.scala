@@ -101,11 +101,11 @@ object NjLinker {
 
         val arg2Link = linker.getBestEntity(arg2, sentences)
 
-        if (arg1Link != null) {
-          group foreach { extraction => extraction.arg1Entity = Some(arg1Link) }
+        if (arg1Link.nonEmpty) {
+          group foreach { extraction => extraction.arg1Entity = arg1Link }
         }
-        if (arg2Link != null) {
-          group foreach { extraction => extraction.arg2Entity = Some(arg2Link) }
+        if (arg2Link.nonEmpty) {
+          group foreach { extraction => extraction.arg2Entity = arg2Link }
         }
       } catch {
         case e: Exception => e.printStackTrace
