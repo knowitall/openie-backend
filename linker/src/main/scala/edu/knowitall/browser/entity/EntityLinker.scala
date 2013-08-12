@@ -56,7 +56,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
 
     if (sources.isEmpty()) {
       System.err.println("Warning: no source sentences for arg: " + arg);
-      return null; // later code assumes that we don't have any empty list
+      return Seq.empty; // later code assumes that we don't have any empty list
     }
     totalLookups += 1
     val fbidPairs = tryFbidCache(arg)
@@ -66,7 +66,7 @@ class EntityLinker(val bm: batch_match, val candidateFinder: CandidateFinder,
         + " cache hits: " + cacheHits + " cache timeouts: "
         + cacheTimeouts)
 
-    if (fbidPairs.isEmpty()) return null
+    if (fbidPairs.isEmpty()) return Seq.empty
 
     while (sources.size() < PAD_SOURCES) {
       val newSources = new ArrayList[String](PAD_SOURCES)
