@@ -57,7 +57,7 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
   }
 
   def entityConversion(link: EntityLink): (Option[FreeBaseEntity], Set[FreeBaseType]) = {
-    val fbEntity = FreeBaseEntity(link.entity.name, link.entity.fbid, link.score, link.inlinks)
+    val fbEntity = FreeBaseEntity(link.entity.name, link.entity.fbid, link.combinedScore, link.inlinks)
     val fbTypes = link.retrieveTypes flatMap FreeBaseType.parse toSet
 
     (Some(fbEntity), fbTypes)
