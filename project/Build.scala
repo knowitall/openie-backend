@@ -39,6 +39,8 @@ object NlpToolsBuild extends Build {
     crossScalaVersions := buildScalaVersions,
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     javacOptions ++= Seq("-source", "1.6", "-target", "1.6"),
+    fork in run := true,
+    javaOptions in run += "-Xmx8G",
     libraryDependencies ++= Seq(junit % "test", specs2 % "test", scalatest % "test"),
     resolvers ++= Seq(
       "knowitall" at "http://knowitall.cs.washington.edu/maven2",
