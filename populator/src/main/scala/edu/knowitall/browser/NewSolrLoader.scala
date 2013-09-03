@@ -29,7 +29,7 @@ import edu.knowitall.openie.models.serialize.TabReader
 
 class NewSolrJLoader(urlString: String) extends SolrLoader {
 
-  import NewSolrLoader.toSolrDocuments
+  import SolrDocumentConverter.toSolrDocuments
   
   type REG = ExtractionGroup[ReVerbExtraction]
   
@@ -52,83 +52,7 @@ class NewSolrJLoader(urlString: String) extends SolrLoader {
   }
 }
 
-object NewSolrLoader {
-
-  val logger = LoggerFactory.getLogger(classOf[SolrLoader])
-
-  sealed abstract class Source {
-    def groupIterator(): Iterator[ExtractionCluster[Extraction]]
-    def close(): Unit
-  }
-
-  case class StdinSource() extends Source {
-    def groupIterator() = {
-      Source.stdin.getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
-    }
-
-    def close() {}
-  }
-
-  case class UrlSource(url: String) extends Source {
-    def groupIterator() = {
-      Source.fromURL(url, "UTF-8").getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
-    }
-
-    def close() {}
-  }
-
-  case class DirectorySource(file: java.io.File) extends Source {
-    require(file.exists, "file does not exist: " + file)
-
-    val files =
-      if (file.isDirectory) FileUtils.listFiles(file, null, true).asScala.toList
-      else List(file)
-
-    files.foreach(file => logger.info("Appending file to import: " + file))
-
-    def groupIterator() = {
-      val thunks: Iterator[() => Iterator[ExtractionCluster[Extraction]]] = files.iterator.map(file =>
-        () =>
-          Source.fromFile(file, "UTF-8").getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
-      )
-
-      // i'm ignoring closing handles--resource leak
-      thunks.foldLeft(thunks.next.apply()){ case (it, th) => it ++ th.apply() }
-    }
-
-    def close() {}
-  }
-
-  case class Config(
-    val source: Source = StdinSource(),
-    val url: String = "",
-    val stdOut: Boolean = false,
-    val count: Int = Int.MaxValue,
-    val parallel: Boolean = false)
-
-  def main(args: Array[String]): Unit = {
-    val parser = new OptionParser[Config]("SolrLoader") {
-      def options = Seq(
-        arg("solr-url", "solr url") { (str: String, c: Config) => c.copy(url = str) },
-        arg("source", "source (stdin|url)") { (str: String, c: Config) =>
-          str match {
-            case "stdin" => c.copy(source = StdinSource())
-            case path if new File(path).exists => c.copy(source = DirectorySource(new File(path)))
-            case url if control.Exception.catching(classOf[MalformedURLException]) opt new URL(url) isDefined => c.copy(source = UrlSource(url))
-            case source => throw new IllegalArgumentException("Unknown source (not a file or URL): " + source)
-          }
-        },
-        flag("stdout", "dump to stdout") { (c: Config) => c.copy(stdOut = true) },
-        flag("p", "parallel", "import in parallel") { (c: Config) => c.copy(parallel = true) },
-        intOpt("n", "number to process") { (n: Int, c: Config) => c.copy(count = n) })
-    }
-
-    parser.parse(args, Config()) match {
-      case Some(config) => run(config)
-      case None =>
-    }
-  }
-  
+object SolrDocumentConverter {
   def toSolrDocuments(cluster: ExtractionCluster[Extraction], idFactory: () => String) = {
 
     val relation = new SolrInputDocument()
@@ -210,6 +134,84 @@ object NewSolrLoader {
     }
     
     docs
+  }
+}
+
+object NewSolrLoader {
+
+  val logger = LoggerFactory.getLogger(classOf[SolrLoader])
+
+  sealed abstract class Source {
+    def groupIterator(): Iterator[ExtractionCluster[Extraction]]
+    def close(): Unit
+  }
+
+  case class StdinSource() extends Source {
+    def groupIterator() = {
+      Source.stdin.getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
+    }
+
+    def close() {}
+  }
+
+  case class UrlSource(url: String) extends Source {
+    def groupIterator() = {
+      Source.fromURL(url, "UTF-8").getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
+    }
+
+    def close() {}
+  }
+
+  case class DirectorySource(file: java.io.File) extends Source {
+    require(file.exists, "file does not exist: " + file)
+
+    val files =
+      if (file.isDirectory) FileUtils.listFiles(file, null, true).asScala.toList
+      else List(file)
+
+    files.foreach(file => logger.info("Appending file to import: " + file))
+
+    def groupIterator() = {
+      val thunks: Iterator[() => Iterator[ExtractionCluster[Extraction]]] = files.iterator.map(file =>
+        () =>
+          Source.fromFile(file, "UTF-8").getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
+      )
+
+      // i'm ignoring closing handles--resource leak
+      thunks.foldLeft(thunks.next.apply()){ case (it, th) => it ++ th.apply() }
+    }
+
+    def close() {}
+  }
+
+  case class Config(
+    val source: Source = StdinSource(),
+    val url: String = "",
+    val stdOut: Boolean = false,
+    val count: Int = Int.MaxValue,
+    val parallel: Boolean = false)
+
+  def main(args: Array[String]): Unit = {
+    val parser = new OptionParser[Config]("SolrLoader") {
+      def options = Seq(
+        arg("solr-url", "solr url") { (str: String, c: Config) => c.copy(url = str) },
+        arg("source", "source (stdin|url)") { (str: String, c: Config) =>
+          str match {
+            case "stdin" => c.copy(source = StdinSource())
+            case path if new File(path).exists => c.copy(source = DirectorySource(new File(path)))
+            case url if control.Exception.catching(classOf[MalformedURLException]) opt new URL(url) isDefined => c.copy(source = UrlSource(url))
+            case source => throw new IllegalArgumentException("Unknown source (not a file or URL): " + source)
+          }
+        },
+        flag("stdout", "dump to stdout") { (c: Config) => c.copy(stdOut = true) },
+        flag("p", "parallel", "import in parallel") { (c: Config) => c.copy(parallel = true) },
+        intOpt("n", "number to process") { (n: Int, c: Config) => c.copy(count = n) })
+    }
+
+    parser.parse(args, Config()) match {
+      case Some(config) => run(config)
+      case None =>
+    }
   }
 
   def run(config: Config) = {
