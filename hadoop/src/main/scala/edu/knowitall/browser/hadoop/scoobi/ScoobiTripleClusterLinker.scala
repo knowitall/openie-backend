@@ -8,12 +8,12 @@ import scala.util.Random
 import scala.collection.JavaConversions._
 import scala.collection.mutable
 import edu.knowitall.common.Timing._
-import edu.knowitall.openie.models.ReVerbExtraction
+import edu.knowitall.openie.models.ExtractionCluster
+import edu.knowitall.openie.models.Extraction
 import edu.knowitall.openie.models.FreeBaseEntity
 import edu.knowitall.openie.models.FreeBaseType
 import edu.knowitall.openie.models.ExtractionGroup
 import edu.knowitall.openie.models.Instance
-import edu.knowitall.openie.models.ReVerbExtractionGroup
 import edu.knowitall.browser.entity.EntityLinker
 import edu.knowitall.browser.entity.EntityLink
 import edu.knowitall.browser.entity.Pair
@@ -32,22 +32,22 @@ import edu.knowitall.browser.entity.CrosswikisCandidateFinder
 /**
   * A mapper job that
   * takes tab-delimited ReVerbExtractions as input, groups them by a normalization key, and
-  * then constructs ExtractionGroup[ReVerbExtraction] from the reducer input.
+  * then constructs ExtractionCluster[Extraction] from the reducer input.
   * linkers is a Seq --- this is because each points to a different lucene index on one of the four of
   * reliable's scratch disks, which helps balance the load, allowing you to run more of these
   * as hadoop map tasks
   *
   * Also adds types - entityTyper does not have to be run as a separate job
   */
-class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedStemmer) {
+class ScoobiTripleClusterLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedStemmer) {
 
-  import ScoobiEntityLinker.getRandomElement
-  import ScoobiEntityLinker.min_arg_length
+  import ScoobiTripleClusterLinker.getRandomElement
+  import ScoobiTripleClusterLinker.min_arg_length
 
-  private var groupsProcessed = 0
-  private var arg1sLinked = 0
-  private var arg2sLinked = 0
-  private var totalGroups = 0
+  private var groupsProcessed: Int = 0
+  private var arg1sLinked: Int = 0
+  private var arg2sLinked: Int = 0
+  private var totalGroups: Int = 0
 
   def getEntity(el: EntityLinker, arg: Seq[PostaggedToken], sources: Set[String]): Option[EntityLink] = {
     if (arg.length < min_arg_length) None
@@ -63,10 +63,10 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
     (Some(fbEntity), fbTypes)
   }
 
-  def linkEntities(reuseLinks: Boolean)(group: ExtractionGroup[ReVerbExtraction]): ExtractionGroup[ReVerbExtraction] = {
+  def linkEntities(reuseLinks: Boolean)(group: ExtractionCluster[Extraction]): ExtractionCluster[Extraction] = {
     groupsProcessed += 1
 
-    val extrs = group.instances.map(_.extraction)
+    val extrs = group.instances
 
     val head = extrs.head
 
@@ -77,7 +77,7 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
     val (arg1Entity, arg1Types) = if (reuseLinks && group.arg1.entity.isDefined) {
       (group.arg1.entity, group.arg1.types)
     } else {
-      val entity = getEntity(randomLinker, head.arg1Tokens, sources) match {
+      val entity = getEntity(randomLinker, head.arg1Tokens, sources.toSet) match {
         case Some(rawEntity) => { arg1sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
@@ -87,14 +87,14 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
     val (arg2Entity, arg2Types) = if (reuseLinks && group.arg2.entity.isDefined) {
       (group.arg2.entity, group.arg2.types)
     } else {
-      val entity = getEntity(randomLinker, head.arg2Tokens, sources) match {
+      val entity = getEntity(randomLinker, head.arg2Tokens, sources.toSet) match {
         case Some(rawEntity) => { arg2sLinked += 1; entityConversion(rawEntity) }
         case None => (Option.empty[FreeBaseEntity], Set.empty[FreeBaseType])
       }
       entity
     }
 
-    val newGroup = new ExtractionGroup(
+    val newGroup = new ExtractionCluster[Extraction](
       group.arg1.norm,
       group.rel.norm,
       group.arg2.norm,
@@ -102,23 +102,17 @@ class ScoobiEntityLinker(val subLinkers: Seq[EntityLinker], val stemmer: TaggedS
       arg2Entity,
       arg1Types,
       arg2Types,
-      group.instances.map(inst => new Instance(inst.extraction, inst.corpus, inst.confidence)))
+      group.instances)
 
     newGroup
   }
 }
 
-object EntityLinkerStaticVars {
-  val linkersLocal = new mutable.HashMap[Thread, ScoobiEntityLinker] with mutable.SynchronizedMap[Thread, ScoobiEntityLinker]
-  case class Counter(var count: Int) { def inc(): Unit = { count += 1 } }
-  val counterLocal = new ThreadLocal[Counter]() { override def initialValue = Counter(0) }
-}
-
-object ScoobiEntityLinker extends ScoobiApp {
+object ScoobiTripleClusterLinker extends ScoobiApp {
   import EntityLinkerStaticVars._
   private val min_arg_length = 3
 
-  val random = new scala.util.Random
+  lazy val linker = getEntityLinker(4)
 
   // hardcoded for the rv cluster - the location of Tom's freebase context similarity index.
   // Indexes are on the /scratchX/ where X in {"", 2, 3, 4}, the method getScratch currently
@@ -133,13 +127,11 @@ object ScoobiEntityLinker extends ScoobiApp {
 
   def getRandomElement[T](seq: Seq[T]): T = seq(Random.nextInt(seq.size))
 
-  def getEntityLinker: ScoobiEntityLinker = getEntityLinker(4)
-
-  def getEntityLinker(num: Int): ScoobiEntityLinker = {
+  def getEntityLinker(num: Int): ScoobiTripleClusterLinker = {
     val el = getScratch(num).map(index => {
       new EntityLinker(new File(index))
     }) // java doesn't have Option
-    new ScoobiEntityLinker(el, TaggedStemmer)
+    new ScoobiTripleClusterLinker(el, TaggedStemmer)
   }
 
   def linkGroups(groups: DList[String], minFreq: Int, maxFreq: Int, reportInterval: Int,
@@ -147,24 +139,22 @@ object ScoobiEntityLinker extends ScoobiApp {
     if (skipLinking) return frequencyFilter(groups, minFreq, maxFreq, reportInterval, skipLinking)
 
     groups.flatMap { line =>
-      val counter = counterLocal.get
-      counter.inc
-      val linker = linkersLocal.getOrElseUpdate(Thread.currentThread, getEntityLinker)
-      if (counter.count % reportInterval == 0) {
-        val format = "MinFreq: %d, MaxFreq: %d, groups input: %d, groups output: %d, arg1 links: %d, arg2 links: %d"
-        System.err.println(format.format(minFreq, maxFreq, counter.count, linker.groupsProcessed, linker.arg1sLinked, linker.arg2sLinked))
+      if (linker.groupsProcessed % 1000 == 0) {
+        val format = s"MinFreq: $minFreq, MaxFreq: $maxFreq, groups input: ${linker.groupsProcessed}, arg1 links: ${linker.arg2sLinked}, arg2 links: ${linker.arg2sLinked}"
+        System.err.println(format)
       }
 
-      val extrOp = ReVerbExtractionGroup.deserializeFromString(line)
+      val extrOp = ExtractionCluster.TabFormat.read(line).toOption
       extrOp match {
-        case Some(extr) => {
+        case Some(extr) if extr.instances.size > 0 => {
           if (extr.instances.size <= maxFreq && extr.instances.size >= minFreq) {
-            Some(ReVerbExtractionGroup.serializeToString(linker.linkEntities(reuseLinks = false)(extr)))
+            Some(ExtractionCluster.TabFormat.write(linker.linkEntities(reuseLinks = false)(extr)))
           } else {
+            System.err.println("Trouble deserializing: " + line)
             None
           }
         }
-        case None => { System.err.println("ScoobiEntityLinker: Error parsing a group: %s".format(line)); None }
+        case None => { System.err.println("ScoobiTripleGroupLinker: Error parsing a group: %s".format(line)); None }
       }
     }
   }
@@ -173,25 +163,23 @@ object ScoobiEntityLinker extends ScoobiApp {
 
     var groupsOutput = 0
 
-    groups.flatMap { line =>
-      val counter = counterLocal.get
-      counter.inc
-      if (counter.count % reportInterval == 0) {
+    groups.mapFlatten { line =>
+      /*
         val format = "(Skipping Linking) MinFreq: %d, MaxFreq: %d, groups input: %d, groups output: %d"
         System.err.println(format.format(minFreq, maxFreq, counter.count, groupsOutput))
-      }
+        */
 
-      val extrOp = ReVerbExtractionGroup.deserializeFromString(line)
+      val extrOp = ExtractionCluster.formatter.read(line).toOption
       extrOp match {
         case Some(extr) => {
           if (extr.instances.size <= maxFreq && extr.instances.size >= minFreq) {
             groupsOutput += 1
-            Some(ReVerbExtractionGroup.serializeToString(extr))
+            Some(ExtractionCluster.formatter.write(extr))
           } else {
             None
           }
         }
-        case None => { System.err.println("ScoobiEntityLinker: Error parsing a group: %s".format(line)); None }
+        case None => { System.err.println("ScoobiTripleGroupLinker: Error parsing a group: %s".format(line)); None }
       }
     }
   }

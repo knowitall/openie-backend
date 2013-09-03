@@ -11,19 +11,7 @@ import edu.knowitall.tool.stem.MorphaStemmer
  * Copied and translated from a java implementation, which itself was originally adapted from other Java source
  * Has the advantage that is takes postagged tokens and passes postags to morpha.
  */
-object TaggedStemmer {
-
-  val modifierTags = Set("JJ", "RB", "$PRP", "VBG")
-  val determinerTags = Set("DT", "PDT", "WDT")
-  val modifiersToKeepTemp = Set("n't", "not", "no", "as",
-    "rarely", "hardly", "never", "most", "least", "few", "some",
-    "many", "none", "ought", "would", "could", "should")
-  val ignorableNounTags = Set("WP", "EX", "SYM")
-
-  val instance = new TaggedStemmer
-
-  // private def getInstance = new TaggedStemmer(new Morpha(System.in))
-}
+object TaggedStemmer extends TaggedStemmer
 
 class TaggedStemmer private (private val lexer: MorphaStemmer) {
   def this() = this(new MorphaStemmer)

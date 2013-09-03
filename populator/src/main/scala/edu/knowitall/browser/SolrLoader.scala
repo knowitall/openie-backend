@@ -1,10 +1,10 @@
 package edu.knowitall.browser.solr
 
+import com.twitter.bijection.Bijection
 import java.io.{ByteArrayOutputStream, ObjectOutputStream, File}
 import java.net.{MalformedURLException, URL}
 import scala.concurrent._
-import scala.collection.JavaConverters.{asJavaIteratorConverter, seqAsJavaListConverter, setAsJavaSetConverter}
-import scala.collection.mutable.MutableList
+import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.io.Source
 import scala.util.control
@@ -12,7 +12,6 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer
 import org.apache.solr.common.SolrInputDocument
 import org.slf4j.LoggerFactory
 import dispatch.{Http, as, enrichFuture, implyRequestHandlerTuple, implyRequestVerbs, url}
-import edu.knowitall.browser.lucene.ParallelIndexPrinter
 import edu.knowitall.common.Resource.using
 import edu.knowitall.common.Timing
 import edu.knowitall.openie.models.{ExtractionGroup, ReVerbExtraction, ReVerbExtractionGroup}
@@ -24,107 +23,142 @@ import net.liftweb.json.JsonDSL.{int2jvalue, jobject2assoc, option2jvalue, pair2
 import scopt.immutable.OptionParser
 import sun.misc.BASE64Encoder
 import java.util.concurrent.atomic.AtomicInteger
+import edu.knowitall.openie.models.ExtractionCluster
+import edu.knowitall.openie.models.Extraction
+import edu.knowitall.openie.models.serialize.TabReader
+import org.apache.commons.io.FileUtils
 
 abstract class SolrLoader {
-  type REG = ExtractionGroup[ReVerbExtraction]
-
   def close()
-  def post(reg: REG)
-  def post(regs: Iterator[REG])
+  def post(cluster: ExtractionCluster[Extraction])
+  def post(clusters: Iterator[ExtractionCluster[Extraction]])
 }
 
 class SolrJLoader(urlString: String) extends SolrLoader {
-
   val solr = new HttpSolrServer(urlString)
   val id = new AtomicInteger(0)
+  val kryos = new ThreadLocal[Bijection[AnyRef, Array[Byte]]] {
+    override def initialValue() = {
+      Chill.createBijection()
+    }
+  }
 
   def close() {}
 
-  def toSolrDocuments(reg: REG) = {
+  def toSolrDocument(cluster: ExtractionCluster[Extraction]) = {
+    val document = new SolrInputDocument();
 
-    val relation = new SolrInputDocument()
-    var docs = Seq(relation)
+    val kryo = kryos.get() // thread local instance
+    val instanceBytes = kryo(cluster.instances.toList)
 
-    relation.setField("id", id.getAndIncrement())
-    relation.setField("doctype", "relation")
-    relation.setField("arg1", reg.arg1.norm)
-    relation.setField("rel", reg.rel.norm)
-    relation.setField("arg2", reg.arg2.norm)
+    for (f <- cluster.getClass.getDeclaredFields) {
+      document.setField("id", id.getAndIncrement())
+      document.setField("arg1", cluster.arg1.norm)
+      document.setField("rel", cluster.rel.norm)
+      document.setField("arg2", cluster.arg2.norm)
 
-    reg.arg1.entity.map { entity =>
-      relation.setField("arg1_entity_id", entity.fbid)
-      relation.setField("arg1_entity_name", entity.name)
-      relation.setField("arg1_entity_inlink_ratio", entity.inlinkRatio)
-      relation.setField("arg1_entity_score", entity.score)
+      cluster.arg1.entity.map { entity =>
+        document.setField("arg1_entity_id", entity.fbid)
+        document.setField("arg1_entity_name", entity.name)
+        document.setField("arg1_entity_inlink_ratio", entity.inlinkRatio)
+        document.setField("arg1_entity_score", entity.score)
+      }
+      document.setField("arg1_fulltypes", cluster.arg1.types.map(_.name).asJava)
+      document.setField("arg1_types", cluster.arg1.types.map(_.typ).asJava)
+
+      cluster.arg2.entity.map { entity =>
+        document.setField("arg2_entity_id", entity.fbid)
+        document.setField("arg2_entity_name", entity.name)
+        document.setField("arg2_entity_inlink_ratio", entity.inlinkRatio)
+        document.setField("arg2_entity_score", entity.score)
+      }
+      document.setField("arg2_fulltypes", cluster.arg2.types.map(_.name).asJava)
+      document.setField("arg2_types", cluster.arg2.types.map(_.typ).asJava)
+
+      document.setField("corpora", cluster.instances.map(_.corpus).toList.distinct.asJava)
+      document.setField("instances", instanceBytes)
+      document.setField("size", cluster.instances.size)
     }
-    relation.setField("arg1_fulltypes", reg.arg1.types.map(_.name).asJava)
-    relation.setField("arg1_types", reg.arg1.types.map(_.typ).asJava)
 
-    reg.arg2.entity.map { entity =>
-      relation.setField("arg2_entity_id", entity.fbid)
-      relation.setField("arg2_entity_name", entity.name)
-      relation.setField("arg2_entity_inlink_ratio", entity.inlinkRatio)
-      relation.setField("arg2_entity_score", entity.score)
-    }
-    relation.setField("arg2_fulltypes", reg.arg2.types.map(_.name).asJava)
-    relation.setField("arg2_types", reg.arg2.types.map(_.typ).asJava)
-
-    relation.setField("corpora", reg.instances.map(_.corpus).toList.distinct.asJava)
-    relation.setField("size", reg.instances.size)
-
-    for(instance <- reg.instances) {
-
-        val extraction = new SolrInputDocument()
-
-        val regId = id.getAndIncrement(); 
-        extraction.setField("id", regId);
-        extraction.setField("doctype", "reverb_extraction")
-
-        extraction.setField("sentence_text", instance.extraction.sentenceText)
-        
-        val tripleNorm = instance.extraction.indexGroupingKey
-        extraction.setField("arg1", tripleNorm._1)
-        extraction.setField("rel", tripleNorm._2)
-        extraction.setField("arg2", tripleNorm._3)
-
-        extraction.setField("corpus", instance.corpus)
-
-        val offsets = new MutableList[Int]()
-        val postags = new MutableList[String]()
-        val chunks = new MutableList[String]()
-
-        for(tok <- instance.extraction.sentenceTokens) {
-
-            offsets += tok.offset
-            postags += tok.postag
-            chunks += tok.chunk
-        }
-
-        extraction.setField("arg1_interval", instance.extraction.arg1Interval.toString)
-        extraction.setField("rel_interval", instance.extraction.relInterval.toString)
-        extraction.setField("arg2_interval", instance.extraction.arg2Interval.toString)
-        extraction.setField("url", instance.extraction.sourceUrl)
-        extraction.setField("term_offsets", offsets.mkString(","))
-        extraction.setField("postags", postags.mkString(","))
-        extraction.setField("chunks", chunks.mkString(","))
-
-        relation.addField("source_ids", regId)
-
-        docs = extraction +: docs
-    }
-    
-    docs
-
+    document
   }
 
-  def post(reg: REG) {
-    val resp = solr.add(toSolrDocuments(reg).asJava)
-    solr.commit()
+  def post(cluster: ExtractionCluster[Extraction]) {
+    solr.add(toSolrDocument(cluster))
   }
 
-  def post(regs: Iterator[REG]) = {
-    val resp = solr.add((regs map toSolrDocuments).flatten.asJava)
-    solr.commit()
+  def post(clusters: Iterator[ExtractionCluster[Extraction]]) = {
+    solr.add((clusters map toSolrDocument).asJava)
+  }
+}
+
+class SolrJsonLoader(solrUrl: String) extends SolrLoader {
+  import dispatch._
+
+  val kryo = Chill.createBijection()
+
+  val b64 = new BASE64Encoder()
+  val http = new Http()
+
+  val svc = url(solrUrl)
+
+  def close() {
+    http.shutdown()
+  }
+
+  def toJsonObject(cluster: ExtractionCluster[Extraction]): JObject = {
+    val instanceBytes = kryo(cluster.instances.toList)
+    /*
+    lazy val instanceBytes = using(new ByteArrayOutputStream()) { bos =>
+      using(new ObjectOutputStream(bos)) { out =>
+        out.writeObject(cluster.instances.toSeq.toStream)
+      }
+      bos.toByteArray()
+    }
+    */
+
+    val fieldMap =
+      ("arg1" -> cluster.arg1.norm) ~
+        ("rel" -> cluster.rel.norm) ~
+        ("arg2" -> cluster.arg2.norm) ~
+        ("arg1_entity_id" -> cluster.arg1.entity.map(_.fbid)) ~
+        ("arg1_entity_name" -> cluster.arg1.entity.map(_.name)) ~
+        ("arg1_entity_inlink_ratio" -> cluster.arg1.entity.map(x => JDouble(x.inlinkRatio))) ~
+        ("arg1_entity_score" -> cluster.arg1.entity.map(x => JDouble(x.score))) ~
+        ("arg1_fulltypes" -> cluster.arg1.types.map(_.name)) ~
+        ("arg1_types" -> cluster.arg1.types.map(_.typ)) ~
+        ("arg2_entity_id" -> cluster.arg2.entity.map(_.fbid)) ~
+        ("arg2_entity_name" -> cluster.arg2.entity.map(_.name)) ~
+        ("arg2_entity_inlink_ratio" -> cluster.arg2.entity.map(x => JDouble(x.inlinkRatio))) ~
+        ("arg2_entity_score" -> cluster.arg2.entity.map(x => JDouble(x.score))) ~
+        ("arg2_fulltypes" -> cluster.arg2.types.map(_.name)) ~
+        ("arg2_types" -> cluster.arg2.types.map(_.typ)) ~
+        ("corpora" -> cluster.instances.map(_.corpus).toList) ~
+        ("instances" -> b64.encode(instanceBytes).replaceAll("\n", "")) ~
+        ("size" -> cluster.instances.size)
+
+    fieldMap
+  }
+
+  def toJsonString(cluster: ExtractionCluster[Extraction]): String = {
+    val json = toJsonObject(cluster)
+    compact(render(json))
+  }
+
+  def post(clusters: Iterator[ExtractionCluster[Extraction]]): Unit = {
+    val updateSvc = svc / "update"
+    val postData = (clusters map toJsonString).mkString("[", ",", "]")
+    val headers = Map("Content-type" -> "application/json")
+    val req = updateSvc <:< headers << postData
+    http(req OK as.String).apply()
+  }
+
+  def post(cluster: ExtractionCluster[Extraction]): Unit = {
+    val updateSvc = svc / "update"
+    val postData = toJsonString(cluster)
+    val headers = Map("Content-type" -> "application/json")
+    val req = updateSvc <:< headers << postData
+    http(req OK as.String).apply()
   }
 }
 
@@ -133,23 +167,13 @@ object SolrLoader {
   val logger = LoggerFactory.getLogger(classOf[SolrLoader])
 
   sealed abstract class Source {
-    def groupIterator(): Iterator[ExtractionGroup[ReVerbExtraction]]
+    def groupIterator(): Iterator[ExtractionCluster[Extraction]]
     def close(): Unit
-  }
-
-  case class LuceneSource() extends Source {
-    val printer = ParallelIndexPrinter.defaultInstance
-
-    def groupIterator() = {
-      printer.getRegs
-    }
-
-    def close() {}
   }
 
   case class StdinSource() extends Source {
     def groupIterator() = {
-      Source.stdin.getLines map ReVerbExtractionGroup.deserializeFromString map (_.get)
+      Source.stdin.getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
     }
 
     def close() {}
@@ -157,25 +181,25 @@ object SolrLoader {
 
   case class UrlSource(url: String) extends Source {
     def groupIterator() = {
-      Source.fromURL(url, "UTF-8").getLines map ReVerbExtractionGroup.deserializeFromString map (_.get)
+      Source.fromURL(url, "UTF-8").getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
     }
 
     def close() {}
   }
 
-  case class DirectorySource(file: File) extends Source {
+  case class DirectorySource(file: java.io.File) extends Source {
     require(file.exists, "file does not exist: " + file)
 
-    val files = 
-      if (file.isDirectory) file.listFiles.toList
+    val files =
+      if (file.isDirectory) FileUtils.listFiles(file, null, true).asScala.toList
       else List(file)
 
     files.foreach(file => logger.info("Appending file to import: " + file))
 
     def groupIterator() = {
-      val thunks: Iterator[() => Iterator[ExtractionGroup[ReVerbExtraction]]] = files.iterator.map(file => 
-        () => 
-          Source.fromFile(file, "UTF-8").getLines map ReVerbExtractionGroup.deserializeFromString map (_.get)
+      val thunks: Iterator[() => Iterator[ExtractionCluster[Extraction]]] = files.iterator.map(file =>
+        () =>
+          Source.fromFile(file, "UTF-8").getLines map implicitly[TabReader[ExtractionCluster[Extraction]]].read map (_.get)
       )
 
       // i'm ignoring closing handles--resource leak
@@ -199,8 +223,7 @@ object SolrLoader {
         arg("source", "source (stdin|lucene|url)") { (str: String, c: Config) =>
           str match {
             case "stdin" => c.copy(source = StdinSource())
-            case "lucene" => c.copy(source = LuceneSource())
-            case path if new File(path).exists => c.copy(source = DirectorySource(new File(path))) 
+            case path if new File(path).exists => c.copy(source = DirectorySource(new File(path)))
             case url if control.Exception.catching(classOf[MalformedURLException]) opt new URL(url) isDefined => c.copy(source = UrlSource(url))
             case source => throw new IllegalArgumentException("Unknown source (not a file or URL): " + source)
           }
@@ -217,46 +240,46 @@ object SolrLoader {
   }
 
   def run(config: Config) = {
-
     SolrLoader.logger.info("Importing from " + config.source + " to " + config.url)
-
     using(new SolrJLoader(config.url)) { loader =>
+      val clusters = config.source.groupIterator
 
-      val regs = config.source.groupIterator
-
-      val index = new AtomicInteger(0)
-      val start = System.nanoTime
-      val BATCH_SIZE = 1000
-      if (!config.parallel) {
-        regs.grouped(BATCH_SIZE).foreach { reg =>
-          try {
-            Timing.timeThen {
-            loader.post(reg.iterator)
-            } { ns =>
-              val i = index.getAndIncrement()
-              val elapsed = System.nanoTime - start
-              println("Batch " + i + " (" + i * BATCH_SIZE + ") in " + Timing.Seconds.format(ns) + " total " + Timing.Seconds.format(elapsed) + " avg " + Timing.Seconds.format(elapsed / index.get) + ".")
+      if (config.stdOut) clusters map loader.asInstanceOf[SolrJsonLoader].toJsonString foreach println
+      else {
+        val lock = new Object()
+        val index = new AtomicInteger(0)
+        val start = System.nanoTime
+        val BATCH_SIZE = 1000
+        if (!config.parallel) {
+          clusters.grouped(BATCH_SIZE).foreach { cluster =>
+            try {
+              Timing.timeThen {
+                loader.post(cluster.iterator)
+              } { ns =>
+                val i = index.getAndIncrement()
+                val elapsed = System.nanoTime - start
+                println("Batch " + i + " (" + i * BATCH_SIZE + ") in " + Timing.Seconds.format(ns) + " total " + Timing.Seconds.format(elapsed) + " avg " + Timing.Seconds.format(elapsed / index.get) + ".")
+              }
+            } catch {
+              case e: Throwable => e.printStackTrace
             }
-          } catch {
-            case e: Throwable => e.printStackTrace
           }
+        } else {
+          clusters.grouped(BATCH_SIZE).map( { cluster => future {
+            try {
+              Timing.timeThen {
+                loader.post(cluster.iterator)
+              } { ns =>
+                val i = index.getAndIncrement()
+                val elapsed = System.nanoTime - start
+                println("Batch " + i + " (" + i * BATCH_SIZE + ") in " + Timing.Seconds.format(ns) + " total " + Timing.Seconds.format(elapsed) + " avg " + Timing.Seconds.format(elapsed / index.get) + ".")
+              }
+            } catch {
+              case e: Throwable => e.printStackTrace
+            }
+          }}) foreach (_.apply())
         }
-      } else {
-        regs.grouped(BATCH_SIZE).map( { reg => future {
-          try {
-            Timing.timeThen {
-              loader.post(reg.iterator)
-            } { ns =>
-              val i = index.getAndIncrement()
-              val elapsed = System.nanoTime - start
-              println("Batch " + i + " (" + i * BATCH_SIZE + ") in " + Timing.Seconds.format(ns) + " total " + Timing.Seconds.format(elapsed) + " avg " + Timing.Seconds.format(elapsed / index.get) + ".")
-            }
-          } catch {
-            case e: Throwable => e.printStackTrace
-          }
-        }}) foreach (_.apply())
       }
-    
     }
   }
 }
