@@ -33,7 +33,7 @@ class NewSolrJLoader(urlString: String) extends SolrLoader {
   
   type REG = ExtractionGroup[ReVerbExtraction]
   
-  val solr = new ConcurrentUpdateSolrServer(urlString, 4, 10000)
+  val solr = new ConcurrentUpdateSolrServer(urlString, 10000, 4)
   val id = new AtomicLong(0)
   
   def idFactory() = id.getAndIncrement().toString
