@@ -143,7 +143,7 @@ object NewSolrLoader {
     }
     
     relation.setField("id", idFactory())
-    relation.setField("doctype", "relation")
+    relation.setField("doctype", "openie4")
     relation.setField("arg1", arg1)
     relation.setField("rel", rel)
     relation.setField("arg2", arg2)
@@ -175,7 +175,7 @@ object NewSolrLoader {
 
         val regId = idFactory(); 
         extraction.setField("id", regId);
-        extraction.setField("doctype", "reverb_extraction")
+        extraction.setField("doctype", "openie4_metadata")
 
         extraction.setField("sentence_text", instance.sentenceText)
         
