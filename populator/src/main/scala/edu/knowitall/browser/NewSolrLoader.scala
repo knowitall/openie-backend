@@ -179,17 +179,15 @@ object NewSolrLoader {
 
         extraction.setField("sentence_text", instance.sentenceText)
         
-        val tripleNorm = instance.indexGroupingKey
-        extraction.setField("arg1", tripleNorm._1)
-        extraction.setField("rel", tripleNorm._2)
-        extraction.setField("arg2", tripleNorm._3)
+//        extraction.setField("arg1", instance.arg1Text)
+//        extraction.setField("rel", instance.relText)
+//        extraction.setField("arg2", instance.arg2Text)
 
         extraction.setField("corpus", instance.corpus)
 
         val offsets = new MutableList[Int]()
         val postags = new MutableList[String]()
         val chunks = new MutableList[String]()
-
         
         for(tok <- instance.sentenceTokens) {
 
