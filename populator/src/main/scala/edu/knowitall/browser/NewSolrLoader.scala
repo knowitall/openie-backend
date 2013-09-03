@@ -23,7 +23,7 @@ import net.liftweb.json.JsonAST.JDouble
 import net.liftweb.json.JsonDSL.{int2jvalue, jobject2assoc, option2jvalue, pair2Assoc, pair2jvalue, seq2jvalue, string2jvalue}
 import scopt.immutable.OptionParser
 import sun.misc.BASE64Encoder
-import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
 import org.apache.commons.io.FileUtils
 import edu.knowitall.openie.models.serialize.TabReader
 
@@ -34,9 +34,9 @@ class NewSolrJLoader(urlString: String) extends SolrLoader {
   type REG = ExtractionGroup[ReVerbExtraction]
   
   val solr = new ConcurrentUpdateSolrServer(urlString, 4, 10000)
-  val id = new AtomicInteger(0)
+  val id = new AtomicLong(0)
   
-  def idFactory() = id.getAndIncrement()
+  def idFactory() = id.getAndIncrement().toString
 
   def close() { solr.commit(); }
 
@@ -129,7 +129,7 @@ object NewSolrLoader {
     }
   }
   
-  def toSolrDocuments(cluster: ExtractionCluster[Extraction], idFactory: () => Long) = {
+  def toSolrDocuments(cluster: ExtractionCluster[Extraction], idFactory: () => String) = {
 
     val relation = new SolrInputDocument()
     var docs = Seq(relation)
@@ -220,7 +220,7 @@ object NewSolrLoader {
       if (config.stdOut) clusters map loader.asInstanceOf[SolrJsonLoader].toJsonString foreach println
       else {
         val lock = new Object()
-        val index = new AtomicInteger(0)
+        val index = new AtomicLong(0)
         val start = System.nanoTime
         val BATCH_SIZE = 10000
         if (!config.parallel) {
