@@ -161,6 +161,11 @@ object NewSolrLoader {
 
     def close() {}
   }
+  
+  @deprecated("0.0.0", "Use SolrDocumentConverter instead")
+  def toSolrDocuments(cluster: ExtractionCluster[Extraction], idFactory: () => String) = {
+    SolrDocumentConverter.toSolrDocuments(cluster, idFactory)
+  }
 
   case class DirectorySource(file: java.io.File) extends Source {
     require(file.exists, "file does not exist: " + file)
