@@ -124,9 +124,9 @@ object SolrDocumentConverter {
         extraction.setField("rel_interval", instance.relInterval.toString)
         extraction.setField("arg2_interval", instance.arg2Interval.toString)
         extraction.setField("url", instance.source)
-        extraction.setField("term_offsets", offsets.mkString(","))
-        extraction.setField("postags", postags.mkString(","))
-        extraction.setField("chunks", chunks.mkString(","))
+        extraction.setField("term_offsets", offsets.mkString(" "))
+        extraction.setField("postags", postags.mkString(" "))
+        extraction.setField("chunks", chunks.mkString(" "))
 
         relation.addField("source_ids", regId)
 
