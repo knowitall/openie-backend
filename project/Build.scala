@@ -66,7 +66,7 @@ object NlpToolsBuild extends Build {
 
   lazy val populator = Project(id = "openie-populator", base = file("populator"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
-      "org.apache.solr" % "solr-solrj" % "4.3.0",
+      "org.apache.solr" % "solr-solrj" % "4.4.0",
       logbackClassic,
       logbackCore,
       slf4jApi,
@@ -80,7 +80,7 @@ object NlpToolsBuild extends Build {
 
   lazy val backend = Project(id = "openie-backend", base = file("backend"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
-      "org.apache.lucene" % "lucene-core" % "3.6.1",
+      "org.apache.lucene" % "lucene-core" % "4.4.0",
       liftJson,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion excludeAll(ExclusionRule(organization = "jwnl")),
@@ -124,7 +124,7 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage %% "nlptools-core" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion,
-      "org.apache.lucene" % "lucene-queries" % "3.0.3",
+      "org.apache.lucene" % "lucene-queries" % "3.6.0",
       "org.apache.lucene" % "lucene-core" % "3.6.0",
       "com.github.scopt" %% "scopt" % "2.1.0",
       logbackClassic,
