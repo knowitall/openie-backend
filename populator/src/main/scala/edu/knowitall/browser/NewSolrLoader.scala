@@ -30,12 +30,12 @@ import edu.knowitall.openie.models.serialize.TabReader
 class NewSolrJLoader(urlString: String) extends SolrLoader {
 
   import SolrDocumentConverter.toSolrDocuments
-  
+
   type REG = ExtractionGroup[ReVerbExtraction]
-  
+
   val solr = new ConcurrentUpdateSolrServer(urlString, 10000, 4)
   val id = new AtomicLong(0)
-  
+
   def idFactory() = id.getAndIncrement().toString
 
   def close() { solr.commit(); }
@@ -46,7 +46,7 @@ class NewSolrJLoader(urlString: String) extends SolrLoader {
   }
 
   def post(clusters: Iterator[ExtractionCluster[Extraction]]) = {
-    
+
     val resp = solr.add(clusters.map(c => toSolrDocuments(c, idFactory)).flatten.toSeq.asJava)
     //solr.commit()
   }
@@ -57,7 +57,7 @@ object SolrDocumentConverter {
 
     val relation = new SolrInputDocument()
     var docs = Seq(relation)
-    // Choose the most common un-normalized triple... 
+    // Choose the most common un-normalized triple...
     // This is necessary so that the _exact fields aren't normalized.
     // Ideally the cluster should have a non-normalized triple
     val (arg1, rel, arg2) = {
@@ -65,7 +65,7 @@ object SolrDocumentConverter {
       val tripleCounts = triples.groupBy(identity).iterator.map(kv => (kv._1, kv._2.size))
       tripleCounts.toSeq.sortBy(-_._2).head._1
     }
-    
+
     relation.setField("id", idFactory())
     relation.setField("doctype", "openie4")
     relation.setField("arg1", arg1)
@@ -97,12 +97,12 @@ object SolrDocumentConverter {
 
         val extraction = new SolrInputDocument()
 
-        val regId = idFactory(); 
+        val regId = idFactory();
         extraction.setField("id", regId);
         extraction.setField("doctype", "openie4_metadata")
 
         extraction.setField("sentence_text", instance.sentenceText)
-        
+
 //        extraction.setField("arg1", instance.arg1Text)
 //        extraction.setField("rel", instance.relText)
 //        extraction.setField("arg2", instance.arg2Text)
@@ -112,7 +112,7 @@ object SolrDocumentConverter {
         val offsets = new MutableList[Int]()
         val postags = new MutableList[String]()
         val chunks = new MutableList[String]()
-        
+
         for(tok <- instance.sentenceTokens) {
 
             offsets += tok.offset
@@ -124,6 +124,7 @@ object SolrDocumentConverter {
         extraction.setField("rel_interval", instance.relInterval.toString)
         extraction.setField("arg2_interval", instance.arg2Interval.toString)
         extraction.setField("url", instance.source)
+        extraction.setField("confidence", instance.confidence)
         extraction.setField("term_offsets", offsets.mkString(" "))
         extraction.setField("postags", postags.mkString(" "))
         extraction.setField("chunks", chunks.mkString(" "))
@@ -132,7 +133,7 @@ object SolrDocumentConverter {
 
         docs = extraction +: docs
     }
-    
+
     docs
   }
 }
@@ -161,7 +162,7 @@ object NewSolrLoader {
 
     def close() {}
   }
-  
+
   @deprecated("0.0.0", "Use SolrDocumentConverter instead")
   def toSolrDocuments(cluster: ExtractionCluster[Extraction], idFactory: () => String) = {
     SolrDocumentConverter.toSolrDocuments(cluster, idFactory)
