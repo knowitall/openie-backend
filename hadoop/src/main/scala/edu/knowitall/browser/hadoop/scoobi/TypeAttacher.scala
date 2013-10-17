@@ -89,8 +89,8 @@ object TypeAttacher extends ScoobiApp {
       arg("argTypesPath", "path to arg type predictions from UETyper", { str => argTypesPath = str })
       arg("outregsPath", "output path for ReVerbExtractionGroups with type predictions attached", { str => outRegsPath = str })
       arg("arg", "arg1 to predict types for arg1's, arg2 to predict types for arg2s", { str =>
-        if (str.equals("arg1")) argField = Arg1()
-        else if (str.equals("arg2")) argField = Arg2()
+        if (str.equals("arg1")) argField = Arg1
+        else if (str.equals("arg2")) argField = Arg2
         else throw new IllegalArgumentException("arg must be either arg1 or arg2")
       })
     }

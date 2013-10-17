@@ -23,6 +23,9 @@ import com.hadoop.mapreduce.LzoTextInputFormat
 import edu.knowitall.tool.stem.MorphaStemmer
 import edu.knowitall.tool.chunk.ChunkedToken
 
+/**
+ * This is a stupid job that runs similar cleanup code to Tony's clean ReVerb set.
+ */
 object ScoobiReVerbGroupExtremeFilter extends ScoobiApp {
   def run() = {
     val (inputPath, outputPath) = (args(0), args(1))

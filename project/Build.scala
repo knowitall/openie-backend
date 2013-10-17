@@ -13,7 +13,7 @@ object NlpToolsBuild extends Build {
   val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
 
   val nlptoolsPackage = "edu.washington.cs.knowitall.nlptools"
-  val nlptoolsVersion = "2.4.2"
+  val nlptoolsVersion = "2.4.4-SNAPSHOT"
 
   val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.12"
   val logbackCore = "ch.qos.logback" % "logback-core" % "1.0.12"
@@ -23,12 +23,14 @@ object NlpToolsBuild extends Build {
   val specs2 = "org.specs2" %% "specs2" % "1.12.3"
   val scalatest = "org.scalatest" %% "scalatest" % "1.9.1"
 
+  val liftJson = "net.liftweb" %% "lift-json" % "2.5-RC5"
+
   lazy val root = Project(id = "openie", base = file(".")) settings (
     crossScalaVersions := buildScalaVersions,
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     publish := { },
     publishLocal := { }
-  ) aggregate(models, populator, backend, linker, hadoop)
+  ) aggregate(models, backend, linker, hadoop, populator)
 
   // parent build definition
   val buildSettings = Defaults.defaultSettings ++ Seq (
@@ -37,6 +39,8 @@ object NlpToolsBuild extends Build {
     crossScalaVersions := buildScalaVersions,
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     javacOptions ++= Seq("-source", "1.6", "-target", "1.6"),
+    fork in run := true,
+    javaOptions in run += "-Xmx8G",
     libraryDependencies ++= Seq(junit % "test", specs2 % "test", scalatest % "test"),
     resolvers ++= Seq(
       "knowitall" at "http://knowitall.cs.washington.edu/maven2",
@@ -56,26 +60,28 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage %% "nlptools-core" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       "net.debasishg" %% "sjson" % "0.19",
-      "com.twitter" %% "chill" % "0.2.2"
+      "com.twitter" %% "chill" % "0.2.3"
     )
   ))
 
   lazy val populator = Project(id = "openie-populator", base = file("populator"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
-      "org.apache.solr" % "solr-solrj" % "4.3.0",
+      "org.apache.solr" % "solr-solrj" % "4.4.0",
       logbackClassic,
       logbackCore,
       slf4jApi,
+      liftJson,
       "commons-logging" % "commons-logging-api" % "1.0.4", // solrj stupidly needs this?
+      "commons-io" % "commons-io" % "2.4", // recursive subfiles
       "com.github.scopt" %% "scopt" % "2.1.0",
       "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.10.0",
       "net.databinder.dispatch" %% "dispatch-core" % "0.10.0")
-  )) dependsOn(backend)
+  )) dependsOn(models)
 
   lazy val backend = Project(id = "openie-backend", base = file("backend"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
-      "org.apache.lucene" % "lucene-core" % "3.6.1",
-      "net.liftweb" %% "lift-json" % "2.5-RC5",
+      "org.apache.lucene" % "lucene-core" % "4.4.0",
+      liftJson,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion excludeAll(ExclusionRule(organization = "jwnl")),
       "com.google.guava" % "guava" % "14.0.1",
@@ -110,7 +116,7 @@ object NlpToolsBuild extends Build {
         }
       }
     }
-  )) dependsOn(backend, linker)
+  )) dependsOn(linker)
 
   lazy val linker = Project(id = "openie-linker", base = file("linker"), settings = buildSettings ++ Seq(
     libraryDependencies ++= Seq(
@@ -118,8 +124,7 @@ object NlpToolsBuild extends Build {
       nlptoolsPackage %% "nlptools-core" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-stem-morpha" % nlptoolsVersion,
       nlptoolsPackage %% "nlptools-postag-opennlp" % nlptoolsVersion,
-      "org.apache.lucene" % "lucene-core" % "3.0.3",
-      "org.apache.lucene" % "lucene-queries" % "3.0.3",
+      "org.apache.lucene" % "lucene-queries" % "3.6.0",
       "org.apache.lucene" % "lucene-core" % "3.6.0",
       "com.github.scopt" %% "scopt" % "2.1.0",
       logbackClassic,

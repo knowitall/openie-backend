@@ -33,7 +33,7 @@ object Constants {
   // Derby database paths.
   val defaultDerbyDbBasePath = new File("/scratch2")
   def entityLinkingDbPath(basePath: File) = {
-    new File(basePath, "entitylinking")
+    new File("/scratch2", "entitylinking")
   }
   // TODO: add crosswikis table to entitylinking DB.
   def crosswikisDbPath(basePath: File) = {

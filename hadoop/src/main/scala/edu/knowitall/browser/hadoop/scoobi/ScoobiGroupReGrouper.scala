@@ -30,6 +30,8 @@ object GroupReGrouperStaticVars {
 object ScoobiGroupReGrouper extends ScoobiApp {
   import GroupReGrouperStaticVars._
 
+  val MAX_GROUP_SIZE = 1000
+
   private var extrsProcessed = 0
 
   private var groupsProcessed = 0
@@ -68,7 +70,7 @@ object ScoobiGroupReGrouper extends ScoobiApp {
 
     val head = parsedGroups.find(group => group.arg1.hasEntity || group.arg2.hasEntity).getOrElse(parsedGroups.head)
 
-    val combinedGroup = new ExtractionGroup(head.arg1, head.rel, head.arg2, allInstances.take(ReVerbGrouperStaticVars.max_group_size).toSet)
+    val combinedGroup = new ExtractionGroup(head.arg1, head.rel, head.arg2, allInstances.take(MAX_GROUP_SIZE).toSet)
 
     groupsProcessed += parsedGroups.size
     if (groupsProcessed % 10000 == 0) System.err.println("Groups combined: %d".format(groupsProcessed))
@@ -118,7 +120,7 @@ object ScoobiGroupReGrouper extends ScoobiApp {
   def removeControlChars(inst: Instance[ReVerbExtraction]): Instance[ReVerbExtraction] = {
 
     val extr = inst.extraction
-    val convertedSentence = extr.sentenceTokens.map(tok => new ChunkedToken(tok.chunk, tok.postag, removeCCs(tok.string), tok.offset))
+    val convertedSentence = extr.sentenceTokens.map(tok => new ChunkedToken(Symbol(tok.chunk), Symbol(tok.postag), removeCCs(tok.string), tok.offset))
     val convertedExtr = new ReVerbExtraction(convertedSentence, extr.arg1Interval, extr.relInterval, extr.arg2Interval, extr.sourceUrl)
 
     new Instance(convertedExtr, inst.corpus, inst.confidence)

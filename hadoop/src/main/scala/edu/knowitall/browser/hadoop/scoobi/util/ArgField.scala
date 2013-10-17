@@ -21,7 +21,7 @@ sealed abstract class ArgField {
 
 }
 
-case class Arg1() extends ArgField {
+case object Arg1 extends ArgField {
   override val name = "arg1"
   override def getArgNorm[T <: ExtractionTuple](reg: T) = reg.arg1Norm
   override def getTypeStrings[T <: ExtractionTuple](reg: T) = reg.arg1Types filter TypeInfoUtils.typeFilter
@@ -30,7 +30,7 @@ case class Arg1() extends ArgField {
     EntityInfo(e, getTypeStrings(reg) map typeToInt)
   }
 }
-case class Arg2() extends ArgField {
+case object Arg2 extends ArgField {
   override val name = "arg2"
   override def getArgNorm[T <: ExtractionTuple](reg: T) = reg.arg2Norm
   override def getTypeStrings[T <: ExtractionTuple](reg: T) = reg.arg2Types filter TypeInfoUtils.typeFilter

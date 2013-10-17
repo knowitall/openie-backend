@@ -29,6 +29,8 @@ import edu.knowitall.openie.models.ReVerbExtraction
 import edu.knowitall.openie.models.TripleExtraction
 import edu.knowitall.srlie.confidence.SrlConfidenceFunction
 import edu.knowitall.openie.models.NaryExtraction
+import edu.knowitall.openie.models.serialize.TabFormat
+import edu.knowitall.openie.models.Extraction
 
 object ScoobiOpenIE4 extends ScoobiApp {
 
@@ -119,7 +121,7 @@ object ScoobiOpenIE4 extends ScoobiApp {
 
         val triples = relnounExtrs ++ srlieTripleExtrs
         val nary = srlieNaryExtrs ++ relnounExtrs.map { extr =>
-          new NaryExtraction(extr.confidence, extr.corpus, extr.sentenceTokens, NaryExtraction.Part(extr.arg1Text, extr.arg1Interval), NaryExtraction.Part(extr.relText, extr.relInterval), List(NaryExtraction.Part(extr.arg2Text, extr.arg2Interval)), extr.sourceUrl)
+          new NaryExtraction(extr.confidence, extr.corpus, extr.sentenceTokens, NaryExtraction.Part(extr.arg1Text, extr.arg1Interval), NaryExtraction.Part(extr.relText, extr.relInterval), List(NaryExtraction.Part(extr.arg2Text, extr.arg2Interval)), extr.source)
         }
 
         (triples, nary)
@@ -136,7 +138,7 @@ object ScoobiOpenIE4 extends ScoobiApp {
       tabSplit.split(line) match {
         case Array(_, url, _, _, sentence, strs, poss, chks, dependencies, _*) => {
           val (tripleExtrs, naryExtrs) = getExtractions(sentence, split(strs), split(poss), split(chks), DependencyGraph.deserialize(dependencies), url)
-          (tripleExtrs map TripleExtraction.serializeToString map ("T\t" + _)) ++
+          (tripleExtrs map implicitly[TabFormat[Extraction]].write map ("T\t" + _)) ++
             (naryExtrs map NaryExtraction.serializeToString map ("N\t" + _))
         }
         case _ => {

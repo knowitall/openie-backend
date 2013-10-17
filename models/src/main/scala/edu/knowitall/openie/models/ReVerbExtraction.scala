@@ -26,6 +26,11 @@ case class ReVerbExtraction(
   val arg2Interval: Interval,
   val sourceUrl: String) extends Extraction {
 
+  // hacks
+  override def confidence = 0.0
+  override def corpus = "none"
+  override def source = sourceUrl
+
   import ReVerbExtraction.{strippedDeterminers, modifierTagsToStrip, modifiersToKeep}
 
   override def sentenceText = sentenceTokens.map(_.string).mkString(" ")
@@ -43,14 +48,11 @@ case class ReVerbExtraction(
   override def arg2Tokens = sentenceTokens(arg2Interval)
 
   def normTokens(interval: Interval) = sentenceTokens(interval) filter indexTokenFilter map { token =>
-    val stemmer = TaggedStemmer.instance
-    val norm = stemmer.stem(token)
-    new ChunkedToken(new PostaggedToken(new Token(norm, token.offset), token.postag), token.chunk)
+    val norm = TaggedStemmer.stem(token)
+    new ChunkedToken(Symbol(token.chunk), Symbol(token.postag), norm, token.offset)
   }
 
   def sentenceTokens(interval: Interval): Seq[ChunkedToken] = interval.map(sentenceTokens(_))
-
-  def indexTokenFilter(token: Token) = !strippedDeterminers.contains(token.string.toLowerCase)
 
   // returns an (arg1, rel, arg2) tuple of normalized string tokens
   def indexGroupingKey: (String, String, String) = {
@@ -59,18 +61,11 @@ case class ReVerbExtraction(
     val relCleaned  =  relTokens filter indexTokenFilter
     val arg2Cleaned = arg2Tokens filter indexTokenFilter
 
-    val stemmer = TaggedStemmer.instance
-
-    val arg1Norm = stemmer.stemAll(arg1Cleaned)
-    val relNorm =  stemmer.stemAll(relCleaned)
-    val arg2Norm = stemmer.stemAll(arg2Cleaned)
+    val arg1Norm = TaggedStemmer.stemAll(arg1Cleaned)
+    val relNorm =  TaggedStemmer.stemAll(relCleaned)
+    val arg2Norm = TaggedStemmer.stemAll(arg2Cleaned)
 
     (arg1Norm.mkString(" ").toLowerCase, relNorm.mkString(" ").toLowerCase, arg2Norm.mkString(" ").toLowerCase)
-  }
-
-  def frontendGroupingKey: (String, String, String) = {
-
-     (frontendArgKey(arg1Interval), frontendArgKey(relInterval), frontendArgKey(arg2Interval))
   }
 
   def arg1Head: String = {
@@ -100,9 +95,7 @@ case class ReVerbExtraction(
       else true
     }
 
-    val stemmer = TaggedStemmer.instance
-
-    val stemmed = stemmer.stemAll(cleaned)
+    val stemmed = TaggedStemmer.stemAll(cleaned)
 
     stemmed.mkString(" ").toLowerCase
   }
@@ -128,7 +121,7 @@ object ReVerbExtraction extends TabSerializer[ReVerbExtraction] {
       thisOffset
     }
     tokens.zip(offsets).zip(posTags).zip(chunkTags).map { case (((token, offset), posTag), chunkTag) =>
-      new ChunkedToken(string=token, postag=posTag, chunk=chunkTag, offset=offset)
+      new ChunkedToken(Symbol(chunkTag), Symbol(posTag), token, offset)
     }
   }
 
