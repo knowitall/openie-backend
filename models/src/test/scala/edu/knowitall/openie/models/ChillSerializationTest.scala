@@ -37,7 +37,7 @@ class ChillSerializationTest extends FlatSpec {
 
   "ChunkedToken" should roundTripString in {
     val kryo = Chill.createBijection()
-    val token = new ChunkedToken("chunk", "postag", "string", 2)
+    val token = new ChunkedToken(Symbol("chunk"), Symbol("postag"), "string", 2)
 
     token === kryo.invert(kryo(token))
   }

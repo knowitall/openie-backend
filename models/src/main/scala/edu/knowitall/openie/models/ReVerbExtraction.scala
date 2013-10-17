@@ -49,7 +49,7 @@ case class ReVerbExtraction(
 
   def normTokens(interval: Interval) = sentenceTokens(interval) filter indexTokenFilter map { token =>
     val norm = TaggedStemmer.stem(token)
-    new ChunkedToken(new PostaggedToken(new Token(norm, token.offset), token.postag), token.chunk)
+    new ChunkedToken(Symbol(token.chunk), Symbol(token.postag), norm, token.offset)
   }
 
   def sentenceTokens(interval: Interval): Seq[ChunkedToken] = interval.map(sentenceTokens(_))
@@ -121,7 +121,7 @@ object ReVerbExtraction extends TabSerializer[ReVerbExtraction] {
       thisOffset
     }
     tokens.zip(offsets).zip(posTags).zip(chunkTags).map { case (((token, offset), posTag), chunkTag) =>
-      new ChunkedToken(string=token, postag=posTag, chunk=chunkTag, offset=offset)
+      new ChunkedToken(Symbol(chunkTag), Symbol(posTag), token, offset)
     }
   }
 

@@ -56,7 +56,7 @@ abstract class Extraction {
   def indexTokenFilter(token: Token) = !strippedDeterminers.contains(token.string.toLowerCase)
   def stemmedTokens(tokens: Seq[ChunkedToken]) = tokens filter indexTokenFilter map { token =>
     val norm = TaggedStemmer.stem(token)
-    new ChunkedToken(new PostaggedToken(new Token(norm, token.offset), token.postag), token.chunk)
+    new ChunkedToken(Symbol(token.chunk), Symbol(token.postag), norm, token.offset)
   }
 
   def frontendGroupingKey: (String, String, String) = {

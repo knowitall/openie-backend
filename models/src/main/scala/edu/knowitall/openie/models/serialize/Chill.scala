@@ -24,7 +24,7 @@ object Chill {
     ChunkedToken,
     (String, String, String, Int)
   ](ChunkedToken.unapply(_).get){ case (chunk, postag, token, offset) =>
-    new ChunkedToken(chunk, postag, token, offset)
+    new ChunkedToken(Symbol(chunk), Symbol(postag), token, offset)
   }
 
   val freebaseEntityBijection = Bijection.build[

@@ -101,7 +101,7 @@ object NaryExtraction extends TabSerializer[NaryExtraction] {
       thisOffset
     }
     tokens.zip(offsets).zip(posTags).zip(chunkTags).map { case (((token, offset), posTag), chunkTag) =>
-      new ChunkedToken(string=token, postag=posTag, chunk=chunkTag, offset=offset)
+      new ChunkedToken(Symbol(chunkTag), Symbol(posTag), token, offset)
     }
   }
 

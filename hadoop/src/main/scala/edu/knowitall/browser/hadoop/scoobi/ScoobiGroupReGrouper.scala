@@ -120,7 +120,7 @@ object ScoobiGroupReGrouper extends ScoobiApp {
   def removeControlChars(inst: Instance[ReVerbExtraction]): Instance[ReVerbExtraction] = {
 
     val extr = inst.extraction
-    val convertedSentence = extr.sentenceTokens.map(tok => new ChunkedToken(tok.chunk, tok.postag, removeCCs(tok.string), tok.offset))
+    val convertedSentence = extr.sentenceTokens.map(tok => new ChunkedToken(Symbol(tok.chunk), Symbol(tok.postag), removeCCs(tok.string), tok.offset))
     val convertedExtr = new ReVerbExtraction(convertedSentence, extr.arg1Interval, extr.relInterval, extr.arg2Interval, extr.sourceUrl)
 
     new Instance(convertedExtr, inst.corpus, inst.confidence)
