@@ -55,12 +55,17 @@ class NewSolrJLoader(urlString: String) extends SolrLoader {
 object SolrDocumentConverter {
 
   def toSolrDocuments(cluster: ExtractionCluster[Extraction], idFactory: () => String) = {
+
+    def fail(s: String) = {
+      System.err.println(s)
+      Nil
+    }
+
     try {
       unsafeToSolrDocuments(cluster, idFactory)
     } catch {
-      case e: Exception =>
-        System.err.println(e.getMessage())
-        Nil
+      case e: java.lang.AssertionError => fail(e.getMessage())
+      case e: Exception => fail(e.getMessage())
     }
   }
 
