@@ -53,7 +53,19 @@ class NewSolrJLoader(urlString: String) extends SolrLoader {
 }
 
 object SolrDocumentConverter {
+
   def toSolrDocuments(cluster: ExtractionCluster[Extraction], idFactory: () => String) = {
+    try {
+      unsafeToSolrDocuments(cluster, idFactory)
+    } catch {
+      case e: Exception =>
+        System.err.println(e.getMessage())
+        Nil
+    }
+  }
+
+  // wrap toSolrDocuments in try-catch...
+  private def unsafeToSolrDocuments(cluster: ExtractionCluster[Extraction], idFactory: () => String) = {
 
     val relation = new SolrInputDocument()
     var docs = Seq(relation)
