@@ -86,7 +86,7 @@ object Extraction {
   implicit def formatter: SpecTabFormat[Extraction] = TabFormat
 
   object TabFormat extends SpecTabFormat[Extraction] {
-    private val spacePattern = "\\s".r
+    private val spacePattern = "\\s+".r
     private val numExtractorPattern = "([0-9]+)".r
 
     def tokensForInterval(interval: Interval, tokens: IndexedSeq[ChunkedToken]): Seq[ChunkedToken] = interval.map(tokens(_))
@@ -128,8 +128,13 @@ object Extraction {
           arg1Text, relText, arg2Text,
           arg1Interval, relInterval, arg2Interval,
           sentenceStrings, sentencePostags, sentenceChunks, sourceUrl) = split
-
-        val tokens = Tokenizer.computeOffsets(spacePattern.split(sentenceStrings), sentenceStrings)
+        
+        var offset = 0
+        val tokens = for (string <- spacePattern.split(sentenceStrings)) yield {
+          val startOffset = offset
+          offset += string.length + 1
+          new Token(string, startOffset)
+        }
         val sentenceTokens = Chunker.tokensFrom(spacePattern.split(sentenceChunks), spacePattern.split(sentencePostags), tokens)
         val extr = new TripleExtraction(confidence.toDouble, corpus, sentenceTokens,
           arg1Text, relText, arg2Text,
