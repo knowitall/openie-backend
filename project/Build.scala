@@ -13,7 +13,7 @@ object NlpToolsBuild extends Build {
   val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
 
   val nlptoolsPackage = "edu.washington.cs.knowitall.nlptools"
-  val nlptoolsVersion = "2.4.4-SNAPSHOT"
+  val nlptoolsVersion = "2.4.4"
 
   val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.12"
   val logbackCore = "ch.qos.logback" % "logback-core" % "1.0.12"
