@@ -238,6 +238,11 @@ object NewSolrLoader {
   }
 
   def run(config: Config) = {
+    
+    def postBatch(cluster: Seq[ExtractionCluster[Extraction]]): Unit = {
+      
+    }
+    
     NewSolrLoader.logger.info("Importing from " + config.source + " to " + config.url)
     using(new NewSolrJLoader(config.url)) { loader =>
       val clusters = config.source.groupIterator
@@ -248,33 +253,37 @@ object NewSolrLoader {
         val index = new AtomicLong(0)
         val start = System.nanoTime
         val BATCH_SIZE = 10000
+
+        def postBatch(cluster: Seq[ExtractionCluster[Extraction]]): Unit = {
+          try {
+            Timing.timeThen {
+              loader.post(cluster.iterator)
+            } { ns =>
+              val i = index.getAndIncrement()
+              val elapsed = System.nanoTime - start
+              println("Batch " + i + " (" + i * BATCH_SIZE + ") in " + Timing.Seconds.format(ns) + " total " + Timing.Seconds.format(elapsed) + " avg " + Timing.Seconds.format(elapsed / index.get) + ".")
+            }
+          } catch {
+            case e: Throwable => {
+              if (cluster.size > 1) {
+                // divide cluster in two parts and try each individually.
+                val (left, right) = clusters.zipWithIndex.partition(_._2 < clusters.size / 2)
+                postBatch(left.map(_._1).toSeq)
+                postBatch(right.map(_._1).toSeq)
+              } else {
+                e.printStackTrace()
+              }
+            }
+          }
+        }
+        
         if (!config.parallel) {
           clusters.grouped(BATCH_SIZE).foreach { cluster =>
-            try {
-              Timing.timeThen {
-                loader.post(cluster.iterator)
-              } { ns =>
-                val i = index.getAndIncrement()
-                val elapsed = System.nanoTime - start
-                println("Batch " + i + " (" + i * BATCH_SIZE + ") in " + Timing.Seconds.format(ns) + " total " + Timing.Seconds.format(elapsed) + " avg " + Timing.Seconds.format(elapsed / index.get) + ".")
-              }
-            } catch {
-              case e: Throwable => e.printStackTrace
-            }
+            postBatch(cluster)
           }
         } else {
           clusters.grouped(BATCH_SIZE).map( { cluster => future {
-            try {
-              Timing.timeThen {
-                loader.post(cluster.iterator)
-              } { ns =>
-                val i = index.getAndIncrement()
-                val elapsed = System.nanoTime - start
-                println("Batch " + i + " (" + i * BATCH_SIZE + ") in " + Timing.Seconds.format(ns) + " total " + Timing.Seconds.format(elapsed) + " avg " + Timing.Seconds.format(elapsed / index.get) + ".")
-              }
-            } catch {
-              case e: Throwable => e.printStackTrace
-            }
+            postBatch(cluster)
           }}) foreach (_.apply())
         }
         loader.close()
